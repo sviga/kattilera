@@ -1,0 +1,309 @@
+<!--@form -->
+<script type="text/javascript">
+    $(function() {
+
+        $("#incatdialog").dialog({
+            autoOpen: false,
+            closeOnEscape: false,
+            height: 350,
+            width: 300,
+            modal: true,
+            title: '[#catalog_item_edit_incategories_label#]',
+            open: function(event, ui) {
+                $(".ui-dialog-titlebar-close", ui.dialog).hide();
+                $(this).append($('#incat').show());
+            },
+            buttons: {
+                '[#common_select_all_label#]': function() {
+                    $(this).find(':checkbox').attr('checked', true);
+                },
+
+                '[#common_deselect_all_label#]': function() {
+                    $(this).find(':checkbox').removeAttr('checked');
+                },
+
+                '[#common_done_label#]': function() {
+                    $(this).dialog( "close" );
+                    $(this).parent().find('#incat').appendTo($("#incatcontainer"));
+                }
+            }
+        });
+
+
+        $("#incat_btn").button().click(function() {
+            $("#incatdialog").dialog("open");
+        });
+
+
+        $('#incat').on('click','li.catactive>span',function(){
+            var ccid=$(this).attr('data-id');
+            if (!ccid)
+                return;
+            var prnt = $(this).parent();
+            //prnt.removeClass('catactive');
+            if (prnt.attr('data-loaded'))
+                $('#cat'+ccid).toggle();
+            else
+            {
+                prnt.attr('data-loaded',1);
+                $(this).after('<div id="cat'+ccid+'"><img src="/admin/templates/default/images/content-loading.gif"></div>');
+                $.get('/admin/index.php?action=set_left_menu&leftmenu=get_item_subcats_block&cid='+ccid+'&itemid=%id%',function(data){
+                    $('#cat'+ccid).html(data);
+                });
+            }
+        });
+
+        //при клике на чекбокс отмечаем всех родителей до корня
+        $('#incat').on('click','li.catactive>input, li.catinactive>input',function(){
+            if (!$(this).is(':checked'))
+                return;
+            var elem = $(this).parent().parent().parent().parent();
+            while (elem.prop("tagName")=='LI')
+            {
+                elem.find('>input:checkbox').attr('checked',true);
+                elem=elem.parent().parent().parent();
+            }
+        });
+    });
+
+
+    function confirm_need_add_big_water(btn)
+    {
+        if (btn == 'no')
+            $('#need_add_big_water').val('0');
+        else
+            $('#need_add_big_water').val('1');
+    }
+
+</script>
+<style>
+
+    ul#itemcats li{
+        list-style: none;
+    }
+    ul#itemcats li.catactive>span{
+        cursor: pointer;
+        font-weight: bold;
+        color: #00ADDB;
+        text-decoration: underline;
+    }
+    /*
+    ul#itemcats li.catinactive span{
+        cursor: default;
+    }
+    */
+</style>
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#catalog_base_name#]</span></span>
+<div id="page_container">
+    <div id="content_container">
+        <div class="content">
+            <h3>[#catalog_item_edit_mainlabel#]</h3>
+
+            <form action="%form_action%" method="POST" id="saveitemform">
+                <input type="hidden" name="id" value="%id%">
+                <input type="hidden" name="group_id" value="%group_id%">
+
+                <table class="container" style="margin-bottom:0;">
+                    <tr>
+                        <th style="max-width:250px; text-align:left;">[#catalog_item_edit_table_nameprop_label#]</th>
+                        <th>[#catalog_item_edit_table_value_label#]</th>
+                    </tr>
+
+                    <tr>
+                        <td align="left" valign="middle"><b>ID:</b></td>
+                        <td align="center"><b>%id%</b></td>
+                    </tr>
+
+                    <tr>
+                        <td align="left" valign="middle">[#catalog_item_edit_available_label#]</td>
+                        <td align="center" valign="middle"><input id="item_avaible" type="checkbox" style="float:none;" name="available" %isavalchecked%></td>
+                    </tr>
+
+                    <tr>
+                        <td align="left">[#catalog_items_group_name_label#]</td>
+                        <td align="center">%group.name%</td>
+                    </tr>
+
+                    <tr>
+                        <td align="left">[#catalog_item_edit_incategories_label#]</td>
+                        <td align="center">
+                            <span id="incat_btn">Выбрать</span>
+                            <div id="incatcontainer" class="clear" style="display:none;">
+                                <div id="incat" class="incat block clear" style="margin:0 auto;">
+
+                                    <ul id="itemcats">
+                                        %categories%
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="incatdialog" style="display:none;"></div>
+                        </td>
+                    </tr>
+
+                    %props%
+                </table>
+
+                <input type="hidden" name="addlinkedid" value="" id="add_linked_itemid">
+                <input type="hidden" name="redir2" value="%redir2%">
+                <fieldset class="page_submit_field">
+                    <input type="button" value="[#catalog_item_edit_bt_save_label#]" onclick="santaFormSubmit('saveitemform');">
+                </fieldset>
+
+            </form>
+
+            %linked%
+
+        </div>
+    </div>
+</div>
+
+
+<!-- @subcats_block_start -->
+<div id="cat%id%"><ul>
+<!-- @subcats_block_end -->
+</ul>
+</div>
+<!-- @category_line -->
+<li class="catactive clear"><input type="checkbox" name="ccb[%id%]" id="ccb_%id%" class="fNone"><span data-id="%id%">%name%</span>%placeholder%</li>
+<!-- @category_line_checked -->
+<li class="catactive clear"><input type="checkbox" name="ccb[%id%]" id="ccb_%id%" checked class="fNone "><span data-id="%id%">%name%</span>%placeholder%</li>
+<!-- @category_line_no_childs -->
+<li class="catinactive clear"><input type="checkbox" name="ccb[%id%]" id="ccb_%id%" class="fNone"><span>%name%</span>%placeholder%</li>
+<!-- @category_line_no_childs_checked -->
+<li class="catinactive clear"><input type="checkbox" name="ccb[%id%]" id="ccb_%id%" checked class="fNone"><span>%name%</span>%placeholder%</li>
+
+<!-- @linked_no_main_prop_block -->
+[#catalog_no_main_prop_defined_label#]
+<!-- @linked_search_block -->
+<input type="text" id="add_linked_query">
+<script type="text/javascript">
+    $("#add_linked_query").autocomplete({
+        source: "/admin/index.php?action=set_left_menu&leftmenu=get_items_quicksearch_result&catid=0&ignored=%id%" ,
+        minLength: 2,
+        select: function( event, ui ) {
+            if (ui.item)
+            {
+                $('#add_linked_itemid').val(ui.item.value);
+                santaFormSubmit('saveitemform');
+            }
+        }
+    });
+</script>
+
+<!-- @linked -->
+
+<fieldset style="border-top:1px solid #ededed; padding:10px 0;">
+      <span class="block clear">
+       <label style="width:170px;">[#catalog_add_linked_item_label#]</label>
+       %linked_data%
+      </span>
+</fieldset>
+
+<table class="admin_table">
+    <tr>
+        <th colspan=>[#catalog_linked_items_list_label#]</th>
+    </tr>
+
+    %linked_items%
+</table>
+
+<!-- @linked_item -->
+<tr><td colspan="2"><a href="javascript:void(0);" onclick="jspub_click('item_edit&id=%lid%&redir2=%redir2%')">%namestring%</a><a href="javascript:void(0);" onclick="jspub_click('item_edit&id=%id%&removlinkedid=%lid%')"><img src="/admin/templates/default/images/icon_delet.gif" alt="[#catalog_remove_linked_item_label#]"/></a></td></tr>
+
+<!-- @prop_string -->
+<tr %class%>
+<td align="left">%prop_name_full%:</td>
+<td><input type="text" name="%prop_name_db%" value="%prop_value%" style="width:98%; float:none; margin:0 auto;"></td>
+</tr>
+
+<!-- @prop_date -->
+<tr %class%>
+<td align="left">%prop_name_full%:</td>
+<td><input type="text" name="%prop_name_db%" id='dp%prop_name_db%' value="%prop_value%" style="width:98%; float:none; margin:0 auto;"></td>
+</tr>
+
+<script type='text/javascript'>
+    $(function() {
+        $( "#dp%prop_name_db%" ).datepicker({
+            dateFormat:"dd.mm.yy"
+        });
+    });
+</script>
+
+<!-- @prop_number -->
+<tr %class%>
+<td align="left">%prop_name_full%:</td>
+<td><input type="text" name="%prop_name_db%" value="%prop_value%" style="width:98%; margin:0 auto; float:none;"></td>
+</tr>
+
+<!-- @prop_text -->
+<tr %class%>
+<td align="left">%prop_name_full%:</td>
+<td><textarea name="%prop_name_db%" style="width:98%; height:75px; float:none; margin:0 auto;" rows="" cols="">%prop_value%</textarea></td>
+</tr>
+
+<!-- @prop_html -->
+<tr style="background:none;">
+    <td colspan="2" style="text-align:left;">
+        <b>%prop_name_full%:</b>
+        <div class="block clear" style="width:98%;">%prop_value%</div>
+    </td>
+</tr>
+
+<!-- @prop_file -->
+<tr %class%>
+<td align="left">%prop_name_full%:</td>
+<td><input type="file" name="%prop_name_db%" size="30"></td>
+</tr>
+
+<!-- @prop_file_edit -->
+<tr %class%>
+<td align="left">%prop_name_full%:</td>
+<td><b>%prop_value%</b> <a href="javascript:void(0);" onclick="jspub_confirm('item_clear_field&id=%id%&redir2=%redir2%&field=%prop_name_db%','[#catalog_item_edit_file_del_alert#]?')"><img src="/admin/templates/default/images/icon_delet.gif" alt="[#catalog_item_edit_file_del_alert#]"/></a></td>
+</tr>
+
+<!-- @prop_pict -->
+<tr %class%>
+<td align="left">%prop_name_full%:</td>
+<td><input type="file" name="%prop_name_db%" size="30">%need_add_water_marka%</td>
+</tr>
+
+<!-- @prop_pict_edit -->
+<tr %class%>
+<td align="left">%prop_name_full%:</td>
+<td><img src="%prop_value%" width="50"><a href="javascript:void(0);" onclick="jspub_confirm('item_clear_field&redir2=%redir2%&id=%id%&field=%prop_name_db%','[#catalog_item_edit_file_del_alert#]?')"><img src="/admin/templates/default/images/icon_delet.gif" alt="[#catalog_item_edit_file_del_alert#]"/></a></td>
+</tr>
+<!-- @prop_pict_marka_source -->
+<br><input type="checkbox" name="%prop_name_db%_need_add_source_water" id="%prop_name_db%_need_add_source_water" checked="checked"/><label for="%prop_name_db%_need_add_source_water">[#catalog_item_edit_pict_add_mark_for_source#]</label>
+<!-- @prop_pict_marka_big -->
+<br><input type="checkbox" name="%prop_name_db%_need_add_big_water" id="%prop_name_db%_need_add_big_water" checked="checked"/><label for="%prop_name_db%_need_add_big_water">[#catalog_item_edit_pict_add_mark_for_big#]</label>
+<!-- @prop_enum -->
+<tr %class%>
+<td align="left">%prop_name_full%:</td>
+<td><select name="%prop_name_db%" style="display:block; margin:0 auto; float:none;">%prop_value%</select></td>
+</tr>
+<!-- @prop_enum_value -->
+<option value="%enum_key%">%enum_val%</option>
+
+<!-- @prop_enum_value_selected -->
+<option value="%enum_key%" selected>%enum_val%</option>
+
+<!-- @prop_set_value -->
+<div style="clear: both;">
+    <input type="checkbox" name="%prop_name_db%[%value_escaped%]"><label>%value%</label><br>
+</div>
+<!-- @prop_set_value_checked -->
+<div style="clear: both;">
+    <input type="checkbox" name="%prop_name_db%[%value_escaped%]" checked><label>%value%</label><br>
+</div>
+<!-- @prop_set -->
+<tr %class%>
+<td align="left">%prop_name_full%:</td>
+<td>%prop_value%</td>
+</tr>
+
+<!-- @category_item -->
+<span class="block clear" style="margin:5px 0;">
+<span class="block fLeft">%shift%</span><input type="checkbox" id="ccb_%id%" class="checkbox" style="float:left; margin:0 5px 0 0;" name="ccb_%id%" %checked%><label for="ccb_%id%" style="width:auto; cursor:pointer; margin-right:0; float:left;">%catname%</label>
+<span class="block clear"></span>
+</span>

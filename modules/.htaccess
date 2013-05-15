@@ -1,0 +1,5 @@
+#Order Deny,Allow
+#Deny from all
+<Files ~ "functions.js"> 
+  Allow from all 
+</Files>

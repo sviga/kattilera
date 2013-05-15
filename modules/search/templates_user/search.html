@@ -1,0 +1,89 @@
+<!--
+Шаблон результатов поиска
+
+Секции:
+@form - основной блок
+@search_form - форма поиска
+%search_text% - текст запроса
+@noresult - если ничего не найдено
+@search_results - результаты поиска
+@search_results_rows - заменяется на конкретный результат
+@pages - постраничная навигация
+
+ -->
+
+<!-- ****************************************** Шаблон результатов поиска ****************************************** -->
+
+<!-- @form -->
+<div id="search" class="content">
+    <p class="title">Результаты поиска по запросу: <span>%search_text%</span></p>
+    %search_form%
+    %search_results%
+    %pages%
+</div>
+<!-- @search_form -->
+			<form action="%action%">
+				<input class="text" type="text" name="search" value="%search_text%" />
+				<input type="image" src="design/images/search.gif" />
+				<br clear="all" />
+			</form>
+<!-- @noresult -->
+			<br clear="all" />
+			<p>
+				К сожалению, документов, содержащих слово <em>%search_text%</em> не найдено. <br />
+				Возможные причины:
+			</p>
+			<ol>
+				<li>Слово написано с ошибкой</li>
+				<li>Материал, в данный момент, отсутствует</li>
+			</ol>
+<!-- @search_results -->
+			<ul>
+%rows%
+			</ul>
+<!-- @search_results_rows -->
+				<li>
+					<a href="%link%" title="%title%">%title%</a> <br />
+					%snipped% <br />
+					<span>%link%</span>
+				</li>
+<!-- @search_results_split -->
+
+<!-- @pages -->
+<div class="page_namber">
+    %first%
+    %backward%
+    %previous%
+    %pages_block%
+    %next%
+    %forward%
+    %last%
+</div>
+
+<!-- @page_first -->
+<a href="%link%">Начало</a>
+<!-- @page_backward -->
+<a href="%link%">&laquo;</a>
+<!-- @page_backward_disabled -->
+&laquo;
+<!-- @page_previous -->
+<a href="%link%">&laquo;</a>
+<!-- @page_previous_disabled -->
+&laquo;
+<!-- @page_forward -->
+<a href="%link%">&raquo;</a>
+<!-- @page_forward_disabled -->
+&raquo;
+<!-- @page_next -->
+<a href="%link%">&raquo;</a>
+<!-- @page_next_disabled -->
+&raquo;
+<!-- @page_last -->
+<a href="%link%">Конец</a>
+<!-- @page_active -->
+<a href="%link%">%page%</a>
+<!-- @page_passive -->
+%page%
+<!-- @page_delimeter -->
+&nbsp;-&nbsp;
+<!-- @page_null -->

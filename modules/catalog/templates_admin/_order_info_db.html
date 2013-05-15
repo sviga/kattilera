@@ -1,0 +1,28 @@
+<!-- @list -->
+
+<table class="admin_table">
+<tr>
+	  <th>Название</th>
+	  <th>Цена</th>
+	  <th>Количество</th>
+	  <th>Сумма</th>
+ </tr>
+%row%
+  <tr>
+	  <td align="right" colspan="2"><b>Всего</b></td>
+	  <td align="right"><b>%total_basket_items%</b></td>
+	  <td align="right"><b>%field_total[price]%</b></td>
+
+  </tr>
+</table>
+
+
+
+
+<!-- @row -->
+<tr>
+	<td>%name_value%</td>
+	<td>%price_value%</td>
+	<td>%items_qty%</td>
+	<td>%field_sum[price]%</td>
+</tr>

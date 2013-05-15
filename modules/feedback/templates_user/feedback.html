@@ -1,0 +1,95 @@
+<!-- ****************************************** Шаблоны формы обратной связи ****************************************** -->
+
+<!-- @form -->
+
+<!-- Код слоя, на котором будут показываться сообщения об ошибках -->
+			<div id="error_message" class="error hide">
+				<div id="errors"></div>
+			</div>
+			<script type="text/javascript" src="modules/feedback/templates_user/functions.js"></script>
+			<p class="title">Задать вопрос</p>
+			<div id="feedback">
+				<form action="%form_action%" method="post">
+					<p>
+						<label for="name">Ваше имя</label> <br />
+						<input type="text" class="text" id="name" name="values[name]" value="" />
+					</p>
+					<p>
+						<label for="email">Ваш e-mail</label> <br />
+						<input type="text" class="text" id="email" name="values[email]" value="" />
+					</p>
+					<p>
+						<label for="message">Сообщение</label> <br />
+						<textarea name="values[message]" id="message" rows="5" cols="20"></textarea>
+					</p>
+					<p>
+						<input type="image" src="design/images/submit.png" onClick="return form_validate(this.form);" />
+					</p>
+				</form>
+			</div>
+			<br clear="all" />
+
+ <!-- ****************************************** Шаблоны письма в формате html ****************************************** -->
+<!-- @email_html -->
+
+<html>
+    <head>
+    </head>
+    <body>
+    Результат заполнения формы на сайте
+
+Ваше имя: %name%<br/>
+
+
+Ваш e-mail: %email%<br/>
+
+
+Сообщение: %message%<br/>
+
+
+    </body>
+</html>
+ <!-- ***************************************** Шаблоны письма в формате текстовом формате ****************************************** -->
+
+<!-- @email_text -->
+
+
+Ваше имя: %name%<br/>
+
+
+Ваш e-mail: %email%<br/>
+
+
+Сообщение: %message%<br/>
+
+
+
+<!-- @processing_succses -->
+
+<p class="success">Ваш вопрос принят, спасибо за участие</p>
+
+
+<!-- @processing_fail -->
+
+<p class="error">Ошибка при отправлении формы, сообщите администратору сайта.</p>
+
+
+<!-- @jscript_start -->
+
+<script type="text/javascript">
+function set_values(){
+
+<!-- @jscript_line_1 -->
+
+var ffed_%element% = document.getElementById('%element%');
+if(ffed_%element% == null){alert(1);}
+ffed_%element%.properties = new Array();
+
+<!-- @jscript_line_2 -->
+
+ffed_%element%.properties['%name%'] = '%value%';
+
+<!-- @jscript_end -->
+
+}
+</script>

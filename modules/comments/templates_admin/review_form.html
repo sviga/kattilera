@@ -1,0 +1,92 @@
+<!-- @form -->
+<script type="text/javascript">
+    $(function() {
+        $( "#date" ).datepicker({
+                dateFormat:"dd.mm.yy"
+            }
+        );
+    });
+
+    function validateTime(value) {
+        return /^[0-2]?[0-9]:[0-5]?[0-9]:[0-5]?[0-9]$/.test(value);
+    }
+
+    function validateDate(value) {
+        return /^[0-3]?[0-9]\.[0-1]?[0-9]\.[1-2][0-9][0-9][0-9]$/.test(value);
+    }
+
+    function submitMyForm()
+    {
+        if (validateDate($('#date').val()) && validateTime($('#time').val()))
+            return form_submit_include_content();
+        else
+        {
+            santaShowPopupHint('Error', '[#comments_error_incorrect_datetime#]',0);
+            return false;
+        }
+    }
+
+</script>
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#comments_base_name#]</span></span>
+<div id="page_container">
+    <div id="content_container">
+        <div class="content">
+
+            <h3>[#comments_review_form_header#]</h3>
+
+            <form action="%form_action%" method="POST">
+                <input type="hidden" name="values[id]" value="%id%">
+
+                <fieldset>
+                    <label for="mod_comments_1">[#comments_property_available_label#]</label>
+                    <input id="mod_comments_1" type="checkbox" name="values[available]" value="1" %available%>
+                </fieldset>
+
+                <fieldset>
+                    <label for="date" style="width:150px;">[#comments_property_date_label#]</label>
+                    <input id="date" style="width:130px; margin-right:15px;" type="text" name="values[date]" value="%date%">
+                    <label for="time" style="width:150px;">[#comments_property_time_label#]</label>
+                    <input id="time" type="text" style="width:130px;" name="values[time]" value="%time%">
+                </fieldset>
+
+                <fieldset>
+                    <label style="width:150px;" for="name">[#comments_property_author_label#]</label>
+                    <input type="text" style="width:455px;" id="name" name="values[name]" value="%name%">
+                </fieldset>
+                <fieldset>
+                    <label style="width:150px;" for="author">[#comments_property_pages_label#]</label>
+                    <input type="text" style="width:455px;" id="pageid" name="values[pageid]" value="%pageid%">
+                </fieldset>
+
+                <fieldset>
+                    <label for="comment" style="width:150px;">[#comments_property_txt_label#]</label>
+                    <textarea id="comment" name="values[comment]" style="width:455px; height:75px;" rows="" cols="">%comment%</textarea>
+                </fieldset>
+                <fieldset>
+                    <label for="comment" style="width:150px;">[#comments_property_pros_label#]</label>
+                    <textarea id="pros" name="values[pros]" style="width:455px; height:75px;" rows="" cols="">%pros%</textarea>
+                </fieldset>
+                <fieldset>
+                    <label for="comment" style="width:150px;">[#comments_property_cons_label#]</label>
+                    <textarea id="cons" name="values[cons]" style="width:455px; height:75px;" rows="" cols="">%cons%</textarea>
+                </fieldset>
+
+                <fieldset>
+                    <label style="width:150px;">[#comments_property_rate_label#]</label>
+
+                    <span class="block fLeft"><input id="one" type="radio" name="values[rate]" value="1" %r_rate_1_checked%><label for="one" style="width:10px;">1</label></span>
+                    <span class="block fLeft"><input id="two" type="radio" name="values[rate]" value="2" %r_rate_2_checked%><label for="two" style="width:10px;">2</label></span>
+                    <span class="block fLeft"><input id="three" type="radio" name="values[rate]" value="3" %r_rate_3_checked%><label for="three" style="width:10px;">3</label></span>
+                    <span class="block fLeft"><input id="four" type="radio" name="values[rate]" value="4" %r_rate_4_checked%><label for="four" style="width:10px;">4</label></span>
+                    <span class="block fLeft"><input id="five" type="radio" name="values[rate]" value="5" %r_rate_5_checked%><label for="five" style="width:10px;">5</label></span>
+
+                </fieldset>
+
+
+                <fieldset class="page_submit_field">
+                    <input type="submit" name="submit" value="[#comments_submit_label#]" onclick="return submitMyForm();">
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

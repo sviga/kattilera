@@ -1,0 +1,50 @@
+<!-- @field -->
+<tr>
+    <td>%caption%</td>
+    <td>%id_field%</td>
+    <td>%type_field%</td>
+    <td>%only_admin%</td>
+    <td>%required%</td>
+    <td><a href="#" onclick="jspub_confirm('user_field_delete&id=%id%','[#auth_user_field_delete_confirm#] %id_field% ?');"><img src="/admin/templates/default/images/icon_delet.gif" alt="delete"/></a></td>
+    <td><a href="#" onclick="jspub_click('user_field&id=%id%');"><img src="/admin/templates/default/images/icon_edit.gif" alt="edit"/></a></td>
+</tr>
+<!-- @content -->
+
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#auth_modul_base_name#]</span></span>
+<div id="page_container">
+    <div id="content_container">
+        <div class="content">
+          <h3>[#auth_user_fields_list#]</h3>
+
+
+<table class="admin_table">
+<tr>
+    <th>[#auth_user_field_caption#]</th>
+    <th>[#auth_user_field_id#]</th>
+    <th>[#auth_user_field_type#]</th>
+    <th>[#auth_user_field_only_admin#]</th>
+    <th>[#auth_user_field_required#]</th>
+    <th colspan="2">...</th>
+</tr>
+%fields%
+</table>
+
+<input type="button" onclick="jspub_click('user_field&id=0');" value="[#auth_add_user_field#]" style="margin-bottom: 30px;">
+
+
+<form action="%generate_action%" method="post" name="generate_cabinet_tpl_form" id="generate_cabinet_tpl_form">
+    <b>[#auth_generate_cabinet_label#]</b><br>
+    [#auth_generate_tpl_filename#]:<br><input type="text" name="generate_cabinet_tpl" value="auth_show_cab.html"><br>
+    <div style="clear:both;">[#auth_generate_cabinet_tpl_tpl_label#]</div>
+    <input type="button" onclick="jspub_form_submit('generate_cabinet_tpl_form','%generate_action%');" value="[#auth_generate_do#]">
+</form>
+<br>
+
+<form action="%generate_action%" method="post" name="generate_reg_tpl_form" id="generate_reg_tpl_form">
+    <b>[#auth_generate_register_label#]</b><br>
+    [#auth_generate_tpl_filename#]:<br><input type="text" name="generate_reg_tpl" value="auth_show_reg.html"><br>
+    <div style="clear:both;">[#auth_generate_reg_tpl_tpl_label#]</div>
+    <input type="button" onclick="jspub_form_submit('generate_reg_tpl_form','%generate_action%');" value="[#auth_generate_do#]">
+</form>
+
+</div></div></div>

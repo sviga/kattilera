@@ -1,0 +1,61 @@
+<!--
+
+
+Секции:
+
+ -->
+
+<!-- ****************************************** Шаблоны ****************************************** -->
+<!-- @form -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<font color="#990000">%errore%</font>
+<form method="post" action="#">
+<input type="hidden" name="id" value="%id%">
+<input type="hidden" name="code" value="%code%">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="150">Дата подписки:</td>
+      <td width="15">&nbsp;</td>
+      <td align="left">%date%</td>
+  </tr>
+    <tr>
+      <td width="150">Ваше имя:</td>
+      <td width="15">&nbsp;</td>
+      <td align="left">
+        <input name="name" type="text" maxlength="255" size="60" value="%name%"></td>
+  </tr>
+  <tr>
+      <td width="150">Адрес электронной почты для рассылки (не изменяется):</td>
+      <td width="15">&nbsp;</td>
+      <td align="left">
+        <input name="mail" type="text" maxlength="255"  size="60"  value="%mail%" disabled></td>
+  </tr>
+  <tr>
+      <td width="150" valign="top">Интересующие новостные группы:</td>
+      <td width="15">&nbsp;</td>
+      <td align="left">%pages_news%</td>
+  </tr>
+  <tr>
+      <td width="150" valign="top" height="50"></td>
+      <td width="15">&nbsp;</td>
+      <td align="left"><input  class="text" type="submit" value="Сохранить" name="save_control"> &nbsp;&nbsp;<input class="text" type="submit" value="Удалить" name="del_user"></td>
+  </tr>
+</table>
+</form>
+
+<!-- @errore_name -->
+Ошибка в имени пользователя<br />
+
+<!-- @errore_news -->
+Необходимо оставить хотя бы одну новостную группу.<br>
+<!-- @code_not_exist -->
+<b>Не существует запрашиваемого пользователя.</b><br />
+Проверьте правильность ссылки с той, что приходит в письмах рассылкой или свяжитесь с web-мастером
+<!-- @user_delet -->
+<b>Ваша подписка отменена.</b><br>
+<br>
+Будем рады видеть Вас снова в рядах наших подписчиков.
+<!-- @module_line_checked -->
+<input id="%key%" name="section[%key%]" value="1" type="checkbox" checked>&nbsp<label for="%key%">%$caption%</label><br>
+<!-- @module_line -->
+<input id="%key%" name="section[%key%]" value="1" type="checkbox">&nbsp<label for="%key%">%$caption%</label><br>

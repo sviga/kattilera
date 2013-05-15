@@ -1,0 +1,406 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>[#server#] - административный интерфейс santafox [#curent_version#]</title>
+
+<!-- all css -->
+<link href="/admin/templates/default/css/style.css" rel="stylesheet" type="text/css">
+<link href="/admin/templates/default/css/custom-theme/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css">
+<link href="/admin/templates/default/css/layout-default-latest.css" rel="stylesheet" type="text/css" media="screen">
+
+<!-- tree classic theme style -->
+<link href="/admin/js/themes/classic/style.css" rel="stylesheet" type="text/css" media="screen">
+
+<!-- all js -->
+<script type="text/javascript" src="/admin/js/jquery-1.7.1.min.js"></script>
+<!-- ui js -->
+<script type="text/javascript" src="/admin/js/jquery-ui-1.8.17.custom.min.js"></script>
+<!-- layout js -->
+<script type="text/javascript" src="/admin/js/jquery.layout-latest-rc.js"></script>
+<!-- tree js -->
+<script type="text/javascript" src="/admin/js/jquery.jstree.js"></script>
+
+
+<script type="text/javascript" src="/admin/js/jquery.form.js"></script>
+
+<!-- content editors js -->
+<script type="text/javascript" src="/components/html_editor/ckeditor/ckeditor.js"></script>
+
+<!-- navigation plugins ui js -->
+<script type="text/javascript" src="/admin/js/jquery.ui.selectmenu.js"></script>
+<script type="text/javascript" src="/admin/js/jquery.ui.modmenu.js"></script>
+
+<script type="text/javascript" src="/admin/js/main_interface.js"></script>
+
+<script type="text/javascript">
+var message_debug = [];
+var helpContent = "";
+var start_interface = function () {
+    return {
+        global_link: "index.php?action=set_left_menu&leftmenu=",
+        array_name_edit_content: [],
+        layout: null,
+        innerLayout: null,
+        main_menu_element_select: null,
+        left_menu_element_select: null,
+        modules_element_select: null,
+        left_menu: null,
+        toolbar: null,
+        dialog: null,
+        console_dialog: null,
+        actiondialog: null,
+        select_node: null,
+
+        //Функции перегружает контент западного и центрального региона
+        //для соответствующего пункта меню
+        main_menu_click: function (el, name_section, name_left_menu) {
+            //Выберем все элементы и проставим им обычный класс
+            //а текущему элементу проставим класс того что он выбрна
+            if (this.main_menu_element_select != null /*&& this.main_menu_element_select.hasClass('main_menu_select')*/) {
+                $('#' + this.main_menu_element_select).removeClass('main_menu_select').addClass('main_menu');
+            }
+            //Кроме того, если надо, выключим подсветку админки модуля с которой мы могли перейти на
+            //главное меню
+            //if (this.modules_element_select != null)
+            //	this.modules_element_select.toggle(false);
+            $('#' + el).removeClass('main_menu').addClass('main_menu_select');
+            this.main_menu_element_select = el;
+            //Теперь необходимо обновить контент левой части меню
+            if (name_left_menu) {
+                //Это прямое позиционирование на элемент меню в секции
+                $("#west").load("index.php?section=" + name_section + "&action=get_left_menu", function (response, status, xhr) {
+                    if (status != "error") {
+                        start_interface.left_menu_click(document.getElementById(name_left_menu),'');
+                    }
+                });
+
+            }
+            else {
+                //Это обычный клик в админке
+                santaUpdateRegion('west', "index.php?section=" + name_section + "&action=get_left_menu");
+            }
+            return true;
+        },
+
+        //Убирает ывделение текущего пункта меню со всего меню
+        left_menu_clear_select: function () {
+            if (this.left_menu_element_select != null)
+                $(this.left_menu_element_select).removeClass('left_menu_select').addClass('left_menu');
+        },
+
+        //Запоминает ссылку на текущую выделенную ноду
+        //Что бы при клике по левому пункту меню снять с неё выделение
+        save_link_node_select: function (el) {
+            this.select_node = el;
+        },
+
+        //Загрузка контента при клике по левому элементу меню
+        left_menu_click: function (el, query) {
+            //Выберем все элементы и проставим им обычный класс
+            //а текущему элементу проставим класс того что он выбран
+            if (this.left_menu_element_select != null)
+                $(this.left_menu_element_select).removeClass('left_menu_select').addClass('left_menu');
+
+            $(el).removeClass('left_menu').addClass('left_menu_select');
+            this.left_menu_element_select = el;
+
+            //Теперь необходимо обновить контент центральной части
+            santaUpdateRegion('content', this.global_link + $(el).attr('id') + '&' + query);
+            //и загрузить помощь
+            $.get("index.php?action=get_help_content", function (data) {
+                helpContent = data;
+            });
+            return true;
+        },
+        //Функция производит перезагрузку центральной области контента
+        //А теперь загрузим контент в нужную часть
+
+        link_go: function (str_link) {
+            santaUpdateRegion('content', this.global_link + str_link);
+        },
+        // Функция для формирования дебага
+        show_console_info: function (content_console) {
+            var str_html = $("#console_content").html();
+            if ((content_console.length <= 0) && (str_html == ""))
+                return false;
+
+            //Теперь проверим, если есть новые сообщения об ошибках
+            //то добавим их в начало
+            if (str_html.length > 500)
+                str_html = str_html.substr(0, 500);
+            //Выведем информацию с дебагами
+            str_html = "" + content_console + "<br>" + str_html;
+            //message_debug = Array();
+            $("#console_content").html(str_html);
+
+            $("#console_content").dialog({
+                resizable: true,
+                height: 200,
+                width: 400,
+                modal: false,
+                //title: header,
+                buttons: {
+                    "OK": function () {
+                        $(this).dialog("close");
+                    }
+                },
+                show: "slide",
+                hide: "slide"//"explode"
+            });
+
+        },
+
+        show_debug_info: function (elmenu) {
+            var str_html = $("#debug_content").html();
+            if ((message_debug.length <= 0) && (str_html == ""))
+                return false;
+
+            //Теперь проверим, если есть новые сообщения об ошибках
+            //то добавим их в начало
+            if (message_debug.length > 0) {
+                str_html = "" + message_debug.join("") + "" + str_html;
+                message_debug = Array();
+                $("#debug_content").html(str_html);
+            }
+
+            $("#debug_content").dialog({
+                resizable: true,
+                height: 400,
+                width: 600,
+                modal: true,
+                //title: header,
+                buttons: {
+                    "OK": function () {
+                        $(this).dialog("close");
+                    }
+                },
+                show: "slide",
+                hide: "slide"//"explode"
+            });
+
+        },
+
+        modules_tab_click: function (select_item, parent_item) {
+            //По способу загрузки очень похоже на то, как обрабатывается главное меню
+            //Нужно сделать неактивным пункт главного меню
+            if (this.main_menu_element_select != null)
+                $(this.main_menu_element_select).removeClass('main_menu_select').addClass('main_menu');
+
+            //Если нужно, отключим сделаем неактивным придыдущее меню модулей
+            if (this.modules_element_select != null)
+                $(this.modules_element_select).toggle(false);
+
+            //Проверим, может это выбран дочерний модуль
+
+            if (parent_item != null) {
+                //Значит это вызов из под меню, и в родетля надо прописать
+                //параметры под меню, что бы они потом вызывлись
+                parent_item.setText(select_item.text);
+                parent_item.moduleid = select_item.moduleid;
+                parent_item.toggle(true);
+                this.modules_element_select = parent_item;
+            } else {
+                select_item.toggle(true);
+                this.modules_element_select = select_item;
+            }
+            santaUpdateRegion('west', "index.php?section=" + select_item.moduleid + "&action=get_left_menu");
+            return true;
+        },
+
+        init: function () {
+            //Создаём тул бар для севера
+            //в котором выбираются доступные админки модулей
+            //здесь табы модулей
+            [#modules_menus_tabs#]
+
+            //for (var i=0;i<santaMods.length;i++)
+            var modsHtml = '';
+            for (m in santaMods) {
+                var mod = santaMods[m];
+                modsHtml += "<select class='modselect'>";
+                for (kk in mod.options) {
+                    var submodName = mod.options[kk];
+                    modsHtml += "<option value='" + kk + "'>" + submodName + "<\/option>";
+                }
+                modsHtml += "<\/select>";
+            }
+            $('#modules_toolbar').html(modsHtml);
+            $('#modules_toolbar select.modselect').modmenu();
+
+            $('select.modselect').bind("change", function (e) {
+                $('#main_menu').find('a.main_menu_select').removeClass('main_menu_select');
+                var selectedModuleID = this.value;
+                this.modules_element_select = this.parent;
+                santaUpdateRegion('west', "index.php?section=" + selectedModuleID + "&action=get_left_menu");
+            });
+
+            //---------- Создание левой менюшки -------------------
+            //Обновление контента левой, и центральной части, значение секции не указывается
+            //так, как оно берётся из сессии либо по умолчанию
+            //Такой вызов необходим что бы при первом построении страницы (или при её обновлении
+            //через F5 подгрузился весь контент
+            update_left_menu("[#get_url#]");
+            fulltime();
+        }
+    };
+}();
+
+$(function () {
+    start_interface.init();
+
+    $('#help_block').bind('click', function () {
+        //$('help_content').css('position','absolute').css('left',0).css('top',100).css('width',200).css('display','block');
+        santaShowPopupHint('Help', helpContent, 0);
+    });
+});
+
+//Функция для обновления текущего времени на сайте и проверки необходимости отображения окна с дебагом
+function fulltime() {
+    var name_month = new Array("Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря");
+    var time = new Date();
+
+    time_sec = time.getSeconds();
+    time_min = time.getMinutes();
+    time_hours = time.getHours();
+    time_wr = ((time_hours < 10) ? "0" : "") + time_hours;
+    time_wr += ":";
+    time_wr += ((time_min < 10) ? "0" : "") + time_min;
+    time_wr += ":";
+    time_wr += ((time_sec < 10) ? "0" : "") + time_sec;
+    time_wr = "" + time.getDate() + " " + name_month[time.getMonth()] + " " + time.getFullYear() + " г. " + time_wr;
+
+    $('#todayIs').html(time_wr);
+    //Заодно проверим, нужно ли показывать дебаг
+    var str_html = $("#debug_content").html();
+    if ((message_debug.length > 0) || (str_html != "")) {
+        $("#link_for_debug").css("color", "#FF0000").css("cursor", "pointer");
+    }
+    else
+        $("#link_for_debug").css("color", "#CCCCCC").css("cursor", "");
+    setTimeout('fulltime()', 500)
+}
+
+</script>
+
+<script type="text/javascript">
+    var mainLayout;
+    $(function () {
+        // mainLayout
+        mainLayout = $('#mainLayout').layout({
+            defaults: {
+                enableCursorHotkey: false
+            },
+            north: {
+                spacing_open: 0,
+                spacing_closed: 0,
+                closable: false,
+                resizable: false
+            },
+            west: {
+                minSize: 265,
+                maxSize: 350,
+                spacing_open: 5,
+                spacing_closed: 5,
+                resizerCursor: 'col-resize'
+            },
+            center: {
+                // minSize: 500,
+                closable: false,
+                resizable: false
+            }
+        });
+
+
+        // показываем, прячем блок модулей..
+        $('#mod_box_sbtn').toggle(function () {
+                    mainLayout.allowOverflow('north');
+                    $(this).addClass('mod_box_sbtn_active');
+                    // $('#modules_toolbar').css({'overflow':'visible', 'background':'#ededed', 'marginLeft':'-263px', 'height':'auto', 'paddingBottom':'3px'});
+                    $('#modules_toolbar').css({'overflow': 'visible', 'backgroundColor': '#fff', 'paddingBottom': '2px', 'height': 'auto', 'min-height': '28px'});
+                    // $('#modules_toolbar').addClass('mod_toolbar_opened');
+                },
+                function () {
+                    $(this).removeClass('mod_box_sbtn_active');
+                    mainLayout.resetOverflow('north');
+                    // $('#modules_toolbar').css({'overflow':'hidden','height':'28px', 'background':'none', 'minHeight':'28px', 'paddingBottom':'0px'});
+                    $('#modules_toolbar').css({'overflow': 'hidden', 'paddingBottom': '0px', 'height': '28px'});
+                    // $('#modules_toolbar').removeClass('mod_toolbar_opened');
+                });
+
+        // убираем .ui-state-active с блока модулей при клике в главной навигации
+        $('#main_menu a').click(function () {
+            $('#mod_block a').removeClass('ui-state-active');
+        });
+
+    });
+
+
+
+</script>
+</head>
+
+<body>
+<div id="mainContainer">
+
+    <div class="mcLayer">
+        <span class="csite"><a href="http://[#server#]" target="_blank">[#server#]</a> &mdash; редактируемый сайт</span>
+        <span id="todayIs" class="today"></span>
+        <span class="santafox"><a href="http://www.santafox.ru" target="_blank">Santafox</a></span>
+    </div>
+
+    <!-- mainLayout -->
+    <div id="mainLayout">
+        <!-- NORTH PANEL -->
+        <div class="ui-layout-north">
+            <div class="north-top">
+                [#main_menu#]
+            </div>
+
+            <div class="north-bottom">
+                <div id="mod_block">
+                    <div id="modules_toolbar"></div>
+                    <a href="#" id="mod_box_sbtn" class="mod_box_sbtn"></a>
+
+                    <div class="clear"></div>
+                </div>
+
+                <div class="clear"></div>
+            </div>
+        </div>
+
+        <!-- WEST PANEL -->
+        <div id="west" class="ui-layout-west"></div>
+        <!-- end of west panel -->
+
+        <!-- CENTER PANEL -->
+        <div class="ui-layout-center">
+            <div id="content" class="middle_content"></div>
+        </div>
+        <!-- end of center panel -->
+
+    </div>
+    <!-- end of mainLayout -->
+
+    <div class="mcLayer">
+        <span class="active_admin">Активных администраторов: <a href="#" onClick="start_interface.main_menu_click(this, 'polzovateli');">%admins_count%</a></span>
+        <span class="debug"><a href="#" onClick="start_interface.show_debug_info(this)">DEBUG</a></span>
+        <span class="update">CMS ver. [#curent_version#] [#version_update#]</span>
+    </div>
+
+    <!-- Контейнер для дебаг информации -->
+    <div id="debug_content" style="display:none;">
+        [#debug_content#]
+    </div>
+
+    <!-- Контейнер для консоли (например при индексировании сайта) -->
+    <div id="console_content" style="display:none;"></div>
+    <!-- Слой для контента каких-то всплывающих окон -->
+    <div id="popup_div" style="display:none;" title=""></div>
+    <!-- Слой для контента каких-то всплывающих сообщений -->
+    <div id="popup_msg_div" style="display:none;" title=""></div>
+    <!-- Слой для контента для выбора страницы сайта -->
+    <div id="popup_sitemap_div" style="display:none;" title=""></div>
+</div>
+</body>
+</html>

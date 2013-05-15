@@ -1,0 +1,101 @@
+<!-- @form -->
+<script type="text/javascript">
+    $(function() {
+        $( "#date" ).datepicker({
+            dateFormat:"dd.mm.yy"
+        });
+    });
+
+    function validateTime(value) {
+        return /^[0-2]?[0-9]:[0-5]?[0-9]:[0-5]?[0-9]$/.test(value);
+    }
+
+    function validateDate(value) {
+        return /^[0-3]?[0-9]\.[0-1]?[0-9]\.[1-2][0-9][0-9][0-9]$/.test(value);
+    }
+
+    function submitMyForm()
+    {
+        if (validateDate($('#date').val()) && validateTime($('#time').val()))
+            return form_submit_include_content();
+        else
+        {
+            santaShowPopupHint('Error', '[#news_error_incorrect_datetime#]',0);
+            return false;
+        }
+    }
+
+</script>
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#newsi_modul_base_name1#]</span></span>
+<div id="page_container">
+    <div id="content_container">
+        <div class="content">
+
+            <h3>Форма добавления/редактирования новости</h3>
+
+            <form action="%form_action%" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="values[id]" value="%id%">
+
+                <fieldset>
+                    <div style="padding:0 0 5px; 0">
+                        <input id="mod_news_1" type="checkbox" name="values[available]" value="1" %available%>&nbsp;<label for="mod_news_1" style="width:110px;">[#news_property_available_label#]</label>
+                        <input id="mod_news_2" type="checkbox" name="values[lenta]" value="1" %lenta%>&nbsp;<label for="mod_news_2" style="width:120px;">[#news_property_lenta_label#]</label>
+                        <input id="mod_news_3" type="checkbox" name="values[delivery]" value="1" %delivery%>&nbsp;<label for="mod_news_3" style="width:140px;">[#news_property_delivery_label#]</label>
+                        <input id="mod_news_4" type="checkbox" name="values[rss]" value="1" %rss%>&nbsp;<label for="mod_news_4" style="width:110px;">[#news_property_rss_label#]</label>
+                        <div class="clear"></div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <label for="date" style="width:150px;">[#news_property_date_label#]</label>
+                    <input id="date" style="width:130px; margin-right:15px;" type="text" name="values[date]" value="%date%">
+                    <label for="time" style="width:150px;">[#news_property_time_label#]</label>
+                    <input id="time" style="width:130px;" type="text" name="values[time]" value="%time%">
+                </fieldset>
+
+                <fieldset>
+                    <label for="header" style="width:150px;">[#news_property_header_label#]</label>
+                    <input type="text" style="width:455px;" id="header" name="values[header]" value="%header%">
+                </fieldset>
+
+                <fieldset>
+                    <label for="description_short" style="width:150px;">[#news_property_description_short_label#]</label>
+                    <textarea id="description_short" style="width:455px; height:75px;" name="values[description_short]" rows="" cols="">%description_short%</textarea>
+                </fieldset>
+
+                <fieldset>
+                    <div style="display:block; width:635px; clear:both;">
+                        %description_full%
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <label for="author">[#news_property_author_label#]</label>
+                    <input type="text" id="author" name="values[author]" value="%author%">
+                </fieldset>
+
+                <fieldset>
+                    <label for="source_name">[#news_property_source_name_label#]</label>
+                    <input type="text" id="source_name" name="values[source_name]" value="%source_name%">
+                </fieldset>
+
+                <fieldset>
+                    <label for="source_url">[#news_property_source_url_label#]</label>
+                    <input type="text" id="source_url" name="values[source_url]" value="%source_url%">
+                </fieldset>
+
+                <fieldset>
+                    <label for="image">[#news_property_image_label#]</label>
+                    <input type="file" style="float:left;" size="31" id="image" name="image" value="%image%">
+                    <span style="float:left; margin-left:15px;">%image_block%</span>
+                </fieldset>
+
+                <fieldset class="page_submit_field">
+                    <input type="submit" name="submit" value="[#news_submit_label#]" onclick="return submitMyForm();">
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- @image -->
+<img src="%image_url%" width="100px" height="75px"><br><input id="remove_image" type="checkbox" name="values[remove_image]">&nbsp;<label style="width:70px;" for="remove_image">Удалить</label>

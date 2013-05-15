@@ -1,0 +1,33 @@
+<!-- @form -->
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#newsi_modul_base_name1#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+ <h3>[#news_select_between_label#]</h3>
+ <form action="%form_action%" method="post">
+ <fieldset>
+  <label for="startDate">[#news_start_date#]</label><input type="text" name="startDate" style="width:130px;" id="startDate">
+ </fieldset>
+ <fieldset>
+  <label for="endDate">[#news_end_date#]</label><input type="text" name="endDate" style="width:130px;" id="endDate">
+ </fieldset>
+           
+ <fieldset class="page_submit_field">
+  <input type="button" value="[#news_button_show#]" onclick="jspub_click('%form_action_sucsess%&start='+$('#startDate').val()+'&stop='+$('#endDate').val())">
+ </fieldset>
+ </form>
+ </div>
+ </div>
+</div>
+<script type="text/javascript">
+$(function() {
+    $( "#startDate" ).datepicker({
+            dateFormat:"yy.mm.dd"
+        }
+    );
+    $( "#endDate" ).datepicker({
+            dateFormat:"yy.mm.dd"
+        }
+    );
+});
+</script>

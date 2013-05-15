@@ -1,0 +1,29 @@
+<!--
+Шаблон формы поиска
+
+Секции:
+@form - форма поиска
+ -->
+
+<!-- ****************************************** Шаблон формы поиска ****************************************** -->
+
+<!-- @form -->
+					<form action="%action%" class="search_form">
+						<fieldset>
+							<table>
+								<colgroup>
+									<col width="78" />
+									<col width="" />
+									<col width="90" />
+								</colgroup>
+								<tr>
+									<td><label>Поиск:</label></td>
+									<!--td><input class="inp_01" autocomplete="off" id="filter_keyword" value="" onkeyup="lookup(this.value);" value="Более 15 000 товаров"  onblur="javascript:if(this.value=='')this.value='Более 15 000 товаров'" onfocus="javascript:if(this.value=='Более 15 000 товаров')this.value=''" name="search" /></td-->
+									<td><input class="inp_01" autocomplete="off" id="filter_keyword" value="" onkeyup="lookup(this.value);" name="search" /></td>
+									<td><input class="button_01" value="" type="submit"  /></td>
+								</tr>
+							</table>
+						</fieldset>
+					</form>
+					
+					

@@ -1,0 +1,102 @@
+<!-- @main -->
+<script>
+    /*
+	function form_submit(a_two)
+	{
+		form_access.action = "/admin/?action=bottom_frames&action_two="+a_two;
+		form_access.submit();
+		return true;
+	}
+
+
+*/
+	//Вызывается по клику на родительском модуле
+	function change_main_modul(str_id)
+	{
+		//alert(str_id);
+
+	}
+
+	function set_checkbox(id, max_id)
+	{
+		var cbarray = {%cbarray%};
+        var arr_select;
+		if (cbarray[id].length > 0)
+			arr_select = (cbarray[id]).split(",");
+		else
+			arr_select = new Array();
+        $('#admin_groups_rights input.gradio').removeAttr('checked');
+		if (arr_select.length > 0 )
+		{
+			for (var i=0; i < arr_select.length; i++)
+			{
+                $('#ida_'+arr_select[i]).attr('checked',true);
+			}
+		}
+		return true;
+	}
+
+    $('#save_admin_group_rigths_button').click(function(){
+        var postArr = $('#form_adm_groups_access').serializeArray();
+        $.post('[#form_action#]', postArr,  function(data){
+            //Обрабатываем ответ
+            var post_res=jQuery.parseJSON(data);
+            if (post_res!=null)
+            {
+                //сначала проверка на наличие ошибок
+                if (post_res.success)
+                {
+                    santaShowPopupHint("Info",post_res.info,1500);
+                    //jspub_click('group_access');
+                }
+                else
+                    santaShowPopupHint("Error", post_res.info,0);
+            }
+        });
+    });
+
+      $('#adm_group li').click(function(){
+          $('#adm_group li').removeClass('active');
+          $(this).addClass('active');
+          $('.right h3, .right ul').fadeIn();
+     });
+
+</script>
+<span class="content_header">[#admin_adminstrators_label#] &rarr; <span class="black">Управление правами групп</span></span>
+<div id="page_container">
+ <div id="content_container">
+  <div class="content" style="width:600px;">
+  <form id="form_adm_groups_access" name="form_adm_groups_access" method="post" action="[#form_action#]">
+
+  <div class="left" style="padding:5px 0;">
+   <h3>[#backof_group_acess_label1#]</h3>
+   <ul id="adm_group" class="access_tree">
+    [#form_select_group#]
+   </ul>
+  </div>
+
+  <div class="right" style="padding:5px 0;">
+   <h3 style="display:none;">[#backof_group_acess_label2#]</h3>
+   <ul class="access_tree" style="display:none;">
+    [#form_select_access#]
+   </ul>
+  </div>
+
+  <fieldset class="page_submit_field">
+    <input type="button" value="Сохранить" id="save_admin_group_rigths_button" onclick="jspub_form_submit('form_adm_groups_access');">
+  </fieldset>
+
+</form>
+  </div>
+ </div>
+</div>
+
+<!-- @str_group -->
+<li class="parent"><input id="idg_[#id#]" type="radio" name="selgriup" onclick="set_checkbox([#id#]);" value="[#id#]"/><label for="idg_[#id#]">[#full_name#]</label><br class="clear"></li>
+
+<!-- @str_acess -->
+<li><input class="gradio" id="ida_[#num#]" type="checkbox" name="access[#name_obj#]" onclick="" value="[#id#]" /><label for="ida_[#num#]">[#full_name#]</label><br class="clear"></li>
+<!-- @@nextlevel -->
+<li class="child"><input class="gradio" id="ida_[#num#]" type="checkbox" name="access[#name_obj#]" onclick="" value="[#id#]" /><label for="ida_[#num#]">[#full_name#]</label><br class="clear"></li>
+<!-- @@nextlevel -->
+<li><input class="gradio" id="ida_[#num#]" type="checkbox" name="access[#name_obj#]" onclick="" value="[#id#]" /><label for="ida_[#num#]">[#full_name#]</label><br class="clear"></li>

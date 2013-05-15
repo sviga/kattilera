@@ -1,0 +1,475 @@
+body {
+	font-size:12px;
+	font-family:Arial,Helvetica,sans-serif;
+}
+
+a {
+	outline:0;
+	color:#6699cc;
+}
+
+a:hover,
+a:focus {
+	color:#9cbdde;
+	text-decoration:none;
+}
+
+.container {
+	width:866px;
+	height:100%;
+	min-height:100%;
+	position:relative;
+}
+
+#header {
+	float:left;
+	width:865px;
+	height:61px;
+	border-bottom:3px solid #6F6F6F;
+}
+
+#header h1 {
+	float:left;
+	display:inline;
+	font-size:24px;
+	font-weight:bold;
+	margin:24px 0 13px 8px;
+}
+
+#header h1 a {
+	color:#0081df;
+	text-decoration:none;
+	text-transform:uppercase;
+}
+
+#crumbs {
+	float:left;
+	width:450px;
+	height:20px;
+	display:inline;
+	font-size:11px;
+	overflow:hidden;
+	margin:27px 0 0 11px;
+}
+
+#crumbs a {
+	margin-right:7px;
+	padding-right:15px;
+	background:url(../images/bullet-left.gif) 100% 70% no-repeat;
+}
+
+#header form {
+	float:right;
+	width:171px;
+	/*height:31px;*/
+	margin:17px 11px 0 0;
+	background:#ededed;
+	/*background:url(../images/search.gif) no-repeat;*/
+}
+
+#header input {
+	float:left;
+	margin-top:6px;
+}
+
+#header .text {
+	width:131px;
+	padding:2px;
+	margin:5px;
+}
+
+#left {
+	float:left;
+	width:199px;
+}
+
+#menu {
+	float:left;
+	width:197px;
+	margin-top:19px;
+	background:#f3f3f3;
+}
+
+#menu ul {
+	padding:0;
+	list-style:none;
+	margin:17px 16px 10px 12px;
+	border-bottom:1px dotted #a9a9a9;
+}
+
+#menu li {
+	color:#333;
+	padding:1px 0 4px 6px;
+	border-top:1px dotted #a9a9a9;
+	background:url(../images/bullet-left.gif) 100% 50% no-repeat;
+}
+
+#menu .current li,
+#menu .current ul {
+	margin:0;
+	border:0 none;
+	background:none;
+}
+
+#menu .current {
+	background:url(../images/bullet-bottom.gif) 100% 6px no-repeat;
+}
+
+#menu span {
+	font-weight:bold;
+}
+
+#lenta {
+	float:left;
+	margin-top:14px;
+}
+
+#lenta p {
+	margin-bottom:4px;
+}
+
+#lenta span {
+	font-size:18px;
+	font-weight:bold;
+}
+
+#lenta ul {
+	padding:0;
+	list-style:none;
+	margin:0 0 0 10px;
+}
+
+#lenta li {
+	margin-bottom:10px;
+}
+
+#lenta small {
+	color:#6699cc;
+	font-size:12px;
+	font-weight:bold;
+}
+
+#lenta a {
+	color:#000;
+	text-decoration:none;
+}
+
+#lenta a:hover,
+#lenta a:focus {
+	color:#6699cc;
+	text-decoration:underline;
+}
+
+.content,
+#footer {
+	float:right;
+	width:640px;
+	margin:19px 0 0 27px;
+}
+
+#footer {
+	clear:both;
+	height:100px;
+	display:inline;
+	border-top:3px solid #6f6f6f;
+}
+
+#footer div {
+	float:left;
+	margin-left:3px;
+}
+
+#footer span {
+	font-size:18px;
+}
+
+#footer a {
+	float:right;
+	margin:20px 3px 0 0;
+}
+
+#feedback {
+	width:298px;
+	background:#f3f3f3;
+}
+
+#feedback form {
+	margin:16px;
+}
+
+#feedback p {
+	margin-bottom:7px;
+}
+
+#feedback label {
+	color:#333;
+	font-size:13px;
+	font-weight:normal;
+}
+
+#feedback textarea,
+#feedback input.text {
+	margin:0;
+	width:246px;
+	padding:3px;
+}
+
+#feedback textarea {
+	height:100px;
+}
+
+#search p span {
+	color:#cc0000;
+}
+
+#search form {
+	width:391px;
+	background:#ededed;
+	padding-bottom:5px;
+	/*background:url(../images/search.gif) no-repeat;*/
+}
+
+#search input {
+	float:left;
+	margin:6px 2px 0 0;
+}
+
+#search .text {
+	width:352px;
+	padding:2px;
+	margin:5px 5px 0;
+}
+
+#search ul {
+	list-style:none;
+	margin:15px 0 0 5px;
+}
+
+#search li {
+	margin-bottom:10px;
+}
+
+#search a {
+	font-size:14px;
+}
+
+#search ul span {
+	color:#339933;
+}
+
+#news ul {
+	margin:0;
+	list-style:none;
+}
+
+#news li {
+	margin-bottom:5px;
+}
+
+#news a,
+#news small {
+	font-size:14px;
+}
+
+#news small {
+	color:#999;
+}
+
+#news a {
+	font-weight:bold;
+}
+
+.title {
+	color:#333;
+	font-size:18px;
+	font-weight:bold;
+	margin:7px 0 18px;
+}
+
+#photo img {
+	background-color:#fff;
+	padding:2px;
+	border:1px solid #ccc;
+	margin:15px 2px;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+}
+
+#photo a.active img {
+	outline:1px solid #000;
+	z-index:9999;
+	position:relative;
+}
+
+#map ul {
+	margin:0;
+	font-size:14px;
+	list-style:none;
+	font-weight:bold;
+}
+
+#map ul ul {
+	font-size:12px;
+	list-style:square;
+	margin:0 17px 21px;
+	font-weight:normal;
+}
+
+#map ul ul ul {
+	list-style:none;
+	margin-bottom:0;
+}
+
+#faq ul {
+	margin:0;
+	list-style:none;
+}
+
+#faq li {
+	margin-bottom:0;
+    list-style-type:disc;
+}
+
+#faq a {
+	font-size:14px;
+	font-weight:bold;
+}
+
+.hyphenate {
+	text-align:justify;
+}
+
+#comments ul {
+	list-style:none;
+}
+
+#comments li {
+	margin-bottom:10px;
+}
+
+.author {
+	font-weight:bold;
+}
+
+.date {
+	font-style:italic;
+}
+
+/* the overlayed element */
+.simple_overlay {
+
+	/* must be initially hidden */
+	display:none;
+
+	/* place overlay on top of other elements */
+	z-index:10000;
+
+	/* styling */
+	background-color:#333;
+
+	width:675px;
+	min-height:200px;
+	border:1px solid #666;
+
+	/* CSS3 styling for latest browsers */
+	-moz-box-shadow:0 0 90px 5px #000;
+	-webkit-box-shadow: 0 0 90px #000;
+}
+
+/* close button positioned on upper right corner */
+.simple_overlay .close {
+	background-image:url(../images/close.png);
+	position:absolute;
+	right:-15px;
+	top:-15px;
+	cursor:pointer;
+	height:35px;
+	width:35px;
+}
+
+/* the large image. we use a gray border around it */
+#img {
+	border:1px solid #666;
+}
+
+/* "next image" and "prev image" links */
+a.next, a.prev {
+
+	/* absolute positioning relative to the overlay */
+	position:absolute;
+	top:40%;
+	border:1px solid #666;
+	cursor:pointer;
+	display:block;
+	padding:10px 20px;
+	color:#fff;
+	font-size:11px;
+
+	/* upcoming CSS3 features */
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+}
+
+a.prev {
+	left:0;
+	border-left:0;
+	-moz-border-radius-topleft:0;
+	-moz-border-radius-bottomleft:0;
+	-webkit-border-bottom-left-radius:0;
+	-webkit-border-top-left-radius:0;
+}
+
+a.next {
+	right:0;
+	border-right:0;
+	-moz-border-radius-topright:0;
+	-moz-border-radius-bottomright:0;
+	-webkit-border-bottom-right-radius:0;
+	-webkit-border-top-right-radius:0;
+}
+
+a.next:hover, a.prev:hover {
+	text-decoration:underline;
+	background-color:#000;
+}
+
+/* when there is no next or previous link available this class is added */
+.disabled {
+	visibility:hidden;
+}
+
+/* the "information box" */
+.info {
+	position:absolute;
+	bottom:0;
+	left:0;
+	padding:10px 15px;
+	color:#fff;
+	font-size:11px;
+	border-top:1px solid #666;
+}
+
+.info strong {
+	display:block;
+}
+
+/* progress indicator (animated gif). should be initially hidden */
+.progress {
+	position:absolute;
+	top:45%;
+	left:50%;
+	display:none;
+}
+
+/* everybody should know about RGBA colors. */
+.next, .prev, .info {
+	background:#333 !important;
+	background:rgba(0, 0, 0, 0.6) url(../images/h80.png) repeat-x;
+}
+
+#catalog img {
+	padding:2px;
+	border:1px solid #afafaf;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+}

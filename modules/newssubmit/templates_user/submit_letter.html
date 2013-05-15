@@ -1,0 +1,48 @@
+<!--
+Шаблон письма о подписке
+
+Секции:
+@news_block - основной блок вывода новостей
+@news - выводит данные о конкретной ноовсти, на которую была осуществлена подписка
+@news_delimiter - разделитель новостей
+@mail - письмо
+ -->
+
+<!-- ****************************************** Шаблон письма о подписке на новости ****************************************** -->
+
+<!-- @news_block -->
+  <tr>
+    <td colspan="3" bgcolor="#CCCCCC"><a href="%url%"><font size="+1">%name%</font></a></td>
+  </tr>
+  %news%
+
+<!-- @news_block_delimiter -->
+
+<!-- @news -->
+  <tr>
+    <td width="40" valign="top">%data%</td>
+    <td width="10"></td>
+    <td><b>%header%</b><br />%description_short%<br />
+    <a href="%url%">Подробнее...</a></td>
+  </tr>
+
+<!-- @news_delimiter -->
+  <tr height="10">
+    <td colspan="3" height="10">&nbsp;</td>
+  </tr>
+
+
+<!-- @mail -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<base href="%base_link%">
+%start_text%
+<br>
+<hr>
+<table border="0" width="100%" cellpadding="0" cellspacing="2">
+%news%
+</table>
+<br><hr>
+%end_text%
+<br><br>
+Для того, что бы изменить условия подписки, Вам необходимо воспользоваться следующей ссылкой:<br>
+<a href="%user_link%" target="_blank">Управление рассылкой</a>

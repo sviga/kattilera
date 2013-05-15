@@ -1,0 +1,86 @@
+<!--
+Шаблон результатов поиска
+
+Секции:
+@form - основной блок
+@search_form - форма поиска
+%search_text% - текст запроса
+@noresult - если ничего не найдено
+@search_results - результаты поиска
+@search_results_rows - заменяется на конкретный результат
+@pages - постраничная навигация
+
+ -->
+
+<!-- ****************************************** Шаблон результатов поиска ****************************************** -->
+
+<!-- @form -->
+%search_form%
+
+%search_results%
+
+%pages%
+
+<!-- @search_form -->
+<h1>Результаты поска по запросу: <span>%search_text%</span></h1>
+				
+
+				
+<!-- @noresult -->
+<h1>К сожалению, документов, содержащих слово <span>%search_text%</span> не найдено</h1>
+
+<!-- @search_results -->
+<div class="table_catalog">
+    <table>
+        %rows%
+    </table>
+</div>
+
+<!-- @search_results_rows -->
+    <tr>
+        <td>
+            <a href="%link%">%title%</a>
+            <p>%snipped%</p>
+        </td>
+    </tr>
+
+<!-- @search_results_split -->
+
+<!-- @pages -->
+<div class="page_namber">
+        %first%
+        %backward%
+        %previous%
+        %pages_block%
+        %next%
+        %forward%
+        %last%
+</div>
+
+<!-- @page_first -->
+<a href="%link%">Начало</a>
+<!-- @page_backward -->
+<a href="%link%">&laquo;</a>
+<!-- @page_backward_disabled -->
+&laquo;
+<!-- @page_previous -->
+<a href="%link%">&laquo;</a>
+<!-- @page_previous_disabled -->
+&laquo;
+<!-- @page_forward -->
+<a href="%link%">&raquo;</a>
+<!-- @page_forward_disabled -->
+&raquo;
+<!-- @page_next -->
+<a href="%link%">&raquo;</a>
+<!-- @page_next_disabled -->
+&raquo;
+<!-- @page_last -->
+<a href="%link%">Конец</a>
+<!-- @page_active -->
+<a href="%link%">%page%</a>
+<!-- @page_passive -->
+%page%
+<!-- @page_delimeter -->
+&nbsp;-&nbsp;
+<!-- @page_null -->

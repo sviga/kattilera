@@ -1,0 +1,69 @@
+<!-- @blank_form -->
+<!-- Код слоя, на котором будут показываться сообщения об ошибках -->
+<div id="error_message" style="display: none; visibility: hidden;  margin: 10px 10px 10px 10px; border: 1px solid red; padding: 5px;">
+    <div id="errors"></div>
+    <!--a href="#" onClick="trigger('error_message');">Закрыть</a-->
+</div>
+<script type="text/javascript" src="/modules/feedback/templates_user/functions.js"></script>
+<form id="feedback" name="feedback" action="%form_action%" method="POST">
+    <table>
+        <tbody>
+        %lines%
+        <tr>
+            <td colspan="2"><input id="submit" type="submit" name="submit" value="Отправить" onClick="return form_validate(this.form);"/></td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+
+<!-- @blank_text -->
+        <tr>
+            <td><label for="%id%">%caption%</label></td>
+            <td><input id="%id%" type="text" name="values[%id%]" /></td>
+        </tr>
+<!-- @blank_checkbox -->
+        <tr>
+            <td><label for="%id%">%caption%</label></td>
+            <td><input id="%id%" type="checkbox" name="values[%id%]" /></td>
+        </tr>
+<!-- @blank_textarea -->
+        <tr>
+            <td><label for="%id%">%caption%</label></td>
+            <td><textarea id="%id%" name="values[%id%]" cols="30" rows="10"></textarea></td>
+        </tr>
+<!-- @blank_email_html -->
+<html>
+    <head>
+    </head>
+    <body>
+    Результат заполнения формы на сайте
+    %lines%
+    </body>
+</html>
+<!-- @blank_email_html_line -->
+%caption% %id%<br/>
+
+<!-- @blank_email_text -->
+%lines%
+<!-- @blank_email_text_line -->
+%caption% %id%<br/>
+
+<!-- @blank_processing_succses -->
+Ваш вопрос принят, спасибо за участие
+
+<!-- @blank_processing_fail -->
+Ошибка при отправлении формы, сообщите администратору сайта.
+
+<!-- @blank_jscript_start -->
+<script type="text/javascript">
+function set_values(){
+<!-- @blank_jscript_line_1 -->
+var ffed_%element% = document.getElementById('%element%');
+if(ffed_%element% == null){alert(1);}
+ffed_%element%.properties = new Array();
+<!-- @blank_jscript_line_2 -->
+ffed_%element%.properties['%name%'] = '%value%';
+<!-- @blank_jscript_end -->
+}
+</script>

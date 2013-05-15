@@ -1,0 +1,37 @@
+<!-- @table -->
+<script type="text/javascript">
+function stat_change_page(url, id_insert)
+{
+    $('#'+id_insert).load(url);
+}
+</script>
+<table class="admin_table" width="600">
+    <thead>
+        <tr>
+            <th>[#show_top_pages_order#]</th>
+            <th>[#show_top_pages_url#]</th>
+            <th>[#show_top_pages_visits#]</th>
+        </tr>
+    </thead>
+    <tbody>
+%rows%
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">%pages%</td>
+        </tr>
+    </tfoot>
+</table>
+<!-- @row -->
+        <tr %class%>
+            <td>%order%</td>
+            <td><a href="%url%" target="_blank"><b>%label%</b>&nbsp;%url%</a></td>
+            <td>%visits%</td>
+        </tr>
+<!-- @page_active -->
+<b>%page%</b>
+<!-- @page_passive -->
+<a href="#" onclick="stat_change_page('%url%','stat_result');">%page%</a>
+<!--<a href="#" onclick="jspub_click('%url%');">%page%</a>-->
+<!-- @page_delimeter -->
+&nbsp;|&nbsp;

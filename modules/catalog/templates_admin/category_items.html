@@ -1,0 +1,202 @@
+<!-- @header -->
+<script type="text/javascript">
+    var ccontainer = $('#content_container');
+    ccontainer.find('.checkallbtn').button({
+        icons:{ primary:"ui-icon-check" }
+    });
+
+    function add_new_item() {
+        jspub_click('item_add&id_cat=%cid%&group_id=' + document.getElementById('group_id_for_add').value+'&redir2=%redir2%');
+    }
+
+    function checkall() {
+        $('#savecategoryitemsform input[type=checkbox]').attr('checked', 'checked');
+    }
+
+    function uncheckall() {
+        $('#savecategoryitemsform input[type=checkbox]').removeAttr('checked');
+    }
+</script>
+
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#catalog_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+
+ <h3>%cname% <small> &mdash; <a href="#" style="font-weight:normal;color: #00ADDB;text-decoration: underline;" onclick="jspub_click('category_edit&id=%cid%')">[#catalog_list_category_edit_label#]</a></small></h3>
+ 
+ <fieldset>
+  <label style="width:120px; cursor:default;">[#catalog_list_category_add_item_label#]</label><select name="group_id_for_add" id="group_id_for_add">%group_values%</select>&nbsp;&nbsp;<input type="button" value="[#catalog_list_category_add_item_bt_label#]" onclick="add_new_item()">
+
+     %search_block%
+
+ </fieldset>
+
+ %items%
+
+<!-- @search_block -->
+ <br clear="all"/>
+ <label style="width:120px; cursor:default;">[#catalog_quicksearch_label#]</label><input type="text" name="search_query" id="search_query">
+ <script type="text/javascript">
+     $("#search_query").autocomplete({
+         source: "/admin/index.php?action=set_left_menu&leftmenu=get_items_quicksearch_result&catid=%catid%" ,
+         minLength: 2,
+         select: function( event, ui ) {
+             if (ui.item)
+                 jspub_click("item_edit&id="+ui.item.value);
+         }
+     });
+ </script>
+<!-- @cat_items_empty -->
+[#catalog_list_category_item_list_notitems#]
+
+<!-- @not_select_cat -->
+[#catalog_list_category_not_select_cat#]
+
+<!-- @list_prop_value -->
+<td>%list_prop_value%</td>
+
+<!-- @list_prop_value_edit -->
+<td><input type="text" name="iv[%item_id%][%name_db%]" value="%list_prop_value%" style="width:88%; float:none; margin:0 auto;"></td>
+
+<!-- @list_prop_value_select_edit -->
+<td>
+ <select name="iv[%item_id%][%name_db%]">
+     %options%
+ </select>
+</td>
+<!-- @list_prop_value_select_option_edit -->
+<option value="%option_value_escaped%">%option_value%</option>
+<!-- @list_prop_value_select_option_selected_edit -->
+<option value="%option_value_escaped%" selected>%option_value%</option>
+
+
+<!-- @cat_items -->
+
+
+<h3 style="margin-top:10px;">[#catalog_list_category_item_list_label#]</h3>
+<form action="%form_action%" method="POST" id="savecategoryitemsform" name="scif">
+<input type="hidden" name="catid" value="%cid%"/>
+<table class="admin_table">
+      <tr>
+        <th width="20"><!--[#catalog_list_category_item_table_num#]--></th>
+        %colum_th%
+        <th width="20">[#catalog_list_category_item_table_order_num#]</th>
+        <th>[#catalog_items_all_list_table_group#]</th>
+        <th>[#catalog_list_category_item_table_action#]</th>
+      </tr>
+    %cat_items_line%
+</table>
+
+<fieldset style="text-align:center;">
+ <input type="button" value="[#catalog_list_category_item_table_action_change_sord#]" onclick="saveOrder()">
+</fieldset>
+
+%pages%
+
+<fieldset style="border-top:1px solid #ededed; padding-top:10px;">
+ <button class="checkallbtn"onclick="checkall();return false;">[#catalog_list_category_item_table_check_all#]</button>&nbsp;&nbsp;<button onclick="uncheckall();return false;">[#catalog_list_category_item_table_uncheck_all#]</button>
+</fieldset>
+
+<fieldset style="border-top:1px solid #ededed; padding-top:10px;">
+ <label style="width:150px; cursor:default; padding:5px 0 10px 0; float:none;" class="clear">[#catalog_list_category_item_table_action_selected#]</label>
+ <select name="withselected" id="withselected" onChange="selectChange()">
+  <option value="">[#catalog_list_category_item_table_action_selected0#]</option>
+  <option value="remove_from_current">[#catalog_list_category_item_table_action_selected1#]</option>
+  <option value="move2">[#catalog_list_category_item_table_action_selected2#]</option>
+  <option value="delete_selected">[#catalog_list_category_item_table_action_selected3#]</option>
+ </select>
+ <div id="catsdiv" style="display:none; margin-left:5px; float:left;">
+   <select name="cats">
+   %cats_options%
+  </select>
+ </div>
+ <input type="hidden" id="hidden_catitems_field" name="" value="1">
+ <input type="button" class="fLeft" style="margin-left:5px;" value="[#catalog_list_category_item_table_action_run#]" onclick="saveSelected();">
+ <input type="button" class="fLeft" style="margin-left:5px;" value="Сохранить поля" onclick="saveFields();">
+</fieldset>
+</form>
+ <script type="text/javascript">
+     function saveOrder()
+     {
+         $('#hidden_catitems_field').attr("name","saveorder");
+         jspub_form_submit('savecategoryitemsform','%form_action%');
+     }
+     function saveSelected()
+     {
+         $('#hidden_catitems_field').attr("name","saveselected");
+         jspub_form_submit('savecategoryitemsform','%form_action%');
+     }
+     function saveFields()
+     {
+         $('#hidden_catitems_field').attr("name","change_items");
+         jspub_form_submit('savecategoryitemsform','%form_action%');
+
+     }
+     function selectChange()
+     {
+         if ($('#withselected').val()=='move2')
+             $('#catsdiv').css('display','block');
+         else
+             $('#catsdiv').css('display','none');
+     }
+ </script>
+
+<!-- @cat_items_line -->
+<tr>
+  <td align="center"><input type="checkbox" name="icb[%item_id%]"></td>
+  %colum_td%
+  <td width="20"><input type="text" name="iorder[%item_id%]" value="%item_order%" style="float:none; margin:0 auto; text-align:center; width:25px;"></td>
+  <td>%group_name%</td>
+  <td align="center" valign="middle"  nowrap>
+      <a href="javascript:void(0);" onclick="jspub_click('item_clone&id=%item_id%')" title="клонировать"><img src="/admin/templates/default/images/eye_old.gif" alt="клонировать"/></a>
+      <a href="javascript:void(0);" onclick="jspub_confirm('item_delete&id=%item_id%&id_cat=%cid%&group_id=0','[#catalog_list_category_item_table_alertdel#]?')"><img src="/admin/templates/default/images/icon_delet.gif" alt="[#catalog_list_category_item_table_alertdel_alt"/></a>
+      <a href="javascript:void(0);" onclick="jspub_click('item_edit&id=%item_id%&redir2=%redir2%')"><img src="/admin/templates/default/images/icon_edit.gif" alt="[#catalog_list_category_item_action_edit#]"/></a>
+  </td>
+</tr>
+
+
+<!-- @cat_option -->
+<option value="%cat_id%">%cat_name%</option>
+<!-- @cat_shift -->
+&rarr;
+<!-- @group_value -->
+<option value="%group_id%" %gselected%>%group_name%</option>
+
+
+ </div>
+</div>
+</div>
+
+
+<!-- @pages -->
+%first% %backward% %previous% %pages_block% %next% %forward% %last%
+
+<!-- @page_first -->
+<a href="#" onclick="jspub_click('%url%')">Начало</a>
+<!-- @page_backward-->
+<a href="#" onclick="jspub_click('%url%')">&laquo;</a>
+<!-- @page_backward_disabled-->
+&laquo;
+<!-- @page_previous-->
+<a href="#" onclick="jspub_click('%url%')">&laquo;</a>
+<!-- @page_previous_disabled-->
+&laquo;
+<!-- @page_forward-->
+<a href="#" onclick="jspub_click('%url%')">&raquo;</a>
+<!-- @page_forward_disabled-->
+&raquo;
+<!-- @page_next-->
+<a href="#" onclick="jspub_click('%url%')">&raquo;</a>
+<!-- @page_next_disabled-->
+&raquo;
+<!-- @page_last -->
+<a href="#" onclick="jspub_click('%url%')">Конец</a>
+<!-- @page_active -->
+<a href="#" onclick="jspub_click('%url%')">%page%</a>
+<!-- @page_passive -->
+%page%
+<!-- @page_delimeter -->
+&nbsp;-&nbsp;
+
+<!-- @page_null -->

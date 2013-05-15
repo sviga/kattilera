@@ -1,0 +1,10 @@
+RewriteBase /
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-l
+RewriteRule   ^[a-z0-9_-]*\.html$ index.php
+
+AddDefaultCharset UTF-8
+AddType text/x-component .htc

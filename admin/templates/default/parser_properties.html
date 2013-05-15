@@ -1,0 +1,65 @@
+<!-- @html_modul_name -->
+%name%<br/><small>(%namem%)</small>
+
+<!-- @html_main -->
+	<fieldset>
+    <label for="ppf_%name%">%caption%</label>
+    <input type="checkbox" id="ppf_%name%" name="properties_cb[ppf_%name%]" onClick="jspub_disabled_change('ppf_%name%', 'ppv_%name%')" %checked% %disabled%>
+    <div class="value" id="lrp_%name%">%element% <div class="prop-description">%description%</div></div>
+   </fieldset>
+
+<!-- @select_html -->
+<select id="ppv_%name%" name="properties[%name%]">
+    %store_options%
+</select>
+
+<!-- @select_code -->
+jspub_disabled_change('ppf_%name%', 'ppv_%name%');
+
+<!-- @file_html -->
+<select id="ppv_%name%" name="properties[%name%]" style="width:270px;">
+    %store_options%
+</select>
+
+<!-- @file_code -->
+jspub_disabled_change('ppf_%name%', 'ppv_%name%');
+
+<!-- @checkbox_html -->
+<input  type="checkBox" class="inputCheckbox" id="ppv_%name%" %value% name="properties[%name%]"   />
+
+<!-- @checkbox_code -->
+jspub_disabled_change('ppf_%name%', 'ppv_%name%');
+
+
+<!-- @text_html -->
+<input type="text" id="ppv_%name%" name="properties[%name%]" value="%value%" style="width:290px;"/>
+
+<!-- @text_code -->
+jspub_disabled_change('ppf_%name%', 'ppv_%name%');
+
+<!-- @textarea_html -->
+<textarea id="ppv_%name%" name="properties[%name%]" style="width:290px;height:50px;">%value%</textarea>
+
+<!-- @textarea_code -->
+jspub_disabled_change('ppf_%name%', 'ppv_%name%');        
+
+<!-- @date_html -->
+<input type="text" class="textInput" style="width:150px;" name="properties[%name%]" value="%value%" id="ppv_%name%">
+<!-- @date_code -->
+$(function() {
+    $( "#ppv_%name%" ).datepicker({
+            dateFormat:"dd.mm.yy"
+   });
+});
+jspub_disabled_change('ppf_%name%', 'ppv_%name%');
+
+<!-- @page_html -->
+<input type="text" class="textInput" style="width:150px;" name="properties[%name%]" value="%value%" id="ppv_%name%" onClick="showPageSelector('ppv_%name%')">
+<!-- @page_code -->
+//Добавим событие на клик по тригеру для выбора страницы
+/*
+$("#ppv_%name%").click(function (e) {
+    get_properes_page(e, 'ppv_%name%');
+});
+*/
+jspub_disabled_change('ppf_%name%', 'ppv_%name%');

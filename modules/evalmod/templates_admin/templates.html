@@ -1,0 +1,84 @@
+<!-- @form -->
+<!-- codemirror -->
+<link rel="stylesheet" href="/components/codemirror/lib/codemirror.css" type="text/css">
+<script type="text/javascript" src="/components/codemirror/lib/codemirror.js"></script>
+<script type="text/javascript" src="/components/codemirror/mode/xml/xml.js"></script>
+<script type="text/javascript" src="/components/codemirror/mode/javascript/javascript.js"></script>
+<script type="text/javascript" src="/components/codemirror/mode/css/css.js"></script>
+<script type="text/javascript" src="/components/codemirror/mode/clike/clike.js"></script>
+<script type="text/javascript" src="/components/codemirror/mode/php/php.js"></script>
+<script type="text/javascript" src="/components/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+
+<style type="text/css">
+    .CodeMirror {
+        border-top: 1px solid #ededed;
+        border-bottom: 1px solid #ededed;
+        border-right: 1px solid #ededed;
+    }
+
+    .cm-tab:after {
+        content: "\21e5";
+        display: -moz-inline-block;
+        display: -webkit-inline-block;
+        display: inline-block;
+        width: 0;
+        position: relative;
+        overflow: visible;
+        left: -1.4em;
+        color: #aaa;
+    }
+
+    .activeline {
+        background: #e8f2ff !important;
+    }
+</style>
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#evalmod_modul_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+ <h3>[#evalmod_admin_label_form#]:</h3>
+ <form action="%form_action%" method="POST">
+ 
+ <fieldset>
+  <span class="black">&lt;php?</span><br>
+  <textarea id="code" name="code" rows="15" cols="130" style="margin:10px 0 10px 15px;">%code%</textarea><br>
+  <span class="black">?&gt;</span>
+ </fieldset>
+
+ <script type="text/javascript">
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+    lineNumbers: true,
+    mode: "text/x-php",
+    tabSize: 4,
+    indentUnit: 4,
+    indentWithTabs: true,
+    onCursorActivity: function() {
+        editor.setLineClass(hlLine, null, null);
+        hlLine = editor.setLineClass(editor.getCursor().line, null, "activeline");
+    }
+    });
+
+    var hlLine = editor.setLineClass(0, "activeline");
+ </script>
+ 
+ <fieldset class="page_submit_field">
+  <input type="submit" name="submit" value="Save">
+ </fieldset>
+</form>
+</div>
+</div>
+</div>
+<!-- @files-->
+<form action="%form_action%" method="POST" enctype="multipart/form-data">
+<table class="admin_table">
+    <tr>
+        <td>%file_list%</td>
+    </tr>
+    <tr>
+        <td>[#evalmod_admin_evel_file#]:</td>
+    </tr>
+    <tr>
+        <td><input type="file" name="f_name" value="f_name"><input type="submit" name="submit" value="[#evalmod_admin_evel_file#]"></td>
+    </tr>
+</table>
+</form>

@@ -1,0 +1,34 @@
+<!-- @main -->
+<span class="content_header">[#admin_adminstrators_label#] &rarr; <span class="black">Список работающих администраторов</span></span>
+<div id="page_container">
+ <div id="content_container">
+  <div class="content">
+  <h3>Список Online Администраторов</h3>
+  <table class="admin_table">
+  <tr>
+       <th class="first">[#backof_user_table_head1#]</th>
+    <th>[#backof_user_table_head2#]</th>
+    <th>[#backof_user_table_head3#]</th>
+    <th>[#backof_user_table_head4#]</th>
+    <th>[#backof_user_table_head5#]</th>
+    <th>[#backof_user_table_head6#]</th>
+    <th>[#backof_user_table_head7#]</th>
+       <th class="last">[#backof_user_table_head8#]</th>
+  </tr>
+  [#backof_user_table_lines#]
+</table>
+  </div>
+ </div>
+</div>
+<!-- @string -->
+<tr [#tr_class#]>
+	<td>[#login#]</td>
+	<td>[#full_name#]</td>
+	<td>[#groups#]</td>
+	<td>[#place#]</td>
+
+	<td>[#time#]</td>
+	<td>[#ip#]</td>
+	<td>[#host#]</td>
+	<td align="center"><input type="checkbox" style="float:none;" [#root#] disabled="disabled"/></td>
+</tr>

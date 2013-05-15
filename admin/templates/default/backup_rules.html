@@ -1,0 +1,111 @@
+<!-- @backup_rules_table -->
+<span class="content_header">Глобальные настройки &rarr; <span class="black">Резервное копирование</span></span>
+<div id="page_container">
+ <div id="content_container">
+  <div class="content">
+  <h3>[#admin_backup_rules_table_header#]</h3>
+  <table class="admin_table">
+    <tr>
+    <th class="first">[#admin_backup_rules_table_num#]</th>
+        <th>[#admin_backup_rules_table_name#]</th>
+        <th>[#admin_backup_rules_table_stringid#]</th>
+        <th>[#admin_backup_rules_table_delete#]</th>
+        <th>[#admin_backup_rules_table_edit#]</th>
+    <th class="last">[#admin_backup_rules_table_edit_details#]</th>
+    </tr>
+%lines%
+</table>
+  </div><!-- end of content -->
+  <span class="act_btn_holder"><a href="" onclick="jspub_click('backup&backup=edit_rule&id=0'); return false;" class="button">[#admin_backup_rule_add_label#]</a></span>
+ </div><!-- end of content container -->
+</div><!-- end of page_container -->
+<script type="text/javascript">
+   $( ".button").button();
+</script>
+
+
+<!-- @backup_rules_row -->
+<tr [#tr_class#]>
+ <td>%num_order%</td>
+ <td>%name%</td>
+ <td>%stringid%</td>
+ <td><a href="#" onclick="jspub_confirm('backup&backup=delete_rule&id=%id%', '[#admin_backup_rule_delete_confirm#]'); return false;">[#admin_backup_table_row_delete#]</a></td>
+ <td><a href="#" onclick="jspub_click('backup&backup=edit_rule&id=%id%'); return false;">[#admin_backup_rules_table_edit#]</a></td>
+ <td><a href="#" onclick="jspub_click('backup&backup=edit_rule_details&id=%id%'); return false;">[#admin_backup_rules_table_edit_details#]</a></td>
+</tr>
+
+
+<!-- @backup_rule_edit -->
+<span class="content_header">Глобальные настройки &rarr; <span class="black">Резервное копирование</span></span> <!-- todo use lang vars -->
+<div id="page_container">
+ <div id="content_container">
+ <form action="%form_action%" method="post" id="saveruleform" name="saveruleform">
+ <input type="hidden" name="id" value="%id%">
+ <div class="content">
+<h3>[#admin_backup_rule_edit_header#]</h3>
+ <fieldset>
+  <label for="name">[#admin_backup_rule_name_label#]</label>
+  <input type="text" id="name" name="name" value="%name%">
+ </fieldset>
+
+ <fieldset>
+  <label for="stringid">[#admin_backup_rule_stringid_label#]</label>
+  <input type="text" id="stringid" name="stringid" value="%stringid%">
+ </fieldset>
+
+ <fieldset>
+  <label for="needcontent">[#admin_backup_rule_needcontent_label#]</label>
+  <input type="checkbox" id="needcontent" name="needcontent" %needcontent%>
+ </fieldset>
+
+ <fieldset>
+  <label for="needsystem">[#admin_backup_rule_needsystem_label#]</label>
+  <input type="checkbox" id="needsystem" name="needsystem" %needsystem%>
+ </fieldset>
+
+ <fieldset>
+  <label for="needtables">[#admin_backup_rule_needtables_label#]</label>
+  <input type="checkbox" id="needtables" name="needtables" %needtables%>
+ </fieldset>
+
+ <fieldset>
+  <label for="needdesign">[#admin_backup_rule_needdesign_label#]</label>
+  <input type="checkbox" id="needdesign" name="needdesign" %needdesign%>
+ </fieldset>
+
+ <fieldset>
+  <label for="ftphost">[#admin_backup_rule_ftp_host_label#]</label>
+  <input type="text" id="ftphost" name="ftphost" value="%ftphost%">
+ </fieldset>
+
+ <fieldset>
+  <label for="ftpuser">[#admin_backup_rule_ftp_user_label#]</label>
+  <input type="text" id="ftpuser" name="ftpuser" value="%ftpuser%">
+ </fieldset>
+
+ <fieldset>
+  <label for="ftppass">[#admin_backup_rule_ftp_pass_label#]</label>
+  <input type="text" id="ftppass" name="ftppass" value="%ftppass%">
+ </fieldset>
+
+ <fieldset>
+  <label for="ftpdir">[#admin_backup_rule_ftp_dir_label#]</label>
+  <input type="text" id="ftpdir" name="ftpdir" value="%ftpdir%">
+ </fieldset>
+ %rule_details_link%
+
+
+ </div>
+
+ <fieldset class="page_submit_field" style="text-align:center;">
+  <input type="button" name="submit" value="[#global_prop_label_save#]" onclick="jspub_form_submit('saveruleform','%form_action%')">
+ </fieldset>
+ </form>
+
+ </div>
+ </div>
+
+<!-- @rule_details_link -->
+<fieldset style="text-align:center;">
+<a href="#" onclick="jspub_click('backup&backup=edit_rule_details&id=%id%'); return false;">[#admin_backup_rules_table_edit_details#]</a>
+</fieldset>

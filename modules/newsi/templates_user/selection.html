@@ -1,0 +1,18 @@
+<!--
+Вывод формы отбора
+
+Секции:
+@form 	url, date_alone_name, date_start_name, date_stop_name 	Блок содержит визуальное представление формы, в которой пользователь сайта осуществляет отбор новостей. Переменная url будет заменена адресом, на который отправляются данные. Остальные переменные заменяются именами используемых параметров.
+ -->
+
+<!-- ****************************************** Шаблоны формы отбора ****************************************** -->
+
+<!-- @form  -->
+<form action="%url%" method="GET">
+    <fieldset>
+        <label for="date_alone">Дата:</label>&nbsp;<input id="date_alone" type="text" name="%date_alone_name%" value=""/>
+        <label for="date_start">С:</label>&nbsp;<input type="text" name="%date_start_name%" value=""/>
+        <label for="date_stop">По:</label>&nbsp;<input type="text" name="%date_stop_name%" value=""/>
+        <input type="submit" name="submit" value="Отбрать"/>
+    </fieldset>
+</form>

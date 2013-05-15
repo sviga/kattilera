@@ -1,0 +1,54 @@
+<!-- @main -->
+%backup_table%
+<form method="post" action="[#form_action#]">
+<table border="0" cellpadding="3" cellspacing="1" class="admin_table">
+<tr>
+	<th colspan="2">[#admin_save_components_legend#]</th>
+</tr>
+<tr>
+<td><input type="checkbox" id="save_content" name="save_content" value="1"><label for="save_content" class="text" style="cursor:pointer;">&nbsp;[#admin_save_components_save_content#]</label></td><td rowspan="3"><textarea name="description" cols="50" rows="7"></textarea></td>
+</tr>
+<tr>
+<td><input type="checkbox" id="save_system" name="save_system" value="1"><label for="save_system" class="text" style="cursor:pointer;">&nbsp;[#admin_save_components_save_system#]</label></td>
+</tr>
+<td><input type="checkbox" id="save_mysql" name="save_mysql" value="1"><label for="save_mysql" class="text" style="cursor:pointer;">&nbsp;[#admin_save_components_save_mysql#]</label></td></tr>
+<tr class="admin_table_wstring"><td colspan="2" align="right"><input type="submit" value="[#admin_save_components_start#]" class="text"></td></tr>
+</table>
+<br />
+%uploaded_files%
+</form>
+<form method="POST" action="%form_action%" enctype="multipart/form-data">
+<input type="file" name="backup_file"/>&nbsp;<input type="submit" name="upload_backup" value="[#admin_backup_button_upload_file#]" />
+</form>
+
+<!-- @backup_table -->
+<table class="admin_table">
+    <tr>
+        <th>[#admin_backup_table_num#]</th>
+        <th>[#admin_backup_table_file#]</th>
+        <th>[#admin_backup_table_date#]</th>
+        <th>[#admin_backup_table_restore#]</th>
+        <th>[#admin_backup_table_delete#]</th>
+        <th>[#admin_backup_table_content#]</th>
+        <th>[#admin_backup_table_desc#]</th>
+    </tr>
+%lines%
+</table>
+<br /><br />
+<!-- @backup_table_row -->
+    <tr [#tr_class#]>
+        <td align="center">%num_order%</td>
+        <td><a href="%real_filename%" target="_top">%filename%</a></td>
+<!--        <td><a href="index.php?backup=dwld&id=%id%">%filename%</a></td>-->
+        <td>%date%</td>
+        <td><a href="#" onclick="jspub_confirm('form_save&backup=restore_step1&id=%id%', '[#admin_backup_table_row_restore_confirm#]');">[#admin_backup_table_row_restore#]</a></td>
+        <td><a href="#" onclick="jspub_confirm('form_save&backup=delete&id=%id%', '[#admin_backup_table_row_delete_confirm#]');">[#admin_backup_table_row_delete#]</a></td>
+        <td>%archive_content%</td>
+        <td>%description%</td>
+    </tr>
+<!-- @writeless -->
+<script type="text/javascript">
+    // @todo use lang vars
+    santaShowPopupHint('Информация', 'Создание резервных копий невозможно. <br/>Попробуйте установить права на запись в папку backup.',0);
+
+</script>

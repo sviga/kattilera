@@ -1,0 +1,65 @@
+<!-- @table_header -->
+<script type="text/javascript">
+// @todo rewrite
+function prop_select_changed(id)
+{
+	var select = document.getElementById('select_'+id);
+	var sval = select[select.selectedIndex].value;
+	if (sval == "__linked__")
+		document.getElementById('sep_div_'+id).style.display = 'block';
+	else
+		document.getElementById('sep_div_'+id).style.display = 'none';
+}
+</script>
+
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#catalog_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+
+ <h3>[#catalog_import_csv_formlabel#]</h3>
+ 
+ <div style="width:100%; overflow-x:auto; display:block; clear:both;">
+ <form action="%form_action%" method="POST" id="importcsvform">
+ <table class="admin_table" style="margin-top:0;">
+  <tr>
+   %theads%
+  </tr>
+
+
+
+<!-- @thead -->
+<th valign="top">
+<input type="checkbox" style="float:left; margin:6px 5px 0 0;" id="chbx_%cb%" name="%cb%">
+<label for="chbx_%cb%" style="width:150px; text-align:left; color:#fff;">[#catalog_import_uniq_field_label#]</label>
+<select name="%prop%" id ="select_%id%" style="margin-top:5px; width:200px; display:block; clear:both; float:none; margin:0 auto;" onChange="prop_select_changed('%id%')">%props%</select>
+<div id="sep_div_%id%" style="display:none;">[#catalog_import_linked_col_separator#]:<input type="text" name="separator_%id%" size=3 ></div>
+</th>
+
+<!-- @prop_option -->
+<option value="%prop_name%">%prop_name_full%</option>
+
+
+
+<!-- @tline -->
+<tr>
+ <td>
+ %cols%
+ </td>
+</tr>
+
+
+
+<!-- @table_footer -->
+</table>
+
+<fieldset>
+ <input type="checkbox" style="margin-right:5px;" id="bypass_1st_line" name="bypass_1st_line" >
+ <label for="bypass_1st_line" style="text-align:left;">[#catalog_import_bypass_1st_line_label#]</label>
+ <input type="submit" style="float:right; left:-43%;" name="submit" value="[#catalog_import_label#]">
+</fieldset>
+</form>
+ </div>
+ </div>
+</div>
+</div>

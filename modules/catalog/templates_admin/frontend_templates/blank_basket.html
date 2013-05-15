@@ -1,0 +1,132 @@
+<!-- @list -->
+<form method="post" action="">
+Всего объектов в корзине: %total_basket_items%
+<table>
+    %row%
+</table>
+<br>
+<input type="submit" name="catalog_basket_upd_qty" value="Обновить кол-во">
+</form>
+
+
+<!-- @list_null -->
+Нет элементов
+
+<!-- @row_even -->
+<tr class="%odd_even%">
+<td> кол-во: <input type="text" name="basket_item_qty[%item_id%]" value="%items_qty%" size="3"></td>
+<td>
+<table>
+ %props%
+</table>
+</td>
+<td valign="top"><a href="%current_page_url%catalog_basket_removeitemid=%item_id%">убрать</a></td>
+</tr>
+
+<!-- @row_odd -->
+<tr class="%odd_even%">
+<td valign="top">кол-во:  <input type="text" name="basket_item_qty[%item_id%]" value="%items_qty%" size="3"></td>
+<td>
+<table>
+
+ %props%
+</table>
+</td>
+
+<td valign="top"><a href="%current_page_url%catalog_basket_removeitemid=%item_id%">убрать</a></td>
+</tr>
+
+
+<!-- @prop_text -->
+        <tr>
+            <td align="right" valign="top">%prop_name_full%:</td>
+            <td>%prop_value%</td>
+        </tr>
+<!-- @text_null -->
+        <tr>
+            <td align="right" valign="top">%prop_name_full%:</td>
+            <td>n/a</td>
+        </tr>
+
+
+<!-- @prop_html -->
+        <tr>
+            <td align="right" valign="top">%prop_name_full%:</td>
+            <td>%prop_value%</td>
+        </tr>
+<!-- @html_null -->
+        <tr>
+            <td align="right" valign="top">%prop_name_full%:</td>
+            <td>n/a</td>
+        </tr>
+
+
+
+<!-- @prop_string -->
+        <tr>
+            <td align="right" valign="top">%prop_name_full%:</td>
+            <td>%prop_value%</td>
+        </tr>
+<!-- @string_null -->
+        <tr>
+            <td align="right" valign="top">%prop_name_full%:</td>
+            <td>n/a</td>
+        </tr>
+
+
+
+
+<!-- @prop_number -->
+        <tr>
+            <td align="right" valign="top">%prop_name_full%:</td>
+            <td>%prop_value%</td>
+        </tr>
+<!-- @number_null -->
+        <tr>
+            <td align="right" valign="top">%prop_name_full%:</td>
+            <td>n/a</td>
+        </tr>
+
+
+
+<!-- @prop_enum -->
+        <tr>
+            <td align="right" valign="top">%prop_name_full%:</td>
+            <td>%prop_value%</td>
+        </tr>
+<!-- @enum_null -->
+        <tr>
+            <td align="right" valign="top">%prop_name_full%:</td>
+            <td>n/a</td>
+        </tr>
+
+
+
+<!-- @prop_pict -->
+        <tr>
+            <td align="right" valign="top">%prop_name_full%:</td>
+            <td><img src="%prop_value%" border="0"/></td>
+        </tr>
+<!-- @pict_null -->
+        <tr>
+            <td align="right" valign="top">%prop_name_full%:</td>
+            <td>Изображение не загружено</td>
+        </tr>
+
+<!-- @prop_file -->
+        <tr>
+            <td align="right" valign="top">%prop_name_full%:</td>
+            <td><img src="/content/files/file_icon/%ext%.gif"/> <a target="_blank" href="%prop_value%">Открыть</a></td>
+        </tr>
+
+<!-- @file_null -->
+        <tr>
+            <td align="right" valign="top">%prop_name_full%:</td>
+            <td>Не загружен</td>
+        </tr>
+
+<!-- @row_delimeter -->
+<tr>
+    <td colspan="2"><hr /></td>
+</tr>
+

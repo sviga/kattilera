@@ -1,0 +1,45 @@
+<!-- @table -->
+<form action="%action%" method="POST">
+ <span class="header_block">%form_label%</span>
+ %lines%
+ 
+ <fieldset class="page_submit_field">
+  <input type="submit" name="faq_button" value="%name_button%">
+ </fieldset>
+</form>
+
+<!-- @import -->
+ <form action="%action_import%"  method="POST" enctype="multipart/form-data">
+  <span class="header_block">Импорт</span>
+  <fieldset>
+   <script type="text/javascript">
+    $('#partition').html($('#partitionValue :selected').text());
+    
+    $('#partitionValue').bind('change', function() {
+      $('#partition').html($('#partitionValue :selected').text());
+    });
+   </script>
+   <label style="padding-top:0;">[#faq_import_label1#]  <span id="partition"  style="font-size:12px; color:#00ADDB; border-bottom:1px dotted #00ADDB;"></span>  [#faq_import_label2#]</label>
+   
+   <span class="block fLeft">
+   <select id="partitionValue" name="csvpart">
+     %part_select_lines%
+    </select>
+    <br><br>
+    <input type="file" size="30" name="csvfile">
+    </span>
+  </fieldset>
+  
+  <fieldset class="page_submit_field">
+   <input type="submit" name="addcsv" value="[#faq_import_button_label#]" class="text">
+  </fieldset>
+ </form>
+
+<!-- @line -->
+ <fieldset>
+  <label for="partition_name">[#faq_add_partition_name#]</label>
+  <input class="text" id="partition_name" name="partition_name" type="text" value ="%value%">
+ </fieldset>
+
+<!-- @part_select_line -->
+<option value="%ovalue%">%oname%</option>

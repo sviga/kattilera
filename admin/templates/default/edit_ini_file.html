@@ -1,0 +1,180 @@
+<script type="text/javascript">
+   $('#page_tabs').parent().tabs();
+   $( ".submit, .button").button();
+
+    $('#edit_ini_buttonsave').click(function(){
+        var postArr = $('#edit_ini_form').serializeArray();
+        $.post('[#form_aсtion#]', postArr,  function(data){
+            //Обрабатываем ответ
+            var post_res=jQuery.parseJSON(data);
+            if (post_res!=null)
+            {
+                //сначала проверка на наличие ошибок
+                if (post_res.success)
+                    santaShowPopupHint("Info",post_res.info,1500);
+                else
+                    santaShowPopupHint("Error", post_res.info,0);
+            }
+        });
+
+        return false;
+    });
+
+</script>
+<span class="content_header">Глобальные настройки &rarr; <span class="black">[#global_prop_label_constant#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+
+ <div id="page_tabs">
+  <ul>
+   <li><a href="#global_prop">[#global_prop_label_define1#]</a></li>
+   <li><a href="#cms_ftp_properties">[#global_prop_label_define11#]</a></li>
+   <li><a href="#admin_interface_properties">[#global_prop_label_define2#]</a></li>
+   <li><a href="#cms_file_path">[#global_prop_label_define3#]</a></li>
+   <li><a href="#cms_other_settings">[#global_prop_label_define4#]</a></li>
+  </ul>
+ </div>
+
+            <form action="[#form_aсtion#]" method="post" id="edit_ini_form">
+
+ <div id="global_prop" class="content">
+            <fieldset>
+   <label for="prefix">[#global_prop_label_prefix#]</label>
+   <input type="text" id="prefix" name="prefix" value="[#prefix_value#]">
+  </fieldset>
+
+  <fieldset>
+   <label for="db_host">[#global_prop_label_db_host#]</label>
+   <input type="text" id="db_host" name="db_host" value="[#db_host_value#]">
+            </fieldset>
+
+            <fieldset>
+   <label for="db_basename">[#global_prop_label_db_basename#]</label>
+   <input type="text" id="db_basename" name="db_basename" value="[#db_basename_value#]">
+            </fieldset>
+
+            <fieldset>
+   <label for="db_username">[#global_prop_label_db_username#]</label>
+   <input type="text" id="db_username" name="db_username" value="[#db_username_value#]">
+            </fieldset>
+
+            <fieldset>
+   <label for="db_password">[#global_prop_label_db_password#]</label>
+   <input type="text" id="db_password" name="db_password" value="[#db_password_value#]">
+  </fieldset>
+ </div>
+
+ <div id="cms_ftp_properties" class="content">
+  <fieldset>
+   <label for="ftp_host">[#global_prop_label_ftp_host#]</label>
+   <input type="text" id="ftp_host" name="ftp_host" value="[#ftp_host_value#]">
+            </fieldset>
+
+            <fieldset>
+   <label for="ftp_login">[#global_prop_label_ftp_login#]</label>
+   <input type="text" id="ftp_login" name="ftp_login" value="[#ftp_login_value#]">
+  </fieldset>
+
+  <fieldset>
+   <label for="ftp_pass">[#global_prop_label_ftp_pass#]</label>
+   <input type="text" id="ftp_pass" name="ftp_pass" value="[#ftp_pass_value#]">
+            </fieldset>
+ </div>
+
+ <div id="admin_interface_properties" class="content">
+  <fieldset>
+   <label for="default_language">[#global_prop_label_default_language#]</label>
+   <input type="text" id="default_language" name="default_language" value="[#default_language_value#]">
+  </fieldset>
+
+  <fieldset>
+   <label for="default_charset">[#global_prop_label_default_charset#]</label>
+   <input type="text" id="default_charset" name="default_charset" value="[#default_charset_value#]">
+  </fieldset>
+
+  <fieldset>
+   <label for="admin_section_default">[#global_prop_label_id_section_default#]</label>
+   <input type="text" id="admin_section_default" name="admin_section_default" value="[#admin_section_default_value#]">
+  </fieldset>
+
+  <fieldset>
+   <label for="close_windows_on_save">[#global_prop_label_close_windows_on_save#]</label>
+   <input type="checkbox" id="close_windows_on_save" name="close_windows_on_save" [#close_windows_on_save_value#]>
+  </fieldset>
+
+  <fieldset>
+   <label for="show_int_errore_message">[#global_prop_label_show_errore#]</label>
+   <input type="checkbox" id="show_int_errore_message" name="show_int_errore_message" [#show_int_errore_message_value#]>
+  </fieldset>
+ </div>
+
+ <div id="cms_file_path" class="content">
+  <fieldset>
+   <label for="path_page_template">[#global_prop_label_path_page_template#]</label>
+   <input type="text" id="path_page_template" name="path_page_template" value="[#path_page_template_value#]">
+  </fieldset>
+
+  <fieldset>
+   <label for="path_page_content">[#global_prop_label_path_page_content#]</label>
+   <input type="text" id="path_page_content" name="path_page_content" value="[#path_page_content_value#]">
+  </fieldset>
+ </div>
+
+ <div id="cms_other_settings" class="content">
+  <fieldset>
+   <label for="">[#global_prop_page_for_404#]</label>
+   <input type="text" id="page_for_404" name="page_for_404" value="[#page_for_404_value#]">
+  </fieldset>
+
+  <fieldset>
+   <label for="email_for_errore">[#global_prop_label_email_for_errore#]</label>
+   <input type="text" id="email_for_errore" name="email_for_errore" value="[#email_for_errore_value#]">
+  </fieldset>
+
+  <fieldset>
+   <label for="cached_page">[#global_prop_label_cached_page#]</label>
+   <input type="checkbox" id="cached_page" name="cached_page" [#cached_page_value#]>
+  </fieldset>
+
+  <fieldset>
+   <label for="redir_www">[#global_prop_label_redir_www#]</label>
+   <input type="checkbox" id="redir_www" name="redir_www" [#redir_www_value#]>
+  </fieldset>
+
+  <fieldset>
+   <label for="generate_statistic">[#global_prop_label_generate_statistic#]</label>
+   <input type="checkbox" id="generate_statistic" name="generate_statistic" [#generate_statistic_value#]>
+  </fieldset>
+
+  <fieldset>
+   <label for="time_creat">[#global_prop_label_generate_time_creat#]</label>
+   <input type="checkbox" id="time_creat" name="time_creat" [#time_creat_value#]>
+  </fieldset>
+
+  <fieldset>
+   <label for="ssl_connection">[#global_prop_label_ssl_connection#]</label>
+   <input type="checkbox" id="ssl_connection" name="ssl_connection" [#ssl_connection_value#]>
+  </fieldset>
+
+  <fieldset>
+   <label for="webform_coding">[#global_prop_webform_coding#]</label>
+   <input type="checkbox" id="webform_coding" name="webform_coding" [#webform_coding_value#]>
+  </fieldset>
+
+  <fieldset>
+   <label for="print_mysql_errors">[#global_prop_print_mysql_errors#]</label>
+   <input type="checkbox" id="print_mysql_errors" name="print_mysql_errors" [#print_mysql_errors_value#]>
+  </fieldset>
+
+  <fieldset>
+   <label for="is_1251_templates">[#global_prop_is_1251_templates#]</label>
+   <input type="checkbox" id="is_1251_templates" name="is_1251_templates" [#is_1251_templates_value#]>
+  </fieldset>
+ </div>
+
+ <fieldset class="page_submit_field">
+  <input type="submit" class="submit" value="[#global_prop_label_save#]" id="edit_ini_buttonsave">
+ </fieldset>
+            </form>
+        </div>
+</div>

@@ -1,0 +1,58 @@
+<!-- @header -->
+<script type="text/javascript">
+function generate_go()
+{
+	var id = $('#gengroupid').val();
+	if (id)
+		jspub_click('show_gen_search_form&groupid='+id);
+
+}
+</script>
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#catalog_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+ 
+ <h3>[#catalog_inner_filters#]</h3>
+ 
+ %table%
+ 
+ <fieldset class="page_submit_field">
+  <button onclick="jspub_click('show_inner_filter_form&id=-1');">[#catalog_add_inner_filter_label#]</button>
+ </fieldset>
+
+ <fieldset style="border-top:1px solid #ededed; padding-top:10px;">
+  <form action="%gen_form_action%" method="post" id="generateform">
+   <select name="groupid" id="gengroupid">%group_items%</select>
+   <input type="button" style="margin-left:10px;" value="[#catalog_generate_search_form_label#]" onclick="generate_go()">
+  </form>
+ </fieldset>
+ </div>
+</div>
+</div>
+
+<!-- @table_header -->
+<form action="%form_action%" method="post">
+<table class="admin_table">
+ <tr>
+            <th>[#catalog_list_inner_filter_stringid_label#]</th>
+            <th>[#catalog_list_inner_filter_name_label#]</th>
+            <th>[#catalog_list_inner_filter_actions#]</th>
+        </tr>
+<!-- @table_body-->
+        <tr>
+            <td>%stringid%</td>
+            <td>%name%</td>
+            <td align="center">
+             <a href="#" onclick="jspub_click('show_inner_filter_form&id=%id%')"><img src="/admin/templates/default/images/icon_edit.gif" alt="[#catalog_list_group_action_edit#]"/></a>
+             <a href="#" onclick="jspub_confirm('inner_filter_delete&id=%id%','[#catalog_group_prop_list_actions_del_alert#] %property_name%?')"><img src="/admin/templates/default/images/icon_delet.gif" alt="[#catalog_inner_filter_actions_del_alert#] %name%?"/></a>
+            </td>
+        </tr>
+<!-- @table_footer -->
+</table>
+</form>
+
+
+<!-- @group_item -->
+<option value="%id%">%name%</option>
+<!-- @no_data -->

@@ -1,0 +1,38 @@
+<!-- @main -->
+<span class="content_header">[#admin_adminstrators_label#] &rarr; <span class="black">Управление администраторами</span></span>
+<div id="page_container">
+ <div id="content_container">
+  <div class="content">
+  <h3>Список администраторов</h3>
+<form method="post" name="all_users" action="#">
+  <input type="hidden" value="" name="id_str_del"/>
+
+  <table class="admin_table">
+    <tr>
+      <th class="first">[#backof_label_tab_users_1#]</th>
+      <th>[#backof_label_tab_users_2#]</th>
+      <th>[#backof_label_tab_users_4#]</th>
+      <th>[#backof_label_tab_users_5#]</th>
+      <th>[#backof_label_tab_users_7#]</th>
+      <th class="last">[#backof_label_tab_users_8#]</th>
+    </tr>
+    [#str_content#]
+  </table>
+
+  <fieldset class="page_submit_field">
+          <input type="button" value="[#backof_label_add_admin#]" id="add_admin_button" onclick="jspub_click('edit_admin&newadmin=yes');">
+  </fieldset>
+</form>
+  </div>
+  </div>
+</div>
+
+<!-- @string -->
+<tr [#class_str#]>
+  <td>[#num#]</td>
+  <td><a href="" onclick="jspub_click('edit_admin&login=[#login#]'); return false;">[#login#]</a></td>
+  <td>[#full_name#]</td>
+  <td>[#lang#]</td>
+  <td>[#list_group#]</td>
+  <td align="center" valign="baseline"><img src="/admin/templates/default/images/icon_delet.gif" width="26" height="26" onclick="jspub_confirm('del_user&deladmin=[#id#]','[#alert_del#]');" style="cursor:pointer;"/></td>
+</tr>

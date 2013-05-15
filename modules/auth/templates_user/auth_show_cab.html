@@ -1,0 +1,56 @@
+<!--
+Шаблон построения личного кабинета пользователя
+
+@userform_begin - шапка формы
+@userform_line - строка свойства
+@userform_end - конец формы
+
+ -->
+<!-- ****************************************** Шаблоны формы личного кабинета ****************************************** -->
+
+<!-- @userform_begin -->
+<form action="" method="POST">
+<table cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td>ФИО</td>
+		<td><input type="text" name="name" value="%name%"></td>
+	</tr>
+	<tr>
+		<td>Пароль</td>
+		<td><input type="password" name="password" value=""></td>
+	</tr>
+	<tr>
+		<td>Повторите пароль </td>
+		<td><input type="password" name="password2" value=""></td>
+	</tr>
+	<tr>
+		<td>E-mail</td>
+		<td><input type="text" name="email" value="%email%"></td>
+	</tr>
+    %phone%
+
+
+<!-- @form_line_phone -->
+	<tr>
+		<td>%caption%</td>
+		<td><input type="text" name="fields[phone]" value="%phone%"></td>
+	</tr>
+
+
+
+<!-- @userform_end -->
+<td colspan="2" align="right" valign="top"><input name="save" type="submit" value="Сохранить"></td>
+</table>
+</form>
+
+
+<!-- ****************************************** Сообщения ****************************************** -->
+
+<!-- @not_authorized -->
+<h2>Вы должны быть авторизованны для того, чтобы менять свои настройки</h2>
+
+<!-- @required_fields_not_filled -->
+<strong>Ошибка: Обязательные поля не заполнены</strong>
+<!-- @save_success -->
+<h2>Информация успешно сохранена</h2>
+

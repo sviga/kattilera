@@ -1,0 +1,57 @@
+<!-- @form -->
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#newssubmit_name_modul_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+ <h3>[#module_newssubmit_menu_show_users#]</h3>
+
+ <form method="post" action="%search_subscriber_url%" id="search_subscriber">
+     <label for="semail" style="width: 200px;">[#newssubmit_find_user_by_email#]:</label> <input type="text" name="semail" id="semail">
+     <input value="[#newssubmit_do_search_user#]" type="button" onclick="santaFormSubmit('search_subscriber');">
+ </form>
+
+ <form method="post" name="formuser" enctype="multipart/form-data" action="%form_url%">
+  <!--<p>Всего подписчиков: %users_count%</p>-->
+  %pages%
+  <table class="admin_table">
+  	<tr>
+        <th width="30" rowspan="2">[#module_newssubmit_admin_table_label_check#]</th>
+        <th width="30" rowspan="2">[#module_newssubmit_admin_table_label_num#]</th>
+        <th rowspan="2">[#module_newssubmit_admin_table_label_name#]</th>
+        <th rowspan="2">[#module_newssubmit_admin_table_label_mail#]</th>
+        <th colspan="%lenta_news_count%">[#module_newssubmit_admin_table_label_news#]</th>
+     </tr>
+  	<tr>
+    	%lenta_news_label%
+    </tr>
+    %users%
+  </table>
+  
+  <fieldset class="page_submit_field">
+   <input type="submit" value="[#module_newssubmit_admin_but_delete_users#]" name="delete_users">
+  </fieldset>
+ </form>
+ 
+ %pages%
+ 
+ </div>
+ </div>
+</div>
+<!-- onsubmit="jspub_confirm('Предупреждение','Вы действительно хотите удалить выбранных подписчиков из рассылки')"-->
+<!-- @user -->
+  	<tr %class%>
+        <td width="30" align="center"><input id="s%num%" type="checkbox" value="" name="select[%user_id%]"></td>
+        <td width="30" align="center">%num%</td>
+        <td><label for="s%num%">%name%</label></td>
+        <td><a href="#" onclick="jspub_click('edit_user&user_id=%user_id%')">%mail%</a></td>
+        %lenta_news%
+     </tr>
+<!-- @pages -->
+Страницы: %pages%
+
+<!-- @page_activ -->
+<a href="#" onclick="jspub_click('show_users&page=%num_page%')">%num_page%</a>
+<!-- @page_passiv -->
+<b>%num_page%</b>
+<!-- @page_delimiter -->
+&nbsp;

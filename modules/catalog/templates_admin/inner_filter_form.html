@@ -1,0 +1,147 @@
+<!-- @form_header -->
+
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#catalog_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div id="filter" class="content">
+ 
+ <h3>%form_header_txt%</h3>
+ 
+ <form action="%form_action%" method="POST" enctype="multipart/form-data" id="saveinnerfilterform">
+ <input type="hidden" name="id" value="%id%"/>
+ 
+ <div style="width:75%; min-width:400px; max-width:600px; float:left;">
+  <fieldset>
+   <label for="name">[#catalog_edit_inner_filter_name_label#]</label>
+   <input type="text" id="name" name="name" value="%name%">
+  </fieldset>
+  
+  <fieldset>
+   <label for="stringid">[#catalog_edit_inner_filter_stringid_label#]</label>
+   <input type="text" id="stringid" name="stringid" value="%stringid%">
+  </fieldset>
+  
+  <fieldset>
+   <label for="query">[#catalog_edit_inner_filter_query_label#]</label><br>
+   <textarea name="query" id="query" style="margin-top:5px;" cols="93" rows="5">%query%</textarea>
+   
+   <div class="block clear" style="text-align:center; border-top:1px solid #ededed; border-bottom:1px solid #ededed; margin:5px auto; padding:5px;">
+    <a href="#" onClick="$('#sqlquery').toggle(); return false;">[#catalog_edit_inner_filter_showsql_label#]</a>
+    
+    <div id="sqlquery" style="display:none;">
+     <fieldset>
+      <small>%sql%</small>
+     </fieldset>
+    </div>
+    
+   </div>
+   
+  </fieldset>
+  
+  <fieldset>
+   <label>[#catalog_edit_inner_filter_template_label#]</label>
+   <select name="template">
+    %template%
+   </select>
+  </fieldset>
+  
+  <fieldset>
+   <label for="limit">[#catalog_edit_inner_filter_limit_label#]</label>
+   <input type="text" id="limit" name="limit" value="%limit%">
+  </fieldset>
+  
+  <fieldset>
+   <label for="perpage">[#catalog_edit_inner_filter_perpage_label#]</label>
+   <input type="text" id="perpage" name="perpage" value="%perpage%">
+  </fieldset>
+  
+  <fieldset>
+   <label for="maxpages">[#catalog_edit_inner_filter_maxpages_label#]</label>
+   <input type="text" id="maxpages" name="maxpages" value="%maxpages%">
+  </fieldset>
+  
+  <fieldset>
+   <label>[#catalog_edit_inner_filter_groupid_label#]</label>
+   <select name="groupid">
+    <option value="0">[#catalog_filter_all_groups#]</option>
+    %groupselectlist%
+   </select>
+  </fieldset>
+  
+  <fieldset>
+   <label for="ppv_target">[#catalog_edit_inner_filter_targetpage_label#]</label>
+   <input type="text" style="width:150px;" name="targetpage" value="%targetpage%" id="ppv_target" onClick="showPageSelector('ppv_target')">
+  </fieldset>
+  
+  <fieldset>
+   <label>[#catalog_edit_inner_filter_categories_label#]</label>
+   <select name="cattype" id="cattype">
+    <option value="all" %cattype_all% >[#catalog_edit_inner_filter_all_categories_label#]</option>
+    <option value="current" %cattype_current%> [#catalog_edit_inner_filter_current_category_label#]</option>
+    <option value="selected" %cattype_selected%>[#catalog_select_categories_label#]</option>
+   </select>
+   
+   <div id="selectedcats" style="clear:both; display:%selectedcats_display%">
+    <ul>
+     %categories%
+    </ul>
+   </div>
+  </fieldset>
+  
+  <fieldset style="text-align:center;">
+  <a href="#" onclick="return show_filter_results()">[#catalog_inner_filter_test#]</a>
+  </fieldset>
+  
+  <fieldset class="page_submit_field">
+   <input type="button" name="submit"  value="[#catalog_edit_inner_filter_action_save#]" onclick="jspub_form_submit('saveinnerfilterform','%form_action%')">
+  </fieldset>
+  
+ </div>
+ 
+ <div id="inner_form_cats" style="width:25%; float:left;">
+  %groups_props%
+ </div>
+
+</form>
+ </div>
+ </div>
+</div>
+
+<script type="text/javascript">
+ $('#cattype').change(function(){
+     console.log('cattype: '+$(this).val());
+     if ($(this).val()!='selected')
+         $('#selectedcats').hide();
+     else
+         $('#selectedcats').show();
+
+ });
+
+ function show_filter_results()
+ {
+    santaUpdateRegion('filter',start_interface.global_link + 'test_filter&id=%id%');
+    return false;
+ }
+
+ $('#inner_form_cats ul li ul').css({'display':'none'});
+ $('#inner_form_cats ul li b').css({'cursor':'pointer'});
+ $('#inner_form_cats ul li b').each(function(){
+   $(this).toggle(function(){
+      $(this).parent().find('ul').slideDown();
+   },
+   function (){
+      $(this).parent().find('ul').slideUp();
+   });
+ });
+ 
+ $("#query").autoGrow();
+</script>
+
+<!-- @group_option_for_select -->
+<option value="%id%" %sel%>%name%</option>
+
+<!-- @option_for_select -->
+<option value="%key%" %sel%>%name%</option>
+
+<!-- @category_item -->
+<li class="block clear"><span class="block fLeft">%shift%</span><input type="checkbox" id="ccb_%id%" name="ccb[%id%]" %checked%><label for="ccb_%id%" style="width:auto;">%catname%</label></li>

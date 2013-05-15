@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=[#set_charset#]">
+   
+   <title>[#in_register_pregloshenie#] [#server#]</title>
+   
+<link href="/admin/templates/default/css/style.css" rel="stylesheet" type="text/css">
+<link href="/admin/templates/default/css/custom-theme/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="/admin/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="/admin/js/jquery-ui-1.8.17.custom.min.js"></script>
+
+<script type="text/javascript">
+ $(document).ready(function(){
+   $('input:submit').button();
+ });
+</script>
+</head>
+<body>
+
+<div id="form_container" class="content">
+ 
+ <span class="header block clear">[#in_register_pregloshenie#] <span class="highlight"><a href="http://[#server#]" target="_blank">[#server#]</a></span></span>
+ 
+ <form method="post" action="index.php">
+ <input type="hidden" name="action" value="registration">
+
+ <fieldset>
+  <label for="login">[#start_login#]:</label>
+  <input type="text" id="login" name="login">
+ </fieldset>
+ 
+ <fieldset>
+  <label for="pwd">[#start_password#]:</label>
+  <input type="password" id="pwd" name="pwd">
+ </fieldset>
+ 
+ <span class="error block clear">[#errore#]</span>
+ 
+ <fieldset class="page_submit_field fslast">
+  <input type="submit" value="Войти">
+ </fieldset>
+ 
+</form>
+</div>
+</body>
+</html>

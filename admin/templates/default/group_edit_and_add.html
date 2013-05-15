@@ -1,0 +1,50 @@
+<!-- @main -->
+<script language="javascript">
+$('#admin_group_savebutton').click(function(){
+        var postArr = $('#admin_form_group_edit').serializeArray();
+        $.post('[#form_action#]', postArr,  function(data){
+            //Обрабатываем ответ
+            var post_res=jQuery.parseJSON(data);
+            if (post_res!=null)
+            {
+                //сначала проверка на наличие ошибок
+                if (post_res.success)
+                {
+                    santaShowPopupHint("Info",post_res.info,1500);
+                    jspub_click('control_group');
+                }
+                else
+                    santaShowPopupHint("Error", post_res.info,0);
+            }
+        });
+});
+</script>
+<span class="content_header">Администраторы &rarr; <span class="black">Управление группами</span></span>
+<div id="page_container">
+ <div id="content_container">
+  <div class="content">
+  <h3>[#backof_group_edit_label1#] <span class="highlight">[#name#]</span></h3>
+
+  <form id="admin_form_group_edit">
+  <fieldset>
+   <label for="name">[#backof_group_edit_field1#]</label>
+   <input type="text" id="name" name="name" value="[#name#]">
+  </fieldset>
+
+  <fieldset>
+   <label for="full_name">[#backof_group_edit_field2#]</label>
+   <input type="text" id="full_name" name="full_name" value="[#full_name#]">
+  </fieldset>
+
+  <fieldset>
+   <label for="root_admin">[#backof_group_edit_field3#]</label><input type="checkbox" id="root_admin" name="root_admin" [#root_admin_checked#]>
+  </fieldset>
+
+  <fieldset class="page_submit_field">
+                    <input type="button" value="[#admin_backof_global_save#]" id="admin_group_savebutton">
+  </fieldset>
+            </form>
+
+  </div>
+		</div>
+</div>

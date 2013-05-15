@@ -1,0 +1,57 @@
+<!-- @group_edit -->
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#auth_modul_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+  <div class="content">
+  
+  <h3>[#auth_group_form_edit_label#]</h3>
+  <form action="" method="post" id='form_group_edit'>
+   <fieldset>
+    <label for="name">[#auth_group_form_edit_name#]:</label>
+    <input type="text" name="name" id="name" value="%name%">
+   </fieldset>
+   
+   <fieldset>
+    <label for="">[#auth_group_form_edit_fname#]:</label>
+    <input type="text" id="fname" name="fname" value="%fname%">
+   </fieldset>
+   
+   <fieldset class="page_submit_field">
+    <input type="button" onclick="jspub_form_submit('form_group_edit', '%url%');" value="[#auth_group_form_button_save#]">
+   </fieldset>
+  </form>
+ </div>
+ </div>
+</div>
+
+<!-- @all_group_table -->
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#auth_modul_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+  <div class="content">
+  <h3>[#auth_group_list#]</h3>
+  <table class="admin_table">
+    <tr>
+      <th width="30">[#auth_group_list_label1#]</th>
+      <th width="200">[#auth_group_list_label2#]</th>
+      <th width="200">[#auth_group_list_label3#]</th>
+      <th>[#auth_group_list_label4#]</th>
+    </tr>
+    %rows%
+  </table>
+  
+  <fieldset class="page_submit_field">
+   <input type="button" value="[#auth_group_list_button_add#]" class="text" onclick="jspub_click('group_add')"/>
+  </fieldset>
+  
+  </div>
+ </div>
+</div>
+
+<!-- @all_group_row -->
+    <tr %classtr%>
+      <td>%number%</td>
+      <td>%name%</td>
+      <td>%full_name%</td>
+      <td nowrap="nowrap"><img src="/admin/templates/default/images/icon_edit.gif" width="26" height="26" onclick="jspub_click('group_edit&id_group=%id%')" style="cursor:pointer;" alt="[#auth_group_list_action2#]" title="[#auth_group_list_action2#]"/>&nbsp;<img src="/admin/templates/default/images/icon_delet.gif" width="26" height="26" onclick="jspub_confirm('group_delet&id_group=%id%','[#auth_group_delete_alert#]')" style="cursor:pointer;"/></td>
+    </tr>

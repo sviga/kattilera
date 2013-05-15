@@ -1,0 +1,62 @@
+<!-- @content -->
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#newssubmit_name_modul_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+ 
+ <h3>[#newssubmit_admin_user_control_label1#]</h3>
+ 
+ <form method="post" id="formuser" action="%url_form%">
+  <input type="hidden" name="id_user" value="%id_user%">
+  
+  <fieldset>
+   <label style="cursor:default">[#newssubmit_admin_user_control_date_sub#]</label>
+   <span class="block fLeft">%date%</span>
+  </fieldset>
+  
+  <fieldset>
+   <label for="name">[#newssubmit_admin_user_control_name_user#]</label>
+   <input type="text" name="name" id="name" maxlength="255" value="%name%">
+  </fieldset>
+  
+  <fieldset>
+   <label for="mail">[#newssubmit_admin_user_control_email_user#]</label>
+   <input type="text" name="mail" id="mail" maxlength="255"  value="%mail%">
+  </fieldset>
+  
+  <fieldset>
+   <label for="off_user">[#newssubmit_admin_user_control_user_onoff#]</label>
+   <input id="off_user" type="checkbox" name="off_user" %off_status%>
+  </fieldset>
+  
+  <fieldset>
+   <label style="cursor:default;">[#newssubmit_admin_user_control_news_label#]</label>
+   <span class="block fLeft">
+    %pages_news%
+   </span>
+  </fieldset>
+  
+  <fieldset class="page_submit_field">
+
+   <input class="text" type="button" value="[#newssubmit_admin_user_control_action_save#]" onclick="santaFormSubmit('formuser',{'save_user':1});">
+   %button_activ%
+   %button_del%
+  </fieldset>
+ </form>
+ </div>
+ </div>
+</div>
+<!-- @button_del_disabled -->
+<input class="text" type="button" value="[#newssubmit_admin_user_control_action_delete#]" onclick="santaFormSubmit('formuser',{'delete_user':1});"  disabled>
+<!-- @button_del -->
+<input class="text" type="button" value="[#newssubmit_admin_user_control_action_delete#]" onclick="santaFormSubmit('formuser',{'delete_user':1});">
+<!-- @button_activ_disabled -->
+<input class="text" type="button" value="[#newssubmit_admin_user_control_action_activate#]" onclick="santaFormSubmit('formuser',{'activate_user':1});"  disabled>
+<!-- @button_activ -->
+<input class="text" type="button" value="[#newssubmit_admin_user_control_action_activate#]" onclick="santaFormSubmit('formuser',{'activate_user':1});" >
+
+
+<!-- @page_news_selected -->
+<input id="%key%" name="section[%key%]" type="checkbox" checked>&nbsp;&nbsp;<label for="%key%" style="min-width: 200px;">%caption%</label><br>
+<!-- @page_news -->
+<input id="%key%" name="section[%key%]" type="checkbox">&nbsp;&nbsp;<label for="%key%" style="min-width: 200px;">%caption%</label><br>

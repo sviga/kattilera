@@ -1,0 +1,160 @@
+<!-- @body -->
+<script type="text/javascript">
+	//var arr_var_lang = new Array();
+    [#action_modules#]
+    
+    if(window.moduleActions)
+    {
+       var htmlSelectActions='';
+       for (var j=0;j<moduleActions.length;j++)
+       {
+           var elem = moduleActions[j];
+           htmlSelectActions+='<option value="'+elem[0]+'">'+elem[1]+'</option>';
+       }
+       $("#moduleNewActionSelect").html(htmlSelectActions);
+    }
+
+
+	%prop_modul_code%
+
+
+
+    $('#button_add_action').click(function () {
+        var val = $('#moduleNewActionSelect').val();
+        if (val)
+            show_action_edit("action_new&id_metod="+val, "[#modules_label_win_new_action#]");
+        else
+            santaShowPopupHint('[#interface_global_label_error#]','[#modules_not_select_mod_for_action#]',0);
+    });
+
+    $('#modulePropsSave').click(function(){
+
+        var postArr = $('#module_props_lang_form').serializeArray();
+
+        /* Because serializeArray() ignores unset checkboxes and radio buttons: */
+        postArr = postArr.concat(
+            jQuery('#module_props_lang_form input[type=checkbox]:not(:checked)').map(
+                    function() {
+                        return {"name": this.name, "value": ''}
+                    }).get()
+        );
+
+        $.post('%url_action%', postArr,  function(data){
+            //Обрабатываем ответ
+            var post_res=jQuery.parseJSON(data);
+            if (post_res!=null)
+            {
+                //сначала проверка на наличие ошибок
+                if (post_res.success)
+                    santaShowPopupHint("Info",post_res.info,1500);
+                else
+                    santaShowPopupHint("Error", post_res.info,0);
+            }
+        });
+
+        return false;
+
+    });
+
+    //tabs
+   var page_tabs=$('#page_tabs');
+   page_tabs.parent().tabs();
+
+   
+   
+   $('.prop-description b').next('ul').css({'display':'none'});
+   
+   $('.prop-description b').toggle(function(){
+      $(this).next('ul').slideDown();
+   },
+   function (){
+      $(this).parent().find('ul').slideUp();
+   });
+   
+   // content таба пустой ? прячем
+   if($('#mod_props').children('fieldset').length == 0)
+       page_tabs.find('a[href=#mod_props]').parent().css({'display':'none'});
+
+</script>
+
+<span class="content_header">Модули &rarr; <span class="black">[#modules_lable_info#]</span> <span style="font-size:11px; font-weight:normal; color:#666;">(Идентификатор: %id_modul%)</span></span>
+<div id="page_container">
+ <div id="content_container">
+
+ <div id="page_tabs">
+  <ul>
+   %module_actions_header%
+   <li><a href="#mod_all_lang_name">[#modules_legend_name_all_lang#]</a></li>
+   <li><a href="#mod_props">[#modules_legend_all_modul#]</a></li>
+
+  </ul>
+ </div>
+
+<form id="module_props_lang_form">
+
+<div id="mod_action_list" class="content">
+
+    %module_actions_block%
+
+</div>
+
+ <div id="mod_all_lang_name" class="content">
+    [#modules_form_edit_all_name#]
+ </div>
+
+ <div id="mod_props" class="content">%str_prop_modul%</div>
+
+
+
+  <fieldset class="page_submit_field">
+   <input type="button" value="[#modules_button_save_properties#]" id="modulePropsSave">
+  </fieldset>
+</form>
+</div>
+
+
+</div>
+
+<!-- @module_actions_header -->
+<li><a href="#mod_action_list">[#modules_legend_action_modul#]</a></li>
+<!-- @module_actions_block -->
+<div id="module_actions_container" style="padding:0;">
+    <label style="width:170px;">[#modules_label_action_new#]</label>
+    <select id="moduleNewActionSelect" style="width:330px;"></select>
+    <input type="button" style="margin-left:15px;" id="button_add_action" value="Создать"> <!-- // @todo move 2 lang vars  -->
+</div>
+
+<div id="actions_list_table">
+    <img src="/admin/templates/default/images/content-loading.gif" />
+</div>
+
+<!-- @names_module -->
+<fieldset>
+ <label for="langname_%id%_[#code#]">[#modules_edit_lang_name#] &quot;[#code#]&quot;</label>
+ <input type="text" id="langname_%id%_[#code#]" name="langname[%id_name%][[#code#]]" value="[#value#]">
+</fieldset>
+
+
+<!-- @action_modules -->
+/*
+ что-то вроде
+    [["56","Экспорт"],["55","Отобразить форму заказа"],["53","Отобразить связанные товары"],["54","Вывести содержимое корзины"],["51","Сформировать выборку по внутреннему фильтру"],["52","Вывести стикер корзины"],["50","Сформировать название элемента"],["49","Сформировать список товаров"],["48","Показать разделы"]]
+*/
+var moduleActions = %array_exist_metod%;
+update_action_list();
+
+<!-- @str_action_begin -->
+<table class="admin_table">
+	<tr>
+        <th colspan="2" align="center" class="first last">[#modules_legend_action_exist#]</th>
+    </tr>
+    [#html_action#]
+
+<!-- @str_action -->
+<tr onmouseover="mouse_select_element(this)" onmouseout="mouse_select_element(this,true)">
+	<td style="text-align:left;" height="26"><b>%name%</b>&nbsp;&nbsp;<font size="-8" color="#666666">(%source_name%)</font><br /></td>
+    <td height="26" width="60"><img style="cursor:pointer" width="26" height="26" src="/admin/templates/default/images/icon_edit.gif" border="0" onclick="show_action_edit('action_edit&id_action=%id_action%', '[#modules_label_win_edit_action#]')" alt="[#label_alt_edit_macros#]"/>&nbsp;<img style="cursor:pointer" width="26" height="26" src="/admin/templates/default/images/icon_delet.gif" border="0" onclick="jspub_confirm('action_delet&id_action=%id_action%','[#modules_label_confirm_del_action#]');" alt="[#label_alt_delet_macros#]" /></td>
+</tr>
+
+<!-- @str_action_end -->
+</table>

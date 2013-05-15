@@ -1,0 +1,96 @@
+<!-- @header -->
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#catalog_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+ 
+ <h3>[#catalog_edit_category_label_main#]</h3>
+ 
+ <form action="%form_action%" method="POST" enctype="multipart/form-data" id="savecategoryform">
+ <input type="hidden" name="id" value="%id%">
+ <input type="hidden" name="pid" value="%pid%">
+ 
+ <fieldset>
+  <label for="isdefault">[#catalog_edit_category_isdefault_label#]:</label>
+  <input type="checkbox" id="isdefault" name="isdefault" %isdefaultchecked%>
+ </fieldset>
+ <fieldset>
+  <label for="_hide_from_waysite">[#catalog_edit_category_hide_from_waysite_label#]:</label>
+  <input type="checkbox" id="_hide_from_waysite" name="_hide_from_waysite" %_hide_from_waysitechecked%>
+ </fieldset>
+ 
+ %props%
+
+<!-- @prop_text -->
+<fieldset>
+ <label for="%prop_name_db%">%prop_name_full%:</label>
+ <textarea id="%prop_name_db%" name="%prop_name_db%" style="width:272px;">%prop_value%</textarea>
+</fieldset>
+
+<!-- @prop_html -->
+<fieldset>
+ <label class="fNone clear">%prop_name_full%:</label>
+ <div class="block clear" style="padding:10px 0; width:600px; height:300px;">%prop_value%</div>
+</fieldset>
+
+<!-- @prop_file_value_null -->
+     <input type="file" name="%prop_name_db%" size="31">
+<!-- @prop_file_value -->
+     <a href="%path%" target="_blank"><small>%path%</small></a><br>
+     <br>
+     <a href="#" onclick='jspub_confirm("cat_clear_field&id=%id%&field=%prop_name_db%","[#catalog_edit_category_prop_file_del_alert#]?")'>
+         <img src="/admin/templates/default/images/icon_delet.gif" alt="[#catalog_edit_category_prop_file_del_alert#]">
+     </a>
+<!-- @prop_file -->
+<fieldset>
+ <label>%prop_name_full%:</label>
+ <span class="block fLeft">%prop_value%</span>
+</fieldset>
+
+<!-- @prop_pict_value_null -->
+     <input type="file" class="inputFile" name="%prop_name_db%" size="31">
+<!-- @prop_pict_value -->
+     <small>%path%</small><br>
+     <img src="%path%" width="50">
+     <br>
+     <a href="#" onclick='jspub_confirm("cat_clear_field&id=%id%&field=%prop_name_db%","[#catalog_edit_category_prop_file_del_alert#]?")'>
+         <img src="/admin/templates/default/images/icon_delet.gif" alt="[#catalog_edit_category_prop_file_del_alert#]">
+     </a>
+<!-- @prop_pict -->
+<fieldset>
+ <label>%prop_name_full%:</label>
+ <span class="block fLeft">%prop_value%</span>
+</fieldset>
+
+<!-- @prop_string -->
+<fieldset>
+ <label for="%prop_name_db%">%prop_name_full%:</label>
+ <input type="text" id="%prop_name_db%" name="%prop_name_db%" value="%prop_value%">
+</fieldset>
+
+<!-- @prop_number -->
+<fieldset>
+ <label for="%prop_name_db%">%prop_name_full%:</label>
+ <input type="text" id="%prop_name_db%" name="%prop_name_db%" value="%prop_value%">
+</fieldset>
+
+<!-- @prop_enum -->
+<fieldset>
+ <label for="%prop_name_db%">%prop_name_full%:</label>
+ <select id="%prop_name_db%" name="%prop_name_db%">
+  %prop_enum_values%
+ </select>
+</fieldset>
+
+<!-- @prop_enum_value -->
+<option value="%enum_value%" %selected%>%enum_name%</option>
+
+<!-- @footer -->
+ <fieldset class="page_submit_field">
+  <input type="button" value="[#catalog_edit_category_bt_save_label#]" onclick="santaFormSubmit('savecategoryform')">
+ </fieldset>
+ </form>
+ 
+ </div>
+ </div>
+</div>

@@ -1,0 +1,28 @@
+<!-- @content -->
+
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#sentinel_base_name#]</span></span>
+<div id="page_container">
+    <div id="content_container">
+        <div class="content">
+            <p>
+            [#sentinel_total_hash_records#] %total%
+            </p>
+            %form%
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $("#submit_button").button();
+</script>
+
+
+<!-- @no_records_message -->
+[#sentinel_no_records_to_check_message#]
+
+
+<!-- @form -->
+<form action="" method="post" id="recals_hashes_form">
+    <p>[#sentinel_notice_long_time#]</p>
+    <input id="submit_button" type="button" onclick="jspub_form_submit('recals_hashes_form','%form_url%')" value="[#sentinel_button_check_files#]">
+</form>

@@ -1,0 +1,59 @@
+<!-- @import_form -->
+<script type="text/javascript">
+ $('#template').focus(function(){
+   $(this).animate({width:'70%'});
+ });
+ 
+ $('#template').focusout(function(){
+   $(this).animate({width:'272px'});
+ });
+ 
+ $('#export_group_props ul li ul').css({'display':'none'});
+ $('#export_group_props ul li b').css({'cursor':'pointer'});
+ //$('#export_group_props ul li b').css('cursor':'pointer');
+ $('#export_group_props ul li b').each(function(){
+   $(this).toggle(function(){
+      $(this).parent().find('ul').slideDown();
+   },
+   function (){
+      $(this).parent().find('ul').slideUp();
+   });
+ });
+ 
+</script>
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#catalog_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+ <h3>[#catalog_export_csv_formlabel#]</h3>
+ 
+ <form action="%form_action%" method="POST"  id="exportcsvform">
+ 
+ <fieldset>
+  <label for="template" style="width:150px;">[#catalog_export_csv_tpl_label#]:</label>
+  <input type="text" id="template" name="template" value="%template_value%">
+ </fieldset>
+ 
+ <fieldset>
+  <label style="cursor:default; width:150px;">[#catalog_export_filter_select_label#]:</label>
+  <select name="filterid" id="import_filterid">
+   <option value="">[#catalog_export_filter_select_all_items#]</option>
+   %filter_items%
+  </select>
+ </fieldset>
+ 
+ <fieldset id="export_group_props" style="font-size:11px;">
+ <span class="block clear"><b>[#catalog_export_groups_props_label#]</b></span>
+ %all_props%
+ </fieldset>
+ 
+ <fieldset class="page_submit_field">
+  <input type="submit" name="submit" value="[#catalog_export_button_label#]">
+ </fieldset>
+ </form>
+ </div>
+ </div>
+</div>
+
+<!-- @filter_items -->
+<option value="%filterid%">%filtername%</option>

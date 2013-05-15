@@ -1,0 +1,18 @@
+<!-- @main -->
+<ul id="main_menu">
+[#main_menu#]
+   <li class="exit"><a id="main_menu_logout" href="/admin/?action=exit">[#main_exit#]</a></li>
+</ul>
+<div class="clear"></div>
+<!-- @activ -->
+	<li>
+		<a id="main_menu_[#id#]" class="main_menu_select" href="" onclick="start_interface.main_menu_click('main_menu_[#id#]', '[#id#]'); return false;">[#name#]</a>
+		<script type="text/javascript">
+			start_interface.main_menu_element_select = "main_menu_[#id#]";
+		</script>
+	</li>
+<!-- @passiv -->
+	<li class="[#id#]">
+		<a id="main_menu_[#id#]" href="" onclick="start_interface.main_menu_click('main_menu_[#id#]', '[#id#]'); return false;">[#name#]</a>
+	</li>
+<!-- @delimiter-->

@@ -1,0 +1,22 @@
+<!-- @form -->
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#auth_modul_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+  <div class="content">
+  <h3>[#auth_protect_dir#]</h3>
+  <form action="" method="post" id="auth_form_pfolder">
+   <fieldset>
+    <label for="pfolder" style="padding-top:0;">[#auth_protect_dir_caption#]</label>
+    <input type="text" id="pfolder" name="pfolder" value="">
+   </fieldset>
+   
+   <fieldset class="page_submit_field">
+    <input type="button" onclick="jspub_form_submit('auth_form_pfolder', '%url%');" value="[#auth_protect_dir_button#]">
+   </fieldset>
+  </form>
+
+<!-- @protect_success -->
+[#auth_protect_dir_success#]
+
+<!-- @protect_failed -->
+[#auth_protect_dir_failed#]

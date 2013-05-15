@@ -1,0 +1,50 @@
+<!-- @main -->
+<span class="content_header">Глобальные настройки &rarr; <span class="black">Бэкап-файлы</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+%backup_table%
+%uploaded_files%
+
+ <form method="post" action="%form_action%" enctype="multipart/form-data">
+  <fieldset>
+   <input type="file" class="file" name="backup_file">
+   <input type="submit" name="upload_backup" value="[#admin_backup_button_upload_file#]">
+  </fieldset>
+</form>
+ </div>
+ </div>
+</div>
+
+<!--  @backup_made_header -->
+[#admin_backup_backup_made_table_header#]
+<!--  @backup_uploaded_header -->
+[#admin_backup_backup_uploaded_table_header#]
+
+
+<!-- @backup_table -->
+<h3>%header%</h3>
+<table class="admin_table">
+    <tr>
+  <th class="first">[#admin_backup_table_num#]</th>
+        <th>[#admin_backup_table_file#]</th>
+        <th>[#admin_backup_table_date#]</th>
+        <th>[#admin_backup_table_restore#]</th>
+        <th>[#admin_backup_table_delete#]</th>
+        <th>[#admin_backup_table_content#]</th>
+  <th class="last">[#admin_backup_table_desc#]</th>
+    </tr>
+%lines%
+</table>
+<br><br>
+<!-- @backup_table_row -->
+    <tr [#tr_class#]>
+        <td>%num_order%</td>
+        <td><a href="%real_filename%" target="_top">%filename%</a></td>
+<!--        <td><a href="index.php?backup=dwld&id=%id%">%filename%</a></td>-->
+        <td>%date%</td>
+        <td><a href="#" onclick="jspub_confirm('backup&backup=restore_step1&id=%id%', '[#admin_backup_table_row_restore_confirm#]');">[#admin_backup_table_row_restore#]</a></td>
+        <td><a href="#" onclick="jspub_confirm('backup&backup=delete&id=%id%', '[#admin_backup_table_row_delete_confirm#]');">[#admin_backup_table_row_delete#]</a></td>
+        <td>%archive_content%</td>
+        <td>%description%</td>
+    </tr>

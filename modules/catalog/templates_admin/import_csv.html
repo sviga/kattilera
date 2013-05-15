@@ -1,0 +1,93 @@
+<!-- @import_form -->
+<script type="text/javascript">
+ function importTypeClick()
+ {
+   if ($('#from_file').attr('checked'))
+   {
+      $('#from_file_block').css('display','block');
+      $('#from_textarea_block').css('display','none');
+   }
+   else
+   {
+      $('#from_textarea_block').css('display','block');
+      $('#from_file_block').css('display','none');
+   }
+ }
+ importTypeClick();
+
+</script>
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#catalog_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+ <h3>[#catalog_import_csv_formlabel#]</h3>
+
+ <form action="%form_action%" method="POST" enctype="multipart/form-data" id="importcsvform">
+ 
+ <fieldset>
+  <label style="cursor:default;">[#catalog_import_separator_label#]:</label>
+  <select name="separator">
+   <option value="tab">[#catalog_import_separator_tab#]</option>
+   <option value="semicolon">[#catalog_import_separator_semicolon#]</option>
+  </select>
+ </fieldset>
+ 
+ <fieldset>
+  <label style="cursor:default;">[#catalog_import2group_label#]:</label>
+  <select name="group">
+   %groups%
+  </select>
+ </fieldset>
+ 
+ <fieldset>
+  <label style="cursor:default;">[#catalog_import2cat_label#]:</label>
+  <select name="cat">
+   %cats_options%
+  </select>
+ </fieldset>
+ 
+ <fieldset>
+  <label style="cursor:default;">[#catalog_new_import2cat_label#]:</label>
+  <select name="cat4new">
+   <option value="0">[#catalog_cat_not_selected_label#]</option>
+   %cats_options%
+  </select>
+ </fieldset>
+ 
+ <fieldset>
+  <label style="cursor:default">[#catalog_commerceml_type#]</label>
+  <span class="block fLeft">
+   <input type="radio" id="from_file" name="importfrom" value="file" onclick="importTypeClick()" checked><label for="from_file">[#catalog_import_file_label#]</label>
+   <br class="clear">
+   <input type="radio" id="from_textarea" name="importfrom" onclick="importTypeClick()" value="textarea"><label for="from_textarea" style="width:200px;">[#catalog_import_textarea_label#]</label>
+  </span>
+ </fieldset>
+ 
+ <div id="from_file_block" style="margin:10px 0; padding:5px; border-bottom:1px solid #ededed; border-top:1px solid #ededed; display:none; clear:both;">
+  <label style="cursor:default;">[#catalog_import_file_label#]</label>
+  <input type="file" size="31" name="importcsv">
+ </div>
+ 
+ <div id="from_textarea_block" style="margin:10px 0; padding:5px; border-bottom:1px solid #ededed; border-top:1px solid #ededed; display:none; clear:both;">
+  <label for="textarea" style="width:130px;">[#catalog_import_textarea_label#]</label>
+  <textarea id="textarea" name="textarea" cols="64" rows="15"></textarea>
+ </div>
+
+ <fieldset class="page_submit_field">
+  <!--<input type="button" name="submit" value="[#catalog_save_label#]" onclick="jspub_form_submit('saveitemform','/admin/index.php?action=set_left_menu&leftmenu=item_save')">-->
+  <input type="submit" name="submit" value="[#catalog_import_label#]">
+ </fieldset>
+ </form>
+ 
+ </div>
+ </div>
+</div>
+
+
+<!-- @group_item -->
+<option value="%group_id%">%group_name%</option>
+
+<!-- @cat_option -->
+<option value="%cat_id%">%cat_name%</option>
+<!-- @cat_shift -->
+-

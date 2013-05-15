@@ -1,0 +1,32 @@
+<!-- @main -->
+<span class="content_header">[#admin_adminstrators_label#] &rarr; <span class="black">Управление группами</span></span>
+<div id="page_container">
+ <div id="content_container">
+  <div class="content">
+  <h3>Список групп администраторов</h3>
+   <table class="admin_table">
+<tr>
+     <th class="first">№</th>
+     <th>[#backof_groups_edit_label1#]</th>
+     <th>[#backof_groups_edit_label2#]</th>
+     <th>[#backof_groups_edit_label3#]</th>
+     <th class="last">[#backof_groups_edit_label4#]</th>
+</tr>
+[#str_content#]
+</table>
+
+   <fieldset class="page_submit_field">
+    <input type="button" value="[#backof_groups_button_add#]" onclick="jspub_click('edit_group&newadmin=yes');">
+   </fieldset>
+  </div>
+ </div>
+</div>
+
+<!-- @string -->
+<tr [#tr_class#]>
+ <td>[#num#]</td>
+ <td><a href="javascript:;" onclick="jspub_click('edit_group&id=[#id#]'); return false;">[#name#]</a></td>
+ <td>[#full_name#]</td>
+ <td><input style="float:none; margin-top:5px;" type="checkbox" disabled="disabled" [#root_admin#]/></td>
+ <td><img src="/admin/templates/default/images/icon_delet.gif" width="26" height="26" onclick="jspub_confirm('del_group&delid=[#id#]','[#alert_del#]');" style="cursor:pointer;"/></td>
+</tr>

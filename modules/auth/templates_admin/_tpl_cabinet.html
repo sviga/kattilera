@@ -1,0 +1,105 @@
+<!--
+Шаблон построения личного кабинета пользователя
+
+@userform_begin - шапка формы
+
+@userform_end - конец формы
+
+ -->
+<!-- ****************************************** Шаблоны формы личного кабинета ****************************************** -->
+
+<!-- @userform_begin -->
+<h2>Кабинет</h2>
+<form action="%curr_page%" method="POST" enctype="multipart/form-data">
+<table cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td>Имя</td>
+		<td><input type="text" name="name" value="%name%"></td>
+	</tr>
+	<tr>
+		<td>Пароль</td>
+		<td><input type="password" name="password" value=""></td>
+	</tr>
+	<tr>
+		<td>Повторите пароль </td>
+		<td><input type="password" name="password2" value=""></td>
+	</tr>
+	<tr>
+		<td>E-mail</td>
+		<td><input type="text" name="email" value="%email%"></td>
+	</tr>
+
+    %additional_fields%
+
+<!-- @userform_end -->
+<td colspan="2" align="center" valign="top"><input name="save" type="submit" value="Сохранить"></td>
+</table>
+</form>
+
+
+<!-- @form_line_required -->
+<sup>*</sup>
+<!-- @form_line_date -->
+<tr>
+  <td>%caption% %required%</td>
+  <td><input type="text" name="fields[%id%]" value="%value%" class="text" style="width:50px;">дд.мм.гггг</td>
+</tr>
+<!-- @form_line_image -->
+<tr>
+  <td>%caption% %required%</td>
+  <td><img src="%value%" /><a href="%curr_page%?clearfield=%fieldid%" title="удалить картинку">[x]</a></td>
+</tr>
+<!-- @form_line_image_empty -->
+<tr>
+  <td>%caption% %required%</td>
+  <td><input name="%id%" type="file" class="text" style="width:100%"></td>
+</tr>
+<!-- @form_line_select_option_selected -->
+<option value="%k%" selected>%v%</option>
+<!-- @form_line_select_option -->
+<option value="%k%">%v%</option>
+<!-- @form_line_select -->
+<tr>
+  <td>%caption% %required%</td>
+  <td>
+      <select name="fields[%id%]" class="text">
+          <option value="">-не выбрано-</option>
+          %options%
+      </select>
+  </td>
+</tr>
+<!-- @form_line_html -->
+<tr>
+  <td>%caption% %required%</td>
+  <td><textarea name="fields[%id%]" class="text" style="width:100%">%value%</textarea></td>
+</tr>
+<!-- @form_line_text -->
+<tr>
+  <td>%caption% %required%</td>
+  <td><textarea name="fields[%id%]" class="text" style="width:100%">%value%</textarea></td>
+</tr>
+<!-- @form_line_string -->
+<tr>
+  <td>%caption% %required%</td>
+  <td><input type="text" name="fields[%id%]" value="%value%" class="text"></td>
+</tr>
+
+
+<!-- @invalid_email -->
+<h2>Неправильный e-mail адрес</h2>
+
+<!-- @not_unique -->
+<h2>Пользователь с таким email уже зарегистрирован. Попробуйте ввести другой.</h2>
+
+<!-- @passwords_dont_match -->
+<h2>Пароли не совпадают</h2>
+
+<!-- @required_fields_not_filled -->
+<h2>Не заполнены все необходимые поля</h2>
+
+<!-- @not_authorized -->
+<h2>Вы должны быть авторизованны для того, чтобы менять свои настройки</h2>
+
+<!-- @save_success -->
+<h2>Информация успешно сохранена</h2>
+

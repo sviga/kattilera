@@ -1,0 +1,62 @@
+<!-- @form_header -->
+
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#catalog_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+ <h3>%form_header_txt%</h3>
+ 
+ <form action="%form_action%" method="POST" id="savegroupform">
+ <input type="hidden" name="id" value="%groupid%">
+ 
+ <fieldset>
+  <label for="name">[#catalog_edit_group_name_label#]</label>
+  <input type="text" name="name" value="%name%" id="name">
+ </fieldset>
+ 
+ <fieldset>
+  <label for="namedb">[#catalog_edit_group_id_label#]</label>
+  <input type="text" name="namedb" value="%dbname%" id="namedb">
+ </fieldset>
+ 
+ <fieldset>
+     <label for="one_items">[#catalog_edit_group_template_item_label#]</label>
+     <select id="one_items" name="one_items">
+         %template_item%
+     </select>
+ </fieldset>
+
+ <fieldset>
+  <label for="list_items">[#catalog_edit_group_template_list_label#]</label>
+  <select id="list_items" name="list_items">
+   %template_list%
+  </select>
+ </fieldset>
+ 
+ <fieldset class="page_submit_field">
+  <button onclick="jspub_click('show_gen_search_form&groupid=%groupid%')">[#catalog_generate_search_form_label#]</button>
+ </fieldset>
+ 
+ <fieldset>
+  <label>[#catalog_group_default_cats_label#]</label>
+  <ul style="margin:5px 0; padding:0; list-style:none; float:left;">
+   %categories%
+  </ul>
+ </fieldset>
+ 
+ <fieldset class="page_submit_field">
+  <input type="button" name="submit"  value="[#catalog_edit_group_action_save#]" onclick="jspub_form_submit('savegroupform','%form_action%')">&nbsp;&nbsp;
+
+     <input type="button" name="submit"  value="[#catalog_edit_group_action_new_template#]" onclick="jspub_confirm('%form_action2%', '[#catalog_edit_group_action_new_template_alert#]')">
+ </fieldset>
+ 
+</form>
+ </div>
+ </div>
+</div>
+
+<!-- @category_item -->
+<li style="display:block; margin:3px 0; clear:both;"><span style="float:left; display:block;">%shift%</span><input type="checkbox" id="ccb[%id%]" name="ccb[%id%]" %checked%><label for="ccb[%id%]" style="width:250px;">%catname%</label></li>
+
+<!-- @option_for_select -->
+<option value="%key%" %sel%>%name%</option>

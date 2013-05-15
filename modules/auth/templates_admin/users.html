@@ -1,0 +1,199 @@
+<!-- @form_user -->
+<span class="content_header" xmlns="http://www.w3.org/1999/html">[#admin_module_label#] &rarr; <span class="black">[#auth_modul_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+  <div class="content">
+   <h3>[#auth_users_list_buttom1#] / [#auth_users_list_action1#]</h3>
+   <form action="%url%" method="post" id="edit_user">
+   <div id="sel_group" style="position:absolute; display:none;"></div>
+   
+   <span class="header_block">[#auth_users_edit_user_label1#]</span>
+   <fieldset>
+    <label for="login" style="padding-top:0;">[#auth_users_edit_user_label2#]<br><small style="font-weight:normal;">[#auth_users_edit_user_label7#]&nbsp;%date%</small></label>
+    <input type="text" id="login" name="login" value="%login%">
+   </fieldset>
+   
+   <fieldset>
+    <label for="name">[#auth_users_edit_user_label3#]</label>
+    <input type="text" id="name" name="name" value="%name%">
+   </fieldset>
+   
+   <fieldset>
+    <label for="password">[#auth_users_edit_user_label4#]</label>
+    <input type="password" id="password" name="password" value="%password%">
+   </fieldset>
+   
+   <fieldset>
+    <label for="re_password">[#auth_users_edit_user_label5#]</label>
+    <input type="password" id="re_password" name="re_password" value="%password%">
+   </fieldset>
+   
+   <fieldset>
+    <label for="email">[#auth_users_edit_user_label6#]</label>
+    <input type="text" id="email" name="email" value="%email%" class="text">
+   </fieldset>
+   
+   <fieldset>
+    <label for="verified" style="cursor:pointer;">[#auth_users_edit_user_label8#]</label>
+    <input id="verified" type="checkbox" name="verified" %v_checked%>
+   </fieldset>
+   
+   <fieldset>
+    <label for="enabled" style="cursor:pointer;">[#auth_users_edit_user_label9#]</label>
+    <input id="enabled" type="checkbox" name="enabled" %e_checked%>
+   </fieldset>
+   
+   <span class="header_block">[#auth_users_edit_user_label10#]</span>
+   %str_fields%
+   
+   
+   <span class="header_block">[#auth_user_in_group_label#]</span>
+   %str_fields_group%
+   
+   <fieldset class="page_submit_field">
+       <input type="button" value="[#auth_users_edit_user_action_save#]" onclick="santaFormSubmit('edit_user');">
+       %init_button%
+   </fieldset>
+  </form>
+</div>
+</div>
+</div>
+
+<!-- @init_button -->
+<input type="button" value="[#auth_verify_and_save_user#]" onclick="$('#edit_user').append('<input type=\'hidden\' name=\'inituser\' value=\'1\'>');santaFormSubmit('edit_user');">
+<!-- @form_line_date -->
+<fieldset>
+    <label>%caption%<font size="-4" color="#999999">%only_admin%</font></label>
+    <input type="text" name="fields_%id%" value="%value%" class="text" style="width:60px;"> [#auth_dateformat_sample#]
+</fieldset>
+<!-- @form_line_image -->
+<fieldset>
+    <label>%caption%<font size="-4" color="#999999">%only_admin%</font></label>
+    <img src="%value%" /><a href="#" onclick="jspub_confirm('user_field_clear&type_field=image&userid=%userid%&fieldid=%id%','[#auth_clear_img_confirm#]');"><img src="/admin/templates/default/images/icon_delet.gif" alt="delete" /></a>
+</fieldset>
+<!-- @form_line_image_empty -->
+<fieldset>
+    <label>%caption%<font size="-4" color="#999999">%only_admin%</font></label>
+    <input name="fields_%id%" type="file" class="text">
+</fieldset
+<!-- @form_line_select_option_selected -->
+<option value="%k%" selected>%v%</option>
+<!-- @form_line_select_option -->
+<option value="%k%">%v%</option>
+<!-- @form_line_select -->
+<fieldset>
+    <label>%caption%<font size="-4" color="#999999">%only_admin%</font></label>
+    <select name="fields_%id%" class="text">
+        <option value="">[#auth_user_field_empty_option#]</option>
+        %options%
+    </select>
+</fieldset>
+<!-- @form_line_html -->
+<fieldset>
+    <label>%caption%<font size="-4" color="#999999">%only_admin%</font></label>
+    <textarea name="fields_%id%" class="text">%value%</textarea>
+</fieldset>
+<!-- @form_line_text -->
+<fieldset>
+    <label>%caption%<font size="-4" color="#999999">%only_admin%</font></label>
+    <textarea name="fields_%id%" class="text">%value%</textarea>
+</fieldset>
+<!-- @form_line_string -->
+<fieldset>
+    <label>%caption%<font size="-4" color="#999999">%only_admin%</font></label>
+    <input type="text" name="fields_%id%" value="%value%" class="text">
+</fieldset>
+<!-- @form_line_group -->
+  <fieldset %class_str%>
+    <label for="dirs%id%">%name%</label>
+    <input type="checkbox" name="group_%id%" id="dirs%id%" %checked%>
+  </fieldset>
+
+<!-- @begin -->
+
+
+
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#auth_modul_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+  <div class="content">
+  <h3>[#auth_users_list#]</h3>
+
+      <form action="%search_action%" method="post" id="slogin_form" name="slogin_form">
+          <label style="width: 150px;">[#auth_search_by_login#]:</label> <input type="text" name="slogin">
+          <input type="button" value="[#auth_search_by_login_do_search#]" onclick="santaFormSubmit('slogin_form');">
+      </form>
+      <br>
+  
+   <table class="admin_table">
+      <tr>
+         <th>[#auth_users_list_label1#]</th>
+         <th><a href="#" class="sort" onclick="jspub_click('users_list&sortby=login')">[#auth_users_list_label2#]</a></th>
+         <th>[#auth_users_list_label3#]</th>
+         <th><a href="#" class="sort" onclick="jspub_click('users_list&sortby=email')">[#auth_users_list_label4#]</a></th>
+         <th><a href="#" class="sort" onclick="jspub_click('users_list&sortby=date')">[#auth_users_list_label8#]</a></th>
+         <th>[#auth_users_list_label5#]</th>
+         <th>[#auth_users_list_label6#]</th>
+         <th>[#auth_users_list_label7#]</th>
+      </tr>
+
+<!-- @line -->
+	<tr>
+		<td>%number%</td>
+		<td>%login%</td>
+		<td>%name%</td>
+		<td>%email%</td>
+		<td>%fdate%</td>
+		<td align="center">%verified%</td>
+		<td align="center">%enabled%</td>
+		<!--<td align="center"><a href="#" onclick="jspub_confirm('','')" title="[#auth_users_list_action2#]"><img src="/admin/images/b_drop.png" border="0"/></a>-->
+		<td nowrap="nowrap"><img src="/admin/templates/default/images/icon_edit.gif" width="26" height="26" onclick="jspub_click('user_edit&id=%id%')" style="cursor:pointer;" alt="[#auth_users_list_action1#]" title="[#auth_users_list_action1#]"/>&nbsp;<img src="/admin/templates/default/images/icon_delet.gif" width="26" height="26" onclick="jspub_confirm('user_delete&id=%id%','[#auth_users_list_alert2#] %login%?')" style="cursor:pointer;" alt="[#auth_users_list_action2#]" title="[#auth_users_list_action2#]"/></td>
+	</td>
+	</tr>
+
+<!-- @end -->
+</table>
+
+<fieldset class="page_submit_field">
+ <input type="button" onclick="jspub_click('user_add')" value="[#auth_users_list_buttom1#]">
+</fieldset>
+
+%pages%
+
+</div>
+</div>
+</div>
+
+
+<!-- @pages -->
+%first% %backward% %previous% %pages_block% %next% %forward% %last%
+
+<!-- @page_first -->
+<a href="#" onclick="jspub_click('%link%')">Начало</a>
+<!-- @page_backward-->
+<a href="#" onclick="jspub_click('%link%')">&laquo;</a>
+<!-- @page_backward_disabled-->
+&laquo;
+<!-- @page_previous-->
+<a href="#" onclick="jspub_click('%link%')">&laquo;</a>
+<!-- @page_previous_disabled-->
+&laquo;
+<!-- @page_forward-->
+<a href="#" onclick="jspub_click('%link%')">&raquo;</a>
+<!-- @page_forward_disabled-->
+&raquo;
+<!-- @page_next-->
+<a href="#" onclick="jspub_click('%link%')">&raquo;</a>
+<!-- @page_next_disabled-->
+&raquo;
+<!-- @page_last -->
+<a href="#" onclick="jspub_click('%link%')">Конец</a>
+<!-- @page_active -->
+<a href="#" onclick="jspub_click('%link%')">%page%</a>
+<!-- @page_passive -->
+%page%
+<!-- @page_delimeter -->
+&nbsp;-&nbsp;
+
+<!-- @page_null -->
+

@@ -1,0 +1,28 @@
+<!-- @begin -->
+<h3>[#faq_module_label_user_question#]</h3>
+<table class="admin_table">
+<tr>
+ <th>[#faq_list_question#]</th>
+ <th>[#faq_list_partition#]</th>
+ <th>[#faq_list_datetime#]</th>
+ <th>[#faq_list_manage#]</th>
+</tr>
+
+<!-- @line -->
+<tr>
+ <td style="text-align:left;" valign="top">
+ %user_name% <a href="mailto:%user_email%">%user_email%</a><br>
+ %question%<br>
+ %description%<br>
+ </td>
+ 
+ <td>%partition_name%</td>
+ <td>%added%</td>
+ <td width="60" nowrap="nowrap">
+  <img onclick="jspub_click('%question_edit%')" src="/admin/templates/default/images/icon_edit.gif" border="0" alt="[#faq_list_edit_element#]" title="[#faq_list_edit_element#]" style="cursor:pointer;">&nbsp;
+  <img src="/admin/templates/default/images/icon_delet.gif" alt="[#faq_list_del_element#]" border="0" title="[#faq_list_del_element#]" onclick="jspub_confirm('%action_delet_q%','[#faq_list_delete_element_alert#]')" style="cursor:pointer;"/>
+ </td>
+</tr>
+
+<!-- @end -->
+</table>

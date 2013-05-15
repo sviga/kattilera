@@ -1,0 +1,48 @@
+<!-- @email2user -->
+<html>
+<head><meta http-equiv="content-type" content="text/html; charset=utf-8" /></head>
+<body>
+Здравствуйте, %user%<br>
+На нашем сайте %added% Вы оставляли вопрос следующего содержания:<br>
+%question% <br>
+%description% <br>
+Ответ:<br>
+%answer%
+</body>
+</html>
+<!-- @table -->
+<h3>[#faq_edit_content#]</h3>
+<form action="%action%" method="POST">
+ <input type="hidden" name="id" value="%id%">
+ <input type="hidden" name="user" value="%user_name%">
+ <input type="hidden" name="email" value="%user_email%">
+ 
+ <fieldset>
+  <label>[#faq_edit_categoty#]</label>
+  %category_list%
+ </fieldset>
+ 
+ <fieldset>
+  <label for="faq_add_content_question">[#faq_edit_question#]</label>
+  <input type="text" id="faq_add_content_question" name="faq_add_content_question" value="%question%">
+ </fieldset>
+ 
+ <fieldset>
+  <label for="faq_description" style="clear:both;">[#faq_edit_description#]:</label>
+  <textarea name="faq_description" id="faq_description" style="width:95%; margin:5px auto 0px auto; height:100px;" rows="" cols="">%description%</textarea>
+ </fieldset>
+ 
+ <fieldset>
+  <span class="header_block">[#faq_edit_editor#]:</span>
+  <div class="block clear" style="width:98%; text-align:left; margin:10px 0;">%editor%</div>
+ </fieldset>
+ 
+ <fieldset class="page_submit_field">
+  <input type="submit" name="faq_button" value="[#faq_button_name#]" onclick="form_submit_include_content('faqcontent')">
+ </fieldset>
+</form>
+
+<!-- @line -->
+<tr>
+  <td colspan="2">[#option#]&nbsp;[#value#]</td>
+</tr>

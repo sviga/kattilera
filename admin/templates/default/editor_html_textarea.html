@@ -1,0 +1,79 @@
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=[#set_charset#]">
+<script type="text/javascript" src="/admin/js/jquery-1.7.1.min.js"></script>
+    <!-- codemirror -->
+    <link rel="stylesheet" href="/components/codemirror/lib/codemirror.css" type="text/css">
+    <script type="text/javascript" src="/components/codemirror/lib/codemirror.js"></script>
+    <script type="text/javascript" src="/components/codemirror/mode/xml/xml.js"></script>
+    <script type="text/javascript" src="/components/codemirror/mode/javascript/javascript.js"></script>
+    <script type="text/javascript" src="/components/codemirror/mode/css/css.js"></script>
+    <script type="text/javascript" src="/components/codemirror/mode/clike/clike.js"></script>
+    <script type="text/javascript" src="/components/codemirror/mode/php/php.js"></script>
+    <script type="text/javascript" src="/components/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+
+    <style type="text/css">
+        .CodeMirror {border-top: 1px solid #ededed; border-bottom: 1px solid #ededed; border-right:1px solid #ededed;}
+        .CodeMirror-scroll { height:94%; }
+        .cm-tab:after {
+            content: "\21e5";
+            display: -moz-inline-block;
+            display: -webkit-inline-block;
+            display: inline-block;
+            width: 0px;
+            position: relative;
+            overflow: visible;
+            left: -1.4em;
+            color: #aaa;
+        }
+        .activeline {background: #e8f2ff !important;}
+        .submit { position:relative; left:50%; width:100px; margin:2px 0 0 -50px; }
+    </style>
+</head>
+<body leftmargin="0" topmargin="0" bottommargin="0" marginwidth="0" marginheight="0">
+<form id="htmlForm" action="/admin/?action=save_content&no_redactor=1" method="post">
+    <textarea id="[#name_edit#]" name="[#name_edit#]" style="position:relative;">[#edit_content#]</textarea>
+    <input type="hidden" value="[#file_name#]" name="file">
+    <input type="submit" class="submit" value="Save code">
+</form>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var editor = CodeMirror.fromTextArea(document.getElementById("[#name_edit#]"), {
+            lineNumbers: true,
+            mode: "text/html",
+            tabSize: 4,
+            indentUnit: 4,
+            indentWithTabs: true,
+            onCursorActivity: function() {
+                editor.setLineClass(hlLine, null, null);
+                hlLine = editor.setLineClass(editor.getCursor().line, null, "activeline");
+            }
+        });
+        var hlLine = editor.setLineClass(0, "activeline");
+
+        $("#htmlForm").submit(function(event) {
+            $('input.submit').before('<img src="/admin/templates/default/images/content-loading.gif" alt="Loading.." style="position:relative; margin-top:5px; left:50%; margin-left:-8px;" border="0" id="contentLoading">');
+            $('input.submit').hide();
+            event.preventDefault();
+
+            var $form = $( this ),
+                    content = editor.getValue();
+            sfile = $form.find( 'input[name="file"]' ).val(),
+                    url = $form.attr( 'action' );
+
+            $.post( url, { content_html: content, file: sfile },function(data){
+                var post_res=jQuery.parseJSON(data);
+                if (post_res!=null)
+                {
+                    //сначала проверка на наличие ошибок
+                    if (!post_res.success)
+                        alert('Error: '+post_res.info);
+                    else
+                        $('#contentLoading').remove();
+                    $('input.submit').show();
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

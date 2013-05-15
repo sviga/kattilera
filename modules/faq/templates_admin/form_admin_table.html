@@ -1,0 +1,36 @@
+<!-- @table -->
+<h3>[#faq_menu_list#]<br><small>всего вопросов: %total%</small></h3>
+<table class="admin_table">
+ <tr>
+  <th>#</th>
+  <th>[#faq_list_question#]</th>
+  <th>[#faq_list_partition#]</th>
+  <th>[#faq_list_datetime#]</th>
+  <th>[#faq_list_has_answer#]</th>
+  <th>[#faq_list_manage#]</th>
+ </tr>
+ %rows%
+</table>
+
+
+<!-- @has_answer -->
+<img src="/admin/templates/default/images/24-em-check.gif" alt="">
+<!-- @no_answer -->
+<b style="color:red; font-size:20px;">!</b>
+<!-- @row -->
+<tr class="admin_table_string">
+
+    <td>%num%</td>
+    <td width="300" style="text-align:left;">
+     <em>%user_name%&nbsp;<a href="mailto:%user_email%">%user_email%</a></em><br>
+     <a href="#" onclick="jspub_click('%question_edit%')" title="[#faq_list_edit_element#]">%question%</a>
+    </td>
+    <td>%partition_name%</td>
+    <td width="150">%added%</td>
+    <td>%has_answer%</td>
+
+    <td width="100">
+        <img onclick="jspub_click('%question_edit%')" src="/admin/templates/default/images/icon_edit.gif" border="0" alt="[#faq_list_edit_element#]" title="[#faq_list_edit_element#]" style="cursor:pointer;">&nbsp;
+        <img src="/admin/templates/default/images/icon_delet.gif" alt="[#faq_list_del_element#]" border="0" title="[#faq_list_del_element#]" onclick="jspub_confirm('%action_delet_q%','[#faq_list_delete_element_alert#]')" style="cursor:pointer;">
+    </td>
+</tr>

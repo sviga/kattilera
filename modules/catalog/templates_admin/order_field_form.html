@@ -1,0 +1,100 @@
+<!-- @prop_type -->
+<option value="text" selected="selected">[#catalog_prop_type_text#]</option>
+<option value="number">[#catalog_prop_type_number#]</option>
+<option value="enum">[#catalog_prop_type_enum#]</option>
+<option value="string">[#catalog_prop_type_string#]</option>
+
+<!-- @label_form_edit -->
+<h3>[#catalog_edit_order_field_label_edit#]</h3>
+<!-- @label_form_add -->
+<h3>[#catalog_edit_order_field_label_add#]</h3>
+
+<!-- @header -->
+<script type="text/javascript">
+    function selectChange()
+    {
+        if ($('#stype').val() == 'enum')
+            $('#prop_addon').css('display', 'block');
+        else
+            $('#prop_addon').css('display', 'none');
+    }
+    selectChange();
+</script>
+
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#catalog_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+ 
+ <h3>%form_label%</h3>
+
+ <form action="" method="POST" enctype="multipart/form-data" id="savepropform">
+ <input type="hidden" name="id" value="%id%">
+ 
+ <fieldset>
+  <label for="name_full">[#catalog_edit_property_name#]: <sup style="color:red;">*</sup></label>
+  <input type="text" id="name_full" name="name_full" value="%name_full%">
+ </fieldset>
+ 
+ <fieldset>
+  <label for="name_db">[#catalog_edit_property_namedb#]: <sup style="color:red;">*</sup></label>
+  <input type="text" id="name_db" name="name_db" value="%name_db%">
+ </fieldset>
+ 
+ <fieldset>
+  <label for="regexp">[#catalog_order_field_regexp_label#]:</label>
+  <input type="text" id="regexp" name="regexp" value="%regexp%">
+ </fieldset>
+ 
+ <fieldset>
+  <label for="req">[#catalog_edit_is_required_label#]:</label>
+  <span class="block fLeft" style="min-width:262px; text-align:center;"><input type="checkbox" name="req" id="req" style="float:none;" %req_checked%></span>
+ </fieldset>
+ 
+ <fieldset>
+  <label>[#catalog_edit_property_type#]:<sup style="color:red;">*</sup></label>
+  <select name="ptype" onChange="selectChange()" onblur="selectChange()" id="stype" %off_type%>
+   %prop_type%
+  </select>
+ </fieldset>
+  
+  <div id="prop_addon" class="block" style="display: none; border-top:1px solid #ededed; margin:5px 0; padding:5px 0; clear:both;">
+   %addons_param%
+
+  </div>
+ 
+ <fieldset class="page_submit_field">
+  <input type="button" name="submit" value="[#catalog_edit_property_bt_save#]" onclick="jspub_form_submit('savepropform','%form_action%')">
+ </fieldset>
+
+
+
+
+<!-- @enum_new -->
+ <fieldset>
+  <label>[#catalog_edit_property_enum_label#]:<br /><small>[#catalog_edit_property_enum_help#]</small></label>
+  <textarea rows="" cols="" name="enum_values" style="width:272px; height:75px;"></textarea>
+ </fieldset>
+<!-- @enum_vals -->
+<table class="admin_table" width="420">
+    <tr>
+        <th align="center" valign="top" colspan="2"><b>[#catalog_edit_property_enum_label#]</b></th>
+    </tr>
+	%vals%
+    <tr>
+        <td width="150" align="right" valign="top">[#catalog_edit_property_enum_val_add_label#]:</td>
+        <td><input type="text" name="enumval" value="">&nbsp;<input type="button" name="submit" value="[#catalog_edit_property_enum_val_add_bt#]" onclick="jspub_form_submit('savepropform','%form_action%')"></td>
+    </tr>
+</table>
+
+
+<!-- @enum_val -->
+    <tr>
+        <td width="150" align="right" valign="top">%val_name%</td>
+        <td><a href="#" onclick="jspub_confirm('%action_del%','[#catalog_edit_property_enum_del_alert#]?')"><img src="/admin/templates/default/images/icon_delet.gif" alt="[#catalog_edit_property_enum_del_alert#]"/></a></td>
+    </tr>
+
+<!-- @old_el -->
+<form action="%form_action%" method="post" id="addenumform">
+<input type="hidden" name="id" value="%id%"/>
+</form>

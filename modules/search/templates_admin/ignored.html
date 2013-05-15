@@ -1,0 +1,32 @@
+<!-- @table_header -->
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#search_name_modul_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+  <div class="content">
+  
+  <h3>[#search_ignored_menuitem#]</h3>
+<table class="admin_table">
+        <tr>
+            <th>[#search_ignored_word_header#]</th>
+            <th>[#search_ignored_actions_header#]</th>
+        </tr>
+
+<!-- @table_line-->
+<tr>
+	<td>%word%</td>
+	<td><a href="#" onclick="jspub_confirm('ignored_delete&id=%id%','[#search_ignored_del_alert#] %word%?')"><img src="/admin/templates/default/images/icon_delet.gif" alt="[#search_ignored_del_alert#] %word%?"/></a></td>
+</tr>
+<!-- @table_footer -->
+</table>
+
+<h3>[#search_ignored_add_button#]</h3>
+<form action="%form_action%" method="POST" id="addignoredform">
+<fieldset>
+ <input type="text" name="istring" value="">
+ <input type="button" name="submit" style="margin-left:10px;"  value="[#search_ignored_add_button#]" onclick="jspub_form_submit('addignoredform','%form_action%')">
+</fieldset>
+</form>
+
+</div>
+</div>
+</div>

@@ -1,0 +1,113 @@
+<!--
+Шаблон формы регистрации посетителя.
+Секции сообщений:
+
+@also_registred - Сообщение о том, что такой посетитель зарегистрирован
+@invalid_email - Сообщение о том, что введен неправильный e-mail
+@not_unique - Сообщение о том, что такой логин уже занят
+@follow_link - Сообщение о том, что на почту выслан линк для подтверждения
+@invalid_link - Если введен неправильный линк подтверждения
+@success - Сообщение об успешном подтверждении емейла
+@wait_for_confirm - Сообщение о необходимости ожидания активации
+
+Секции формы:
+@begin - шапка формы регистрации
+@register - сама форма регистрации
+@end - подвалформы регистрации
+
+Письма администаторам:
+@email2admin_body - текст письма администратору, %fields% заменится на список полей пользователя
+@email2admin_field_line - строка с каждым полем, заполненным пользователем
+
+Письмо пользователю:
+@mail - тело письма пользователю со ссылкой для подтверждения акаунта
+
+
+-->
+
+<!-- @also_registred -->
+<h2>Вы уже зарегистрированы</h2>
+<!-- @invalid_email -->
+<h2>Неправильный e-mail адрес</h2>
+<!-- @not_unique -->
+<h2>Пользователь с таким логином или email уже зарегистрирован. Попробуйте ввести другой.</h2>
+<!-- @wait_for_confirm -->
+<h2>Ожидайте, пока администратор активирует вашу учётную запись. После активации вам придёт письмо</h2>
+<!-- @follow_link -->
+<h2>На Ваш адресс отправлено письмо. Для подтверждения регистрации перейдите по ссылке, указанной в письме.</h2>
+<!-- @invalid_link -->
+<h2>Неправильная ссылка!</h2>
+<!-- @success -->
+<h2>Регитрация успешно пройдена</h2>
+
+<!-- @begin -->
+<h2>Регистрация</h2>
+
+<!-- @register -->
+<form method="POST" id="BigForm" action="?regaction=input">
+	<table cellpadding="10">
+		<tr>
+			<td width="200" align="left" valign="top" >Имя*</td>
+			<td align="left" valign="top"><input name="reg[name]" type="text" id="name" value="" size="50"></td>
+		</tr>
+
+		<tr>
+			<td width="200" align="left" valign="top" >Телефон (с кодом города)</td>
+			<td align="left" valign="top"><input name="reg[phone]" type="text" id="phone" value="" size="50"></td>
+		</tr>
+		<tr>
+			<td width="200" align="left" valign="top" >Ваш E-mail* (на него придет код регистрации)</td>
+			<td align="left" valign="top"><input name="reg[email]" type="text" id="email" value="" size="50"></td>
+		</tr>
+		<tr>
+			<td width="200" align="left" valign="top" >Ваш логин*</td>
+			<td align="left" valign="top"><input name="reg[login]" type="text" id="login" value="" size="40"></td>
+		</tr>
+		<tr>
+			<td width="200" align="left" valign="top" >Ваш пароль*</td>
+			<td align="left" valign="top"><input name="reg[pass]" type="password" id="passwd" onblur="checkPass(this.form.passwd2,this,'quality')" onkeypress="checkPass(this.form.passwd2,this)" onkeyup="checkPass(this.form.passwd2,this,'quality')" value="" size="40" maxlength="20"></td>
+		</tr>
+		<tr>
+			<td width="200" align="left" valign="top" >Подтверждение пароля*</td>
+			<td align="left" valign="top"><input name="reg[pass2]" type="password" id="passwd2" onBlur="checkPass(this,this.form.passwd)" onKeyPress="checkPass(this,this.form.passwd)" onKeyUp="checkPass(this,this.form.passwd)" value="" size="40" maxlength="20"></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="right" valign="top"><input name="register" type="submit" value="Зарегистрировать"></td>
+		</tr>
+	</table>
+</form>
+<!-- @end -->
+
+
+<!-- @email2admin_body -->
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<h3>Регистрация нового пользователя</h3>
+%fields%
+</body>
+</html>
+
+<!-- @email2admin_field_line -->
+<li><strong>%key%</strong> : %value% </li>
+
+
+<!-- @mail -->
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+</head>
+<body>
+Здравствуйте, %name%!<br>
+Вы получили это письмо потому, что на сайте %host% активирован процесс регистрации нового пользователя с указанием E-mail: %email%.<br>
+Для продолжения регистрации пожалуйста перейдите по ссылке:<br>
+<a href="%url%">%url%</a><br>
+Если ссылка не открывается, скопируйте ее в адресную строку браузера.<br>
+<br>
+<br>
+С Уважением,<br>
+<a href="mailto:info@%host%">Администрация сайта %host%</a>
+</body>
+</html>

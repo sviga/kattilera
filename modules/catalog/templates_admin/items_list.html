@@ -1,0 +1,181 @@
+<!-- @header -->
+<script type="text/javascript">
+ var ccontainer=$('#content_container');
+ ccontainer.find('.searchbtn').button({
+   icons: { primary: "ui-icon-search" }
+ });
+
+ ccontainer.find('.checkallbtn').button({
+   icons: { primary: "ui-icon-check" }
+ });
+
+ function groupSelectChange()
+ {
+	jspub_click('show_items&group_id='+$('#group_id').val());
+ }
+
+ function add_new_item()
+ {
+ 	jspub_click('item_add&group_id='+$('#group_id_for_add').val()+'&redir2=%redir2%');
+ }
+
+ function checkall()
+ {
+     $('#scif').find('input[type=checkbox]').attr('checked','checked');
+     return false;
+ }
+
+ function uncheckall()
+ {
+     $('#scif').find('input[type=checkbox]').removeAttr('checked');
+     return false;
+ }
+
+ function show_hide_search()
+ {
+	 $('#search_form_block').toggle();
+	 return false;
+ }
+
+</script>
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#catalog_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+ 
+<h3>%header_label%</h3>
+
+<fieldset>
+ <label style="width:100px; cursor:default;">[#catalog_items_all_list_filter_items_group#]:</label>
+ <select name="group_id" style="float:right;" id="group_id" onChange="groupSelectChange()">
+  %group_values%
+ </select>
+ 
+<div style="display:%search_link_display%; float:right;"><button class="searchbtn" onClick="return show_hide_search();">[#catalog_items_search_link_label#]</button></div>
+</fieldset>
+
+<div id="search_form_block" style="display:none; clear:both; border-top:1px solid #ededed; margin-top:10px;">
+  %search_form%
+</div>
+
+<!-- @group_value -->
+<option value="%group_id%" %gselected%>%group_name%</option>
+
+<!-- @table_header -->
+<form action="%form_action%" method="post" name="scif" id="scif">
+<table class="admin_table">
+        <tr>
+            <th width="20"><!-- [#catalog_items_all_list_table_checkbox#] --></th>
+            <th>[#catalog_items_all_list_table_num#]</th>
+            %list_prop_names%
+            <th>[#catalog_items_all_list_table_group#]</th>
+            <th>[#catalog_items_all_list_table_action#]</th>
+        </tr>
+
+<!-- @list_prop_name -->
+<th>%list_prop_name%</th>
+
+<!-- @list_prop_value -->
+<td>%list_prop_value%</td>
+
+<!-- @list_prop_value_edit -->
+<td><input type="text" name="iv[%id%][%name_db%]" value="%list_prop_value%" style="width:88%; float:none; margin:0 auto;"></td>
+
+<!-- @list_prop_value_select_edit -->
+<td>
+    <select name="iv[%id%][%name_db%]">
+        %options%
+    </select>
+</td>
+<!-- @list_prop_value_select_option_edit -->
+<option value="%option_value_escaped%">%option_value%</option>
+<!-- @list_prop_value_select_option_selected_edit -->
+<option value="%option_value_escaped%" selected>%option_value%</option>
+
+<!-- @table_body-->
+        <tr>
+            <td><input type="checkbox" id="icb" name="icb[%id%]"></td>
+            <td>%number%</td>
+            %list_prop_values%
+            <td>%group%</td>
+            <td valign="middle" nowrap>
+                <a href="javascript:void(0);" onclick="jspub_click('item_clone&id=%id%')" title="клонировать"><img src="/admin/templates/default/images/eye_old.gif" alt="клонировать"/></a>
+	             <a href="javascript:void(0);" onclick="jspub_confirm('item_delete&id=%id%&group_id=%group_id%','[#catalog_items_all_list_table_action_alertdel#]?')"><img src="/admin/templates/default/images/icon_delet.gif" alt="[#catalog_items_all_list_table_action_alertdel#]"/></a>
+                <a href="javascript:void(0);" onclick="jspub_click('item_edit&id=%id%&redir2=%redir2%')"><img src="/admin/templates/default/images/icon_edit.gif" alt="[#catalog_items_all_list_table_action_edit#]"/></a>
+            </td>
+        </tr>
+<!-- @table_footer -->
+</table>
+
+%pages%
+
+<fieldset style="border-top:1px solid #ededed; padding-top:10px;">
+ <button class="checkallbtn" onclick="return checkall();">[#catalog_items_all_list_table_action_check_all#]</button>&nbsp;&nbsp;<button onclick="return uncheckall();">[#catalog_items_all_list_table_action_uncheck_all#]</button>
+</fieldset>
+
+<fieldset style="border-top:1px solid #ededed; padding-top:10px;">
+ <input type="hidden" name="group_id" value="%group_id%">
+ <label style="width:150px; cursor:default;">[#catalog_items_all_list_table_action_with_sel#]:</label>
+ <select name="withselected" id="withselected">
+  <option value="">[#catalog_items_all_list_table_action_no#]</option>
+  <option value="delete_selected">[#catalog_items_all_list_table_action_del_sel#]</option>
+  %category_values%
+ </select>
+ &nbsp;
+  <input type="submit" value="[#catalog_items_all_list_table_action_with_sel_go#]">
+  <input type="submit" name="change_items" value="Сохранить поля">
+</fieldset>
+
+</form>
+
+<!-- @addform -->
+<fieldset style="border-top:1px solid #ededed; padding-top:10px;">
+ <label style="width:150px; cursor:default;">[#catalog_items_all_list_add_item_label#]</label><select name="group_id_for_add" id="group_id_for_add">%group_values%</select>&nbsp;&nbsp;<input type="button" value="[#catalog_items_all_list_add_item_bt_label#]" onclick="add_new_item()">
+</fieldset>
+
+ </div>
+ </div>
+</div>
+
+<!-- @category_value -->
+<option value="%category_id%">&rarr;%shift% %category_name%</option>
+
+
+<!-- @pages -->
+%first% %backward% %previous% %pages_block% %next% %forward% %last%
+
+<!-- @page_first -->
+<a href="#" onclick="jspub_click('%url%')">Начало</a>
+<!-- @page_backward-->
+<a href="#" onclick="jspub_click('%url%')">&laquo;</a>
+<!-- @page_backward_disabled-->
+&laquo;
+<!-- @page_previous-->
+<a href="#" onclick="jspub_click('%url%')">&laquo;</a>
+<!-- @page_previous_disabled-->
+&laquo;
+<!-- @page_forward-->
+<a href="#" onclick="jspub_click('%url%')">&raquo;</a>
+<!-- @page_forward_disabled-->
+&raquo;
+<!-- @page_next-->
+<a href="#" onclick="jspub_click('%url%')">&raquo;</a>
+<!-- @page_next_disabled-->
+&raquo;
+<!-- @page_last -->
+<a href="#" onclick="jspub_click('%url%')">Конец</a>
+<!-- @page_active -->
+<a href="#" onclick="jspub_click('%url%')">%page%</a>
+<!-- @page_passive -->
+%page%
+<!-- @page_delimeter -->
+&nbsp;-&nbsp;
+
+<!-- @page_null -->
+
+
+<!-- @no_data -->
+ <h3>[#catalog_items_all_list_no_items#]</h3>
+
+<!-- @no_groups -->
+[#catalog_items_all_list_nogroups_msg#]

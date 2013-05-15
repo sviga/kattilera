@@ -1,0 +1,10 @@
+#php_value log_errors 1
+#php_value error_log "./error.log"
+#php_value upload_max_filesize 32M
+
+RewriteBase /
+RewriteEngine On
+
+#RewriteRule   !^features.*     -                  [C]
+RewriteRule   ^[a-z0-9_-]*\.html.*                     index.php
+DirectoryIndex index.php

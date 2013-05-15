@@ -1,0 +1,91 @@
+<!--
+Вывод комментариев
+
+Секции:
+@partition_list_begin - шапка списка категорий
+@partition_list_line - вывод названия категории
+@partition_list_end -подвал списка категорий
+@partition_content_begin - шапка списка вопросов
+@partition_content_line - вывод вопроса
+@partition_content_end - подвал списка вопросов
+@answer_table - вывод вопроса с ответом
+@form - форма для задания вопросов
+@form_submit_ok - сообщение о удачной отправке вопроса
+
+-->
+
+
+
+<!-- @email2admin -->
+<html>
+<head><meta http-equiv="content-type" content="text/html; charset=utf-8" /></head>
+<body>
+Новый вопрос на сайте от %user% (%email%):<br>
+%question%
+</body>
+</html>
+
+<!-- @partition_list_begin -->
+		<div id="faq" class="content">
+			<p class="title">FAQ</p>
+			<ol>
+<!-- @partition_list_line -->
+				<li><a href="%link%" title="%name%">%name%</a></li>
+<!-- @partition_list_end -->
+			</ol>
+<!-- @partition_content_begin -->
+		<div id="faq" class="content">
+			<p class="title">FAQ</p>
+		<ul>
+
+<!-- @partition_content_line -->
+				<li>%user% %added% <a href="%link%">%question%</a><br>%description%<br>%answer%</li>
+
+<!-- @partition_content_end -->
+		</ul>
+
+<!-- @answer_table -->
+		<div id="faq" class="content">
+			<p class="title">FAQ</p>
+			<dl>
+				<dt>Вопрос:</dt>
+				<dd>
+					<p>пользователь %user% спросил %added% <em>%question%</em></p>
+					<p>%description%</p>
+				</dd>
+				<dt>Ответ:</dt>
+				<dd>
+					%answer%
+				</dd>
+			</dl>
+
+
+<!-- @form -->
+            <br><br>
+			<p class="title">Задать вопрос</p>
+			<div id="feedback">
+				<form action="" method="post">
+					<p>
+						<label for="faq_user_name">Ваше имя</label> <br />
+						<input type="text" class="text" id="faq_user_name" name="faq_user_name" value="" />
+                        <br clear="all">
+					</p>
+					<p>
+						<label for="faq_user_email">Ваш e-mail</label> <br />
+						<input type="text" class="text" id="faq_user_email" name="faq_user_email" value="" />
+                         <br clear="all">
+					</p>
+					<p>
+						<label for="faq_user_question">Ваш вопрос</label> <br />
+						<textarea name="faq_user_question" id="faq_user_question" rows="5" cols="20"></textarea>
+                         <br clear="all">
+					</p>
+					<p>
+						<input type="submit" name="faq_user_button" value="Задать" />
+					</p>
+				</form>
+			</div>
+		</div>
+<!-- @form_submit_ok -->
+			<p class="success">Спасибо, ваш вопрос принят</p>
+			</div>

@@ -1,0 +1,89 @@
+<!-- @form -->
+<script type="text/javascript">
+function create_file_tpl()
+{
+    $("#popup_msg_div").html('<p>[#feedback_create_template_label#]<input type="text" name="filename" id="feedback_filename"/> </p>');
+    $("#popup_msg_div").dialog({
+        resizable: false,
+        height:200,
+        modal: true,
+        title: '[#feedback_create_template_winlabel#]',
+        buttons: {
+            "OK": function() {
+                $('#edit_ini_form').attr('action',"%form_action_3%"+$('#feedback_filename').val());
+                $('#edit_ini_form').submit();
+                $(this).dialog( "close" );
+            },
+            "Cancel": function() {
+                $(this).dialog( "close" );
+            }
+        }
+    });
+    return false;
+}
+
+</script>
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#feedback_modul_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+  <div class="content">
+  
+  <h3>[#feedback_menu_edit_ini#]</h3>
+  
+  <form action="%form_action%" method="POST" id="edit_ini_form" name="edit_ini_form">
+   %lines%
+   
+   
+   <fieldset class="page_submit_field">
+    <input type="button" value="[#admin_backof_global_save#]" onclick="jspub_form_submit('edit_ini_form','%form_action%');" %but1disabled%>
+    <input type="button" value="[#feedback_create_template#]" onclick="return create_file_tpl();" %but2disabled%>
+   </fieldset>
+
+  </form>
+
+  <h3>[#feedback_field_new#]</h3>
+  <form action="%form_action_2%" method="post" id="feedback_form_add" name="feedback_form_add">
+   <fieldset>
+    <label for="field_id" style="width:auto;">[#feedback_field_id#]</label>
+    <input type="text" id="field_id" name="field_id">
+    <input type="button" style="margin-left:10px;" value="[#feedback_field_add#]" onclick="jspub_form_submit('feedback_form_add','%form_action_2%');">
+   </fieldset>
+  </form>
+
+ </div>
+</div>
+</div>
+<!-- @line -->
+<fieldset>
+<table class="container" style="margin:0;">
+<tr>
+ <th colspan="5" style="text-align:left;">[#feedback_field_id#] : %legend%</th>
+</tr>
+<tr>
+    <td>
+        [#feedback_field_label#]<br>
+        <input type="text" style="width:200px; margin:0; float:none;" name="%legend%[label]" value="%label%" id="%legend%">
+    </td>
+    <td>
+        [#feedback_field_type#]<br>
+        <select style="width:auto;" name="%legend%[type]">
+            %types%
+        </select>
+    </td>
+
+    <td>
+        [#feedback_field_blank#]<br>
+        <input type="checkbox" name="%legend%[allowBlank]" %allow_value%>
+    </td>
+    <td>
+        [#feedback_field_regexp#]<br>
+        <select style="width:auto;" name="%legend%[regexp]">
+            %regexp_types%
+        </select>
+    </td>
+    <td>
+        <img style="cursor: pointer;" width="26" height="26" src="/admin/templates/default/images/icon_delet.gif" alt="[#feedback_item_action_remove#]" border="0" onclick="jspub_confirm('delete&id=%legend%', '[#feedback_item_remove#]')"/>
+    </td>
+</tr>
+</table>
+</fieldset>

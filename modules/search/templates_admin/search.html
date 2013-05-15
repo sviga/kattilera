@@ -1,0 +1,42 @@
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#search_name_modul_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+  <div class="content">
+  
+  <h3>[#search_admin_index#]</h3>
+  
+   <table class="admin_table" cellpadding="10" width="400">
+     <tr>
+       <th colspan="3"> [#search_admin_table_label#] </th>
+     </tr>
+     <tr>
+       <td>[#search_admin_table_all_index#]</td>
+       <td colspan="2">%index_page%</td>
+     </tr>
+     <tr class="admin_table_wstring">
+       <td>[#search_admin_table_all_words#]</td>
+       <td colspan="2">%index_word%</td>
+     </tr>
+     <tr class="admin_table_wstring" >
+       <td colspan="3" height="10"></td>
+     </tr>
+     <tr>
+       <th colspan="3"> [#search_admin_table_label2#] </th>
+     </tr>
+     <tr>
+       <td>[#search_admin_table_php_mem#]&nbsp;%is_change%</td>
+       <td>%php_mem%</td>
+       <td>[#search_admin_table_php_mem_coment#]</td>
+     </tr>
+     <tr>
+       <td>[#search_admin_table_time_life#]</td>
+       <td colspan="2"> %script_life% </td>
+     </tr>
+   </table>
+
+   <fieldset class="page_submit_field">
+    <input type="button" value="[#search_admin_button_reindex#]" onclick="jspub_click('start_index&firstime=1')">
+   </fieldset>
+ </div>
+</div>
+</div>

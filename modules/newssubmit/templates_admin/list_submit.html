@@ -1,0 +1,69 @@
+<!-- @form -->
+<script type="text/javascript">
+ function start_submit()
+ {
+   formsubmit.submit();
+   //window.location = "";
+ }
+</script>
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#newssubmit_name_modul_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+ 
+ <h3></h3>
+ 
+ <form method="post" name="formsubmit" enctype="multipart/form-data" action="%url_form%">
+  <table class="admin_table">
+    <tr>
+      <th width="30">[#module_newssubmit_admin_table_submit_label_num#]</th>
+      <th width="30">[#module_newssubmit_admin_table_submit_label_check#]</th>
+      <th>[#module_newssubmit_admin_table_submit_label_date_news#]</th>
+      <th width="100">[#module_newssubmit_admin_table_submit_label_label#]</th>
+      <th width="300">[#module_newssubmit_admin_table_submit_label_descrip#]</th>
+    </tr>
+    
+    %news_for_submit%
+
+    <tr>
+      <td colspan="5"></td>
+    </tr>
+    
+    <tr>
+      <th colspan="5">[#module_newssubmit_admin_table_submit_text_start#]</th>
+    </tr>
+    <tr>
+      <td colspan="5"><textarea name="start_text" rows="7" style="width:99%; margin:0 auto;"></textarea></td>
+    </tr>
+    
+    <tr>
+      <th colspan="5">[#module_newssubmit_admin_table_submit_text_end#]</th>
+    </tr>
+    
+    <tr>
+      <td colspan="5"><textarea name="end_text" rows="7" style="width:99%; margin:0 auto;"></textarea></td>
+    </tr>
+  </table>
+  
+  <fieldset class="page_submit_field">
+   <input type="submit" name="submit" value="[#module_newssubmit_admin_table_submit_bt_send#]">
+   <!-- <input type="button" value="Разослать" class="text" onClick="start_submit()"> -->
+  </fieldset>
+ </form>
+ </div>
+ </div>
+</div>
+
+<!-- @news_lenta -->
+<tr>
+ <td colspan="5"><span class="highlight"><b>%name%</b></span></td>
+</tr>
+
+<!-- @news_one-->
+<tr>
+ <td>%num%</td>
+ <td><input id="%section%_%num%" type="checkbox" name="news[%section%][%id%]" %check%></td>
+ <td><label for="%section%_%num%" style="font-weight:normal;">%date%</label></td>
+ <td><label for="%section%_%num%" style="font-weight:normal;">%header%</label></td>
+ <td style="text-align:left;"><label for="%section%_%num%" style="font-weight:normal;">%announce%</label></td>
+</tr>

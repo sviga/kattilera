@@ -1,0 +1,18 @@
+<!-- Данный шаблон, подменяет собой основной шаблон страницы, значение меток, будут взяты из
+привязок для страницы, к которой формиуется печатная версия -->
+<html>
+<head>
+<title>Версия для печати: [#title#]</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css"><!-- Стили, используемые в печатной версии--></style>
+</head>
+<body onload="window.print();">
+<table>
+  <tbody>
+    <tr>
+      <td>[#content#]</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

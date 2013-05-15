@@ -1,0 +1,247 @@
+<!-- @tree_data_url -->
+
+"ajax" : {
+    "url" : "%data_url%",
+    "data":function(n) {
+        return { pid : n.attr ? n.attr("id") : "" };
+    }
+},
+
+
+<!-- @click_node_default -->
+santaUpdateRegionSynchron("content","index.php?action=set_left_menu&leftmenu=%action_node%&id="+sel_node);
+<!-- @linkmenu_struct -->
+structure_tree_click_node("%action_node%&id=" + currNodeId);
+<!-- @linkmenu -->
+start_interface.link_go("%action_node%&id=" + currNodeId);
+<!-- @main -->
+<div id="%tree_id%"></div>
+<script type="text/javascript">
+
+    jQuery("#%tree_id%")
+            //%dnd_action2%
+            .bind("select_node.jstree", function (e,data) {
+                var currNodeId = data.rslt.obj.attr("id");
+                var dc = true/*%direct_click%*/;
+                if (!dc)
+                {
+                    //%linkmenu%
+                }
+                else
+                {
+                    //Это клик когда надо будет проставить значение выбранной ноды
+                    //и вызвать событие на закрытие окна. Используется для выбора
+                    //страницы сайта в качестве свойства чего-либо.
+                    if (typeof structSelectedPage == 'function')
+                        structSelectedPage(currNodeId);
+                    else // 'string'
+                        $('#'+structSelectedPage).val(currNodeId);
+                    $("#popup_sitemap_div").dialog("destroy");
+                }
+
+            })
+            .bind("loaded.jstree", function (event, data) {
+                var str_cook = jspub_cookie_get("%cookie_name_tree%");
+                var arr_node = [
+                    //%node_default%
+                ];
+                if (str_cook.length > 0)
+                {
+                    //Так как ID могут быть строками, надо заменить там запятые на кавычки
+                    str_cook = '"'+str_cook.replace(/,/g,'","')+'"';
+                    //Массив нужно создать таким страшным способом.
+                    arr_node = eval(' new Array(' + str_cook.toString() + ')');
+                }
+                var sel_node=false;
+                //Теперь начнём раскрывать необходимые ноды
+                for (i = 0; i < arr_node.length; i++)
+                {
+                    sel_node=arr_node[i];
+                    //This can be a DOM node, jQuery node or selector pointing to an element we want opened.
+                    if (!data.inst.is_open("#"+arr_node[i]))
+                    {
+                        data.inst.open_node("#"+arr_node[i],false, true); //no callback, skip animation
+                    }
+                }
+                //И теперь поставим самую последнюю ноду в текущую
+                if (sel_node)
+                {
+                    //%click_node_default%
+                    data.inst.select_node("#"+sel_node);
+                }
+
+                var rootNodeID='#%root_id%';
+                if (data.inst.is_closed(rootNodeID) && !data.inst.is_leaf(rootNodeID))
+                    data.inst.open_node(rootNodeID,false, true); //no callback, skip animation
+
+            }).jstree({  //сначала привязываем  loaded.jstree, select_node.jstree и только ПОТОМ создаём дерево
+
+                "ui": {
+                    "select_limit": 1 //no multiselect
+                },
+                "core":{
+                    "html_titles":true
+                },
+                "json_data" : {
+                    "data" : [{"data":"%root_name%","attr":{"id":"%root_id%","rel":"root"},"state":"open","children": "%tree_data_children%"}],
+                    /*%tree_data_url%*/
+                    "correct_state":true
+                    //,"progressive_render" : true
+                },
+
+
+                "plugins" : [
+                    "json_data",
+                    "ui",
+                    //%dnd_enabled%
+                    "types",
+                    "contextmenu",
+                    "themes"
+                ],
+                "types" : {
+                    "max_depth" : -2,
+                    "max_children" : -2,
+                    "valid_children" : [ "root" ],
+                    "types" : {
+                        "default" : {
+                            "valid_children" : "file",
+                            "icon" : {
+                                "image" : "/admin/templates/default/images/file.png"
+                            }
+                        },
+                        // The `folder` type
+                        "folder" : {
+                            "valid_children" : [ "default", "folder" ],
+                            "icon" : {
+                                "image" : "/admin/templates/default/images/folder.png"
+                            }
+                        },
+                        "root" : {
+                            "valid_children" : [ "default", "folder" ],
+                            "icon" : {
+                                "image" : "/admin/templates/default/images/root.png"
+                            },
+                            "start_drag" : false,
+                            "move_node" : false,
+                            "delete_node" : false,
+                            "remove" : false
+                        }
+                    }
+                },
+                "themes" : {
+                    "theme" : "classic",
+                    "dots" : true,
+                    "icons" : true
+                },
+                //%dnd_action1%
+
+                "contextmenu" : {
+                    items: function (node, tree_obj) {
+                        return {
+                            "rename" : false,
+                            "remove" : false,//Delete
+                            "ccp" : false,
+                            "create":false
+                            //%context_menu_functions%
+                        }
+                    }
+                }
+            });
+
+</script>
+
+<!-- @dnd_action1 -->
+"crrm" : {
+    "move" : {
+        "default_position" : "inside",
+        "check_move" : function (m) {
+            if (m.o[0].id=="index" || m.np[0].id=="%tree_id%")
+                return false;//no index node drag && no drag to top
+            return true;
+        }
+    }
+},
+<!-- @dnd_action2 -->
+.bind("move_node.jstree", function (e, data) {
+    var index=data.rslt.cp;
+    $.post("%move_url%", { node :  data.rslt.o.attr("id"), newParent:data.rslt.np.attr("id"), index:index},
+        function(data){
+            //santaUpdateRegion('west','index.php?action=get_left_menu');
+        });
+})
+<!-- @dnd_enabled -->
+"crrm", "dnd",
+<!-- @context_menu_not -->
+
+<!-- @context_empty -->
+//this.contextmenu.add('-');
+
+<!-- @context_element -->
+
+<!-- @context_element_normal_click_function -->
+
+"%link_orig%":{
+    "label": "%name%",
+    "_class" : "%class%",
+    "action": function (par) {
+        var disabledForNodes = new String("%node_exclude%").split(",");
+        if (jQuery.inArray( par.attr("id"), disabledForNodes)>-1)
+            return;
+        //%action%
+    }
+}
+<!-- @context_element_add_click_function -->
+
+"create":{
+    "label"	: "Создать",
+    "action": function (par) {
+        var disabledForNodes = new String("%node_exclude%").split(",");
+        if (jQuery.inArray( par.attr("id"), disabledForNodes)>-1)
+            return;
+        //%action%
+    }
+}
+<!-- @context_element_remov_click_function -->
+"delete":{
+    "label" : "Удалить", // @todo use lang[]
+    "_class" : "ic_delete",
+    "_disabled": node.attr('rel')=='root'|| (jQuery.inArray( node.attr("id"), (new String ("%node_exclude%")).split(",")))>-1,
+    "action":function (par){
+        //%action%
+    }
+}
+<!-- @message_confirm -->
+if (par.attr("id")!="index")
+{
+    $("#popup_msg_div").html('<p>%confirm%?</p>');
+    $("#popup_msg_div").dialog({
+    resizable: false,
+    height:140,
+    modal: true,
+    buttons: {
+        "Yes": function() {// @todo use lang[]
+            jspub_cookie_set("%cookie_name_tree%","");
+            $.post('%link%',{ node :  par.attr("id")}, function(data){
+            santaUpdateRegion('west','index.php?action=get_left_menu');
+            });
+            $(this).dialog( "close" );
+        },
+        "No": function() {// @todo use lang[]
+            $(this).dialog( "close" );
+        }
+    }
+});
+}
+
+<!-- @context_element_normal_context_action-->
+$.post('%link%',{ node :  par.attr("id")}, function(data){
+    santaUpdateRegion('west','index.php?action=get_left_menu');
+});
+<!-- @context_element_add_context_action-->
+$.post('%link%',{ node :  par.attr("id")}, function(data){
+    santaUpdateRegion('west','index.php?action=get_left_menu');
+});
+<!-- @context_element_remov_context_action-->
+$.post('%link%',{ node :  par.attr("id")}, function(data){
+    santaUpdateRegion('west','index.php?action=get_left_menu');
+});

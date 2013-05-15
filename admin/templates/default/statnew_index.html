@@ -1,0 +1,52 @@
+<!-- @data_empty -->
+<h4 class="stat_data_empty">[#statist_erorre_no_data_for_show#]</h4>
+
+<!-- @begin -->
+<div align="left">
+<br />
+
+<!-- @image -->
+%link_image%
+
+<!-- @th_begin -->
+<table border="0" cellspacing="1" cellpadding="6 " align="center" class="admin_table">
+    <tr>
+      <th>[#statist_roboindex_table_label2#]</th>
+
+<!-- @th_tr -->
+	<th>%label_robor%</th>
+<!-- @th_end -->
+    </tr>
+
+<!-- @tr_begin -->
+    <tr %set_class_tr%>
+      <td nowrap="nowrap">%date%</td>
+
+<!-- @tr_tr -->
+<td align="center"><a onclick="jspub_click('%link%')" href="#">%count%</a></td>
+
+<!-- @tr_end -->
+</tr>
+
+<!-- @end -->
+</table>
+</div>
+
+<!-- @begin_robot -->
+<br />
+<table border="0" cellspacing="1" cellpadding="6 " align="center" class="admin_table">
+    <tr>
+	  <th>[#statist_roboindex_table_label1#]</th>
+	  <th>Страница</th>
+      <th>Кол-во</th>
+	</tr>
+<!-- @tr_robot -->
+    <tr %set_class_tr%>
+	  <td>%num%</td>
+	  <td><a href="%link%" target="_blank">%name_link%</td>
+      <td>%count%</td>
+	</tr>
+
+
+<!-- @end_robot -->
+</table>

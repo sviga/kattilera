@@ -1,0 +1,91 @@
+<!-- @lang_option -->
+<option value="%key%">%val%</option>
+<!-- @lang_option_selected -->
+<option value="%key%" selected>%val%</option>
+
+<!-- @group_line -->
+<span class="clear" style="display:block;">
+ <input type="checkbox" id="[#id_group#]" name="select_group[[#id_group#]]" [#group_checked#]>
+    <label for="[#id_group#]" style="width:65%;">[#name_group#]</label>
+</span>
+
+
+<!-- @main -->
+<script language="javascript">
+
+    $('#form_admin_buttonsave').click(function () {
+        if (!$('#login').val() || !$('#pass').val())
+            santaShowPopupHint("Error", '[#admin_adminstrators_required_fields_empty#]', 0);
+        else {
+            var postArr = $('#form_admin_edit_and_add').serializeArray();
+            $.post('[#form_action#]', postArr, function (data) {
+                //Обрабатываем ответ
+                var post_res = jQuery.parseJSON(data);
+                if (post_res != null) {
+                    //сначала проверка на наличие ошибок
+                    if (post_res.success) {
+                        santaShowPopupHint("Info", post_res.info, 1500);
+                        jspub_click('control_admins');
+                    }
+                    else
+                        santaShowPopupHint("Error", post_res.info, 0);
+                }
+            });
+        }
+
+        return false;
+    });
+</script>
+<span class="content_header">[#admin_adminstrators_label#] &rarr; <span class="black">[#admin_adminstrators_manage#]</span></span>
+<div id="page_container">
+    <div id="content_container">
+        <div class="content">
+            <h3>[#backof_admin_edit_label#] <span class="highlight">[#full_name#]</span></h3>
+
+            <form id="form_admin_edit_and_add">
+                <fieldset>
+                    <label for="login">[#backof_admin_edit_field1#]</label>
+                    <input type="text" id="login" name="login" value="[#login#]" id="admin_login">
+                </fieldset>
+
+                <fieldset>
+                    <label for="full_name">[#backof_admin_edit_field2#]</label>
+                    <input type="text" id="full_name" name="full_name" value="[#full_name#]">
+                </fieldset>
+
+                <fieldset>
+                    <label for="pass">[#backof_admin_edit_field3#]</label>
+                    <input type="text" id="pass" name="pass" value="[#pass#]" id="admin_pass">
+                </fieldset>
+
+                <fieldset>
+                    <label for="langselect">[#backof_admin_edit_field4#]</label>
+                    <select id="langselect" name="lang" style="width:282px;">
+                        %lang_options%
+                    </select>
+                </fieldset>
+
+                <fieldset>
+                    <label>[#backof_admin_edit_field5#]</label> <span class="bold">UTF-8</span>
+                </fieldset>
+
+                <fieldset>
+                    <label for="field7">[#backof_admin_edit_field7#]</label>
+                    <input type="checkbox" id="field7" name="enabled" [#enabled_checked#]>
+                </fieldset>
+
+                <fieldset>
+                   <label>[#backof_admin_edit_field6#]</label>
+                   <span style="width:300px; display:block; float:left;">
+                        [#fields_groups#]
+                   </span>
+                </fieldset>
+
+                <fieldset class="page_submit_field">
+                    <input type="submit" value="[#admin_backof_global_save#]" id="form_admin_buttonsave">
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+

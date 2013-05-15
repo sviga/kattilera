@@ -1,0 +1,62 @@
+<!-- @header -->
+<form method="post" action="%search_form_action%" id="searchform">
+<input type="hidden" name="group_id" value="%groupid%">
+
+<!-- @checkbox -->
+<fieldset>
+ <label>%prop_full_name%</label>
+ %checkboxs%
+</fieldset>
+
+<!-- @checkboxs -->
+<input type="checkbox" name="%prop_db_name%[]" value="%valuekey%">%value%
+
+<!-- @radio -->
+<fieldset>
+ <label>%prop_full_name%</label>
+ %radios%
+</fieldset>
+<!-- @radios -->
+<input type="radio" name="%prop_db_name%" value="%valuekey%"> %value%
+
+<!-- @select -->
+<fieldset>
+ <label>%prop_full_name%:</label>
+ <select name="%prop_db_name%">
+  %selects%
+ </select>
+</fieldset>
+<!-- @selects -->
+<option value="%valuekey%">%value%</option>
+
+<!-- @diapazon -->
+<fieldset>
+ <label>%prop_full_name%</label>
+ <span class="block fLeft">
+  от %diapazons_from% до %diapazons_to%
+ </span>
+</fieldset>
+<tr><td></td><td> </td></tr>
+<!-- @diapazons_from -->
+<input type="text" name="%prop_db_name%_from" style="width:130px;" value="">
+<!-- @diapazons_to -->
+<input type="text" name="%prop_db_name%_to" style="width:130px;" value="">
+
+
+
+<!-- @numberinput -->
+<fieldset>
+ <label>%prop_full_name%:</label>
+ <input type="text" name="%prop_db_name%" value="">
+</fieldset>
+<!-- @textinput -->
+<fieldset>
+ <label>%prop_full_name%:</label>
+ <input type="text" name="%prop_db_name%" value="">
+</fieldset>
+
+<!-- @footer -->
+<fieldset class="page_submit_field">
+ <input type="submit" name="search" value="Искать">
+</fieldset>
+</form>

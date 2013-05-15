@@ -1,0 +1,85 @@
+<!-- @body -->
+<div id="mod_action_edit" class="content" style="width:100%; margin:0 auto; padding:10px 0;">
+    <h3>[#action_curent_name#]</h3>
+    <form action="%url_action%" method="post" id="module_action_saveform">
+        <fieldset>
+            <label for="action_name">[#modules_install_label_name_action#]</label>
+            <input type="text" name="action_name" id="action_name" value="[#action_name#]">
+        </fieldset>
+
+        <fieldset>
+            %action_param_html%
+        </fieldset>
+
+        <fieldset class="page_submit_field">
+            <input type="button" value="[#modules_button_save_properties#]" id="modules_button_save_properties">
+        </fieldset>
+    </form>
+</div>
+
+
+<script type="text/javascript">
+    var mblock=$('#mod_action_edit');
+    mblock.find("input:button").button();
+
+    mblock.find('select').selectmenu({
+        style:'dropdown',
+        maxHeight: 200
+    });
+
+    var arr_actions = [];
+    var fieldNames = [%fieldNames%];
+    var url_for_submit = '';
+
+
+    $('#modules_button_save_properties').click(function(){
+        var action_name=$('#action_name');
+        if (action_name.val()=="")
+            santaShowPopupHint('Error','Не заполнено имя действия',0);// @todo move to lang vars
+        else
+        {
+            var postArr={action_name:action_name.val()};
+            postArr.properties = {};
+            var fID, val, fieldName, elem;
+            for (var j=0;j<fieldNames.length;j++)
+            {
+                fID = 'ppv_'+fieldNames[j];
+                elem=$('#'+fID);
+                //пропускаем незачеканные чекбоксы
+                if (elem[0].tagName=="INPUT" &&  elem.attr('type').toLowerCase()=="checkbox" && !elem.attr('checked'))
+                    continue;
+                postArr.properties[fieldNames[j]]=elem.val();
+
+            }
+            $.post('%url_action%',postArr,  function(data){
+                //Обрабатываем ответ
+                var post_res=jQuery.parseJSON(data);
+                if (post_res!=null)
+                {
+                    //сначала проверка на наличие ошибок
+                    if (post_res.success)
+                    {
+                        santaShowPopupHint("Info",post_res.info,1500);
+                        update_action_list();//обновляем действия, если всё ок
+                    }
+                    else
+                        santaShowPopupHint("Error", post_res.info,0);
+                }
+            });
+
+        }
+    });
+
+    $('.prop-description b').next('ul').css({'display':'none'});
+
+    $('.prop-description b').toggle(function(){
+                $(this).next('ul').slideDown();
+            },
+            function (){
+                $(this).parent().find('ul').slideUp();
+            });
+
+
+    %action_param_code%
+
+</script>

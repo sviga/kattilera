@@ -1,0 +1,90 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=[#set_charset#]">
+<link rel="StyleSheet" href="../../../../admin/css/css.css" type="text/css" />
+<script language="javascript1.2" type="text/JavaScript">
+<!--
+	function set_action(name_action)
+	{
+		document.all_form.mact.value = name_action;
+		document.all_form.submit();
+	}
+
+	function start_new_template(name_action)
+	{
+		var num = 1;
+		if (document.all_form.shablon != undefined)
+		{
+			num = 2;
+			if (document.all_form.shablon.length != undefined)
+				num = document.all_form.shablon.length + 1;
+		}
+
+		var regexp = /^[a-z0-9_\-\.]{1,50}$/;
+		var new_name = 'new_tempate'+num+'.html';
+		var one_step = 0;
+
+		while ((!regexp.test(new_name)) || (one_step == 0))
+		{
+			new_name = prompt('[#mapsite_admin_prompt_label1#]',new_name);
+			one_step = 1;
+			if (!regexp.test(new_name))
+			{
+				alert('[#mapsite_admin_prompt_errore1#]');
+			}
+		}
+		if (new_name != null)
+		{
+			document.all_form.name_new_file.value = new_name;
+			document.all_form.mact.value = name_action;
+			document.all_form.submit();
+		}
+	}
+
+	function start_delet_template()
+	{
+		if (confirm('[#mapsite_admin_confirm1#]'))
+		{
+			document.all_form.mact.value = 'delet_template';
+			document.all_form.submit();
+		}
+	}
+//-->
+
+</script>
+</head>
+<body style="border-style: none;" topmargin="10" rightmargin="0" leftmargin="20">
+<div align="center">[#module_mapsite_admin_label1#]</div>
+<form name="all_form" method="post" action="/admin/?action=bottom_frames">
+  <input type="hidden" name="mact" value="save_on_text">
+  <input type="hidden" name="name_new_file" value="">
+  <table border="0" cellpadding="0" cellspacing="0" width="99%" height="90%">
+    <tr>
+      <td valign="top" width="300">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td><fieldset>
+              <legend>&nbsp;[#module_mapsite_admin_label2#]&nbsp;</legend>
+              [#mapsite_admin_list_templates#] </fieldset></td>
+          </tr>
+		  <tr><td align="right"><span onClick="start_new_template('create_template')"><font style="CURSOR: hand" onMouseOver="event.srcElement.style.color='#000000'" onMouseOut="event.srcElement.style.color='#999999'" color="#999999">[#mapsite_admin_new_template#]</font></span>&nbsp;
+		          <span onClick="start_new_template('copy_template')"><font style="CURSOR: hand" onMouseOver="event.srcElement.style.color='#000000'" onMouseOut="event.srcElement.style.color='#999999'" color="#999999">[#mapsite_admin_copy_template#]</font></span>&nbsp;
+				  <span onClick="start_delet_template()"><font style="CURSOR: hand" onMouseOver="event.srcElement.style.color='#000000'" onMouseOut="event.srcElement.style.color='#999999'" color="#999999">[#mapsite_admin_del_template#]</font></span>
+				  </td></tr>
+		  <tr><td height="10"></td>
+		  </tr>
+          <tr>
+            <td><fieldset>
+              <legend>&nbsp;[#module_mapsite_admin_label3#]&nbsp;</legend>
+              [#mapsite_admin_type_edit_list#] </fieldset></td>
+          </tr>
+	  </table>
+      </td>
+      <td width="5"></td>
+	  <td valign="top" align="left">[#mapsite_admin_edit_content#]</td>
+	  <td width="*"></td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>

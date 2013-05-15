@@ -1,0 +1,58 @@
+<!-- @header -->
+<h3>Оформление заказа</h3>
+<form method="post" action="">
+<table>
+
+
+<!-- @prop_text -->
+        <tr>
+            <td align="right" valign="top">%prop_name_full%:%req%</td>
+            <td><textarea name="%prop_name_db%">%prop_value%</textarea></td>
+        </tr>
+
+<!-- @prop_string -->
+        <tr>
+            <td align="right" valign="top">%prop_name_full%:%req%</td>
+            <td><input type="text" name="%prop_name_db%" value="%prop_value%"></td>
+        </tr>
+
+<!-- @prop_number -->
+        <tr>
+            <td align="right" valign="top">%prop_name_full%:%req%</td>
+            <td><input type="text" name="%prop_name_db%" value="%prop_value%" size="5"></td>
+        </tr>
+
+<!-- @prop_enum -->
+        <tr>
+            <td align="right" valign="top">%prop_name_full%:%req%</td>
+            <td><select name="%prop_name_db%">%enum_vals%</select></td>
+        </tr>
+
+<!-- @enum_item -->
+<option value="%enum_val%" %%prop_name_db%_%enum_val%_selected%>%enum_val%</option>
+
+
+<!-- @required -->
+<sup><b>*</b></sup>
+<!-- @not_required -->
+
+<!-- @footer -->
+</table>
+<br/>
+
+<input type="submit" name="process_order" value="Заказать">
+</form>
+
+<!-- @no_basket_items -->
+<b>Ошибка - В корзине нет объектов</b><br/>
+
+<!-- @order_received -->
+<b>Спасибо, ваш заказ был принят</b><br/>
+<!-- @required_field_not_filled -->
+<b>Ошибка - Обязательное %field_name% не заполнено</b><br/>
+<!-- @incorrect_field_value -->
+<b>Ошибка - Некорректное значение в поле %field_name% </b><br/>
+
+<!-- @no_email_error -->
+<b>Ошибка - Email не найден</b><br/>
+

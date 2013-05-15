@@ -1,0 +1,154 @@
+
+<!-- ****************************************** Шаблон вывода комментариев ****************************************** -->
+
+<!--
+Вывод комментариев
+
+Секции:
+
+@content - основная секция
+  если комментарии есть, метка %comments_rows% будет заменена на их список  (comments_header + comment_row*N + comments_footer)
+  иначе - на содержимое метки @no_data
+%total% - общее кол-во комментариев
+%form% - место, куда будет добавлена форма комментариев
+
+@comment_row - секция для комментария пользователя
+@comment_row_by_admin- секция для комментария администратора
+
+
+@form - форма для комментирвания
+
+Секции сообщений формы:
+@msg_processing_success
+@msg_need_admin_approve
+@msg_fields_not_filled
+@msg_no_admin_comments
+@msg_badcaptcha
+
+
+
+Секции постраничной навигации:
+
+@page_first - 	Заменяется переменная first в блоке @pages, в том случае, если мы находимся не на самой первой странице. Используется для формирования ссылки перехода к этой самой первой странице.
+@page_backward - 	Заменяется переменная backward в блоке @pages, в том случае, если страниц так много, что они разбиты на несколько блоков и текущая страница не входит в первый из них.
+@page_previous - 	Заменяется переменная previous в блоке @pages, в том случае, если существует более одной страницы и необходимо вывести ссылку на предыдущую страницу относительно текущей.
+@page_previous_disabled - Заменяется переменная previous в блоке @pages, в том случае, если существует более одной страницы, но текущая страница является первой и значит, что предыдущей страницы нет.
+@page_next - Заменяется переменная next в блоке @pages, в том случае, если мы находимся не на самой последней странице. Используется для формирования ссылки перехода к следующей странице, относительно текущей.
+@page_next_disabled - Заменяется переменная next в блоке @pages, в том случае, если мы находимся на самой первой странице.
+@page_forward - Заменяется переменная forward в блоке @pages, в том случае, если страниц так много, что они разбиты на несколько блоков и текущая страница в любом из них, кроме последнего.
+@page_forward_disabled - Заменяется переменная forward в блоке @pages, в том случае, если страниц так много, что они разбиты на несколько блоков и текущая страница входит в последний из них.
+@page_last 	- Заменяется переменная last в блоке @pages, в том случае, если мы находимся не на самой последней странице. Используется для формирования ссылки перехода к этой самой последней странице.
+@page_active - Используется для формирования переменной page_block в блоке @pages. Формируется для страницы списка, на которую может перейти пользователь (то есть не для текущей страницы).
+@page_passive - Используется для формирования переменной page_block в блоке @pages. Формируется для странице списка, на которой сейчас находиться пользователь сайта (то есть для текущей страницы).
+@page_delimeter - Используется для формирования переменной page_block в блоке @pages, Разделяет блоки @page_active и @page_passive друг от друга.
+@page_null - Используется в том случае, если страниц так много, что необходимо показывать не все из них.
+ -->
+
+
+
+<!-- @no_data -->
+<p class="notice">нет комментариев</p>
+
+<!-- @content -->
+<br clear="all" />
+%comments_rows%
+%form%
+
+
+<!-- @comments_header -->
+
+<ul>
+<!-- @comments_footer -->
+</ul>
+<p>Страницы: %pages%</p>
+
+<!-- @comment_row -->
+<li>
+    <span class="author">%author%</span> (<span class="date">%date% в %time%</span>):<br />
+    %txt%
+</li>
+
+<!-- @comment_row_by_admin -->
+<li>
+    <span class="author"><b>администратор</b></span> (<span class="date">%date% в %time%</span>):<br />
+    %txt%
+</li>
+
+<!-- @captcha -->
+<p>
+    <label for="cmnt_captcha">Введите цифры с картинки:</label> <br />
+    <img src="/modules/comments/captcha.php" width="120" height="41" alt="captcha" />
+    <input type="text" class="text" id="cmnt_captcha" name="cmnt_captcha" value="" />
+</p>
+
+
+<!-- @form -->
+<p class="title">Добавить комментарий</p>
+<div id="feedback">
+    <form action="" method="post">
+        <p>
+            <label for="cmnt_name">Ваше имя</label> <br />
+            <input type="text" class="text" id="cmnt_name" name="cmnt_name" value="%user_name%" />
+        </p>
+        <p>
+            <label for="cmnt_txt">Комментарий</label> <br />
+            <textarea name="cmnt_txt" id="cmnt_txt" rows="5" cols="20">%user_txt%</textarea>
+        </p>
+        %form_captcha%
+        <p>
+            <input type="image" src="/design/images/submit.png" />
+        </p>
+        <input type="hidden" name="view" value="form_processing" />
+    </form>
+</div>
+
+
+<!-- @msg_processing_success -->
+<p class="success">Ваш комментарий опубликован</p>
+<!-- @msg_need_admin_approve -->
+<p class="notice">Ваш комментарий будет опубликован после просмотра администратором</p>
+<!-- @msg_fields_not_filled -->
+<p class="error">Ошибка! Не заполнены все поля!</p>
+<!-- @msg_no_admin_comments -->
+<p class="error">Ошибка! Нельзя комменировать от имени администратора сайта!</p>
+<!-- @msg_badcaptcha -->
+<p class="error">Ошибка! Введены неверные цифры с картинки!</p>
+
+
+
+<!-- @pages -->
+<p>
+    %first%
+    %previous%
+    %pages_block%
+    %next%
+    %last%
+</p>
+<!-- @page_first -->
+<a href="%link%">Начало</a>
+<!-- @page_backward -->
+<a href="%link%">&laquo;</a>
+<!-- @page_backward_disabled -->
+&laquo;
+<!-- @page_previous -->
+<a href="%link%">&laquo;</a>
+<!-- @page_previous_disabled -->
+&laquo;
+<!-- @page_forward -->
+<a href="%link%">&raquo;</a>
+<!-- @page_forward_disabled -->
+&raquo;
+<!-- @page_next -->
+<a href="%link%">&raquo;</a>
+<!-- @page_next_disabled -->
+&raquo;
+<!-- @page_last -->
+<a href="%link%">Конец</a>
+<!-- @page_active -->
+<a href="%link%">%page%</a>
+<!-- @page_passive -->
+%page%
+<!-- @page_delimeter -->
+&nbsp;-&nbsp;
+<!-- @pages_null -->
+1

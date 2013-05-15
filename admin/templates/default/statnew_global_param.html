@@ -1,0 +1,119 @@
+<!-- @begin -->
+<script type="text/javascript">
+$( "#date_start" ).datepicker({
+        dateFormat:'dd-mm-yy'
+});
+
+$( "#date_end" ).datepicker({
+        dateFormat:'dd-mm-yy'
+});
+
+</script>
+<span class="content_header">Статистика &rarr; <span class="black">Отчёты</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+  <h3>%name_otchet%</h3>
+
+  <form id="admin_stat_form">
+  <fieldset>
+   <label for="date_start">С</label><!-- // @todo use lang vars -->
+   <input type="text" name="date_start" id="date_start" value="[#date_start_value#]" style="width:150px;">
+  </fieldset>
+
+  <fieldset>
+   <label for="date_end">По</label><!-- // @todo use lang vars -->
+   <input type="text" name="date_end" id="date_end" value="[#date_end_value#]" style="width:150px;">
+  </fieldset>
+
+  <fieldset>
+                [#select_diapazon#]
+  </fieldset>
+
+  <fieldset>
+                [#select_partners#]
+  </fieldset>
+
+  <fieldset>
+                [#dop_fields#]
+  </fieldset>
+
+  <fieldset class="page_submit_field">
+   <input type="button" value="[#statist_all_button_show#]" onclick="admin_form_submit('%link_form%','stat_result','admin_stat_form');">
+  </fieldset>
+            </form>
+
+  <div id="stat_result"></div>
+
+		</div>
+</div>
+</div>
+
+<!-- @diapazon_block -->
+   <fieldset>
+   <label for="stat_pre_date">[#statist_all_label_date#]</label>
+    <select name="pre_date" id="stat_pre_date">
+     <optgroup label="[#statist_all_label_date_default#]">
+        [#diapazon_list#]
+     </optgroup>
+    </select>
+   </fieldset>
+    <script type="text/javascript">
+    $('#stat_pre_date').change(function(){
+        var sval = $(this).val();
+        if (sval=="")
+        {
+            $('#date_start').val('');
+            $('#date_end').val('');
+        }
+        else
+        {
+            var dates = sval.split(",");
+            $('#date_start').val(dates[0]);
+            $('#date_end').val(dates[1]);
+        }
+    });
+    </script>
+<!-- @diapazon_line -->
+<option value="%key%">%val%</option>
+
+<!-- @set_partner_line -->
+<option value="%key%">%val%</option>
+<!-- @set_partner -->
+   <fieldset>
+   <label for="partners">[#statist_all_label_partnets#]</label>
+    <select id="partners" name="partners">
+        <optgroup label="[#statist_all_label_partnets_default#]">
+        [#partner_list#]
+        </optgroup>
+
+    </select>
+    </fieldset>
+
+
+<!-- @begin_result -->
+<div style="padding-top: 10px;">
+<table class="admin_table">
+  <tr>
+    <th class="first last"></th>
+  </tr>
+</table>
+<table class="admin_table">
+  <tr>
+    <th class="first last"><img src='/admin/templates/default/images/statist_ico.gif' width='14' height='14'>&nbsp;&nbsp;&nbsp;[#statist_all_label_result#]</th>
+  </tr>
+</table>
+</div>
+
+<!-- @host -->
+<fieldset>
+ <label for="f_people">[#statist_host_show_only_people#]</label>
+ <input type="checkbox" id="f_people" name="f_people" [#checked_f_people#]>
+</fieldset>
+
+
+<!-- @word -->
+<fieldset>
+ <label for="show_diagram">[#statist_words_show_images#]</label>
+ <input type="checkbox" id="show_diagram" name="show_diagram" [#checked_diagram#]>
+</fieldset>

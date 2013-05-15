@@ -1,0 +1,31 @@
+<!-- @form -->
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#catalog_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+ <h3>%form_header_txt%</h3>
+ <form action="%form_action%" method="POST" enctype="multipart/form-data" id="savevarform">
+ <input type="hidden" name="prev_name_db" value="%prev_name_db%">
+ 
+ <fieldset>
+  <label for="name_full">[#catalog_variable_edit_namefull_label#]</label>
+  <input type="text" name="name_full" id="name_full" value="%name_full%">
+ </fieldset>
+ 
+ <fieldset>
+  <label for="name_db">[#catalog_variable_edit_namedb_label#]</label>
+  <input type="text" name="name_db" id="name_db" value="%name_db%">
+ </fieldset>
+ 
+ <fieldset>
+  <label for="value">[#catalog_variable_edit_value_label#]</label>
+  <input type="text" name="value" id="value" value="%value%">
+ </fieldset>
+ 
+ <fieldset class="page_submit_field">
+  <input type="button" name="submit"  value="[#catalog_variable_edit_save_label#]" onclick="jspub_form_submit('savevarform','%form_action%')">
+ </fieldset>
+ </form>
+ </div>
+</div>
+</div>

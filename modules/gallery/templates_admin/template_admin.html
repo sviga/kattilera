@@ -1,0 +1,267 @@
+<!-- @import_form -->
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#gallery_modul_base_name#]</span></span>
+<div id="page_container">
+<div id="content_container">
+<div class="content">
+<h3>[#gallery_import_archive_title#]</h3>
+<b style="color: red;">%msg%</b>
+<form action="%action%" method="post" enctype="multipart/form-data">
+<fieldset>
+ <label>[#gallery_import_gen_names#]:</label>
+ <span style="display:block; float:left; width:300px;">
+  <input id="gen_names_filenames" type="radio" name="gen_names" style="float:left; width:auto;" value="filenames" checked><label for="gen_names_filenames" style="width:auto;text-align:left;float:left;">[#gallery_import_gen_names_filename#]</label>
+  <input id="gen_names_numbers" type="radio" name="gen_names" style="clear:both;" style="float:left; width:auto;" value="number"><label for="gen_names_numbers" style="width:auto;text-align:left;float:left;">[#gallery_import_gen_names_number#]</label>
+ </span>
+</fieldset>
+
+<fieldset>
+ <label for="gallery_copyright">[#gallery_property_add_copyright#]</label>
+ <input id="gallery_copyright" name="copyright" type="checkbox" value="1" />
+</fieldset>
+
+<fieldset>
+ <label for="gallery_catid">[#gallery_imageform_category#]: </label>
+ <select name="cat_id" id="gallery_catid">
+  <option value="0">[#gallery_imageform_category_empty#]</option>
+  %catlines%
+ </select>
+</fieldset>
+
+<fieldset>
+ <label>[#gallery_import_from#]: </label>
+ <span class="block left">
+  <input id="import_from_file" type="radio" name="import_from" value="upload_file" style="float:left; width:auto;" checked onclick="document.getElementById('div_import_onserver').style.display='none';document.getElementById('div_import_upload').style.display='block';"><label for="import_from_file" style="width:auto;text-align:left;float:left;">[#gallery_import_upload_file#] <small>(max: %max_upload_size%)</small></label>
+  <input id="import_from_upload" type="radio" name="import_from" value="file_on_server" style="float:left; width:auto;" onclick="document.getElementById('div_import_upload').style.display='none';document.getElementById('div_import_onserver').style.display='block';"><label for="import_from_upload" style="width:auto;text-align:left;float:left;">[#gallery_import_file_on_server#] <small>(/upload/)</small></label>
+  
+  <span id="div_import_upload" class="block clear" style="margin-left:35%; padding:10px 0;">
+   <input type="file" name="archive"><br>
+  </span>
+
+  <span id="div_import_onserver" class="block clear" style="display: none; margin-left:35%; padding:10px 0;">
+   <select name="file_on_server">
+    <option value="">-----</option>
+    %server_files%
+   </select>
+  </span>
+ </span>
+</fieldset>
+
+<fieldset class="page_submit_field">
+ <input type="submit" name="do_archive_import" value="[#gallery_import_archive#]" />
+</fieldset>
+</form>
+</div>
+</div>
+</div>
+
+<!-- @category_form -->
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#gallery_modul_base_name#]</span></span>
+<div id="page_container">
+<div id="content_container">
+<div class="content">
+<h3>Добавить/Редактировать категорию</h3>
+<form action="%action%" method="post" enctype="multipart/form-data" onsubmit="form_submit_include_content_auto();">
+<input type="hidden" name="id" value="%id%">
+<fieldset>
+ <label for="gallery_catname">[#gallery_category_name#]: </label>
+ <input id="gallery_catname" name="name" type="text" value="%name%"/>
+</fieldset>
+<fieldset class="page_submit_field">
+ <input type="submit" value="[#gallery_save#]" />
+</fieldset>
+</form>
+
+<!-- @categories_list -->
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#gallery_modul_base_name#]</span></span>
+<div id="page_container">
+<div id="content_container">
+<div class="content">
+<h3>Cписок категорий</h3>
+<table class="admin_table" cellpadding="0" cellspacing="1">
+<tr>
+    <th>[#gallery_category_name#]</th>
+    <th>[#gallery_edit#]</th>
+    <th>[#gallery_delete_category#]</th>
+</tr>
+    %rows%
+</table>
+<fieldset class="page_submit_field">
+ <button onclick="jspub_click('category_edit&catid=0');">[#gallery_add_category#]</button>
+</fieldset>
+</div>
+</div>
+</div>
+
+<!-- @categories_row -->
+<tr>
+   <td><a href="#" onclick="jspub_click('show_photos&catid=%id%')">%name%</a></td>
+   <td><a href="#" onclick="jspub_click('category_edit&catid=%id%')"><img src="/admin/templates/default/images/icon_edit.gif" title="[#gallery_edit#]" alt="[#gallery_edit#]" /></a></td>
+   <td><img onclick="jspub_confirm('category_delete&id=%id%','[#gallery_category_delete_alert#]')" src="/admin/templates/default/images/icon_delet.gif" title="[#gallery_delete#]" style="cursor:pointer;" alt="[#gallery_delete#]" /></td>
+</tr>
+
+
+<!-- @begin -->
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#gallery_modul_base_name#]</span></span>
+<div id="page_container">
+<div id="content_container">
+<div class="content">
+<h3>Список Фотографий</h3>
+ <fieldset>
+  <label for="listcatid">Фотографии:</label> <select name="catid" id="listcatid" onchange="jspub_click('show_photos&sortby=%sortby%&catid='+document.getElementById('listcatid').value);">
+    <option value="0">[#gallery_list_all_cats#]</option>
+    %catlines%
+</select>
+ </fieldset>
+
+<table class="admin_table">
+<tr>
+	<th><a href="#" class="sort" onclick="jspub_click('show_photos&sortby=id')">ID</a></th>
+	<th><a href="#" class="sort" onclick="jspub_click('show_photos&sortby=date')">Дата</a></th>
+	<th>Картинка</th>
+	<th><a href="#" class="sort" onclick="jspub_click('show_photos&sortby=title')">Описание</a></th>
+	<th>Управление</th>
+</tr>
+
+<!-- @line -->
+<tr>
+<td>%id%</td>
+<td>%post_date%</td>
+<td><img src="%link_image%" width="100" border="0" alt="" /></td>
+<td style="text-align:left;"><p>%title_image%</p>
+ <p>%description%</p>
+</td>
+<td>
+<img onclick="jspub_click('image_edit&image_id=%id%')" src="/admin/templates/default/images/icon_edit.gif" border="0" alt="[#gallery_edit#]" title="[#gallery_edit#]" style="cursor:pointer;">&nbsp;
+<img
+onclick="jspub_confirm('image_delete&image_id=%id%','[#gallery_list_delete_element_alert#]')"
+src="/admin/templates/default/images/icon_delet.gif" 
+alt="[#gallery_delete#]" border="0"
+title="[#gallery_delete#]"
+style="cursor:pointer;"/></td>
+</tr>
+
+<!-- @end -->
+</table>
+всего:%total%<br>
+%pages%
+</div>
+</div>
+</div>
+
+<!-- @form_edit -->
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#gallery_modul_base_name#]</span></span>
+<div id="page_container">
+<div id="content_container">
+<div class="content">
+<h3>[#gallery_imageform_header#]</h3>
+<form action="%action%" method="post" enctype="multipart/form-data" onsubmit="form_submit_include_content_auto();">
+<input type="hidden" name="id" value="%id%" />
+<fieldset>
+ <label>Изображение</label>
+ <img src="%img_src%" alt="" />
+</fieldset>
+
+<fieldset>
+ <label for="gallery_title_image">Название картинки: </label>
+ <input id="gallery_title_image" name="title_image" type="text" value="%title_image%" />
+</fieldset>
+
+<fieldset>
+ <label for="gallery_cat_id">[#gallery_imageform_category#]:</label>
+ <select name="cat_id" id="gallery_cat_id">
+   <option value="0">[#gallery_imageform_category_empty#]</option>
+   %catlines%
+ </select>
+</fieldset>
+
+<fieldset>
+ <label>Описание:</label><br><br>
+ %editor%
+</fieldset>
+
+<fieldset class="page_submit_field">
+ <input type="submit" value="[#gallery_save#]" />
+</fieldset>
+</form>
+
+</div>
+</div>
+</div>
+
+<!-- @form_add -->
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#gallery_modul_base_name#]</span></span>
+<div id="page_container">
+<div id="content_container">
+<div class="content">
+<h3>[#gallery_imageform_header#]</h3>
+<form action="%action%" method="post" enctype="multipart/form-data" onsubmit="form_submit_include_content_auto();">
+<input type="hidden" name="id" value="%id%" />
+
+<fieldset>
+ <label for="file_image">Файл:</label>
+ <input type="file" id="file_image" name="file_image" size="40" />
+</fieldset>
+
+<fieldset>
+ <label for="gallery_add_copyright">[#gallery_property_add_copyright#]</label>
+ <input id="gallery_add_copyright" name="copyright" type="checkbox" value="1" />
+</fieldset>
+
+<fieldset>
+ <label for="gallery_add_title">Название картинки: </label>
+ <input id="gallery_add_title" name="title_image" type="text" value="%title_image%" />
+</fieldset>
+
+<fieldset>
+ <label for="gallery_add_catid">[#gallery_imageform_category#]: </label>
+ <select name="cat_id" id="gallery_add_catid">
+   <option value="0">[#gallery_imageform_category_empty#]</option>
+   %catlines%
+ </select>
+</fieldset>
+
+<fieldset>
+ <label>Описание:</label><br><br>
+ %editor%
+</fieldset>
+
+<fieldset class="page_submit_field">
+ <input type="submit" value="[#gallery_save#]" />
+</fieldset>
+</form>
+</div>
+</div>
+</div>
+
+<!-- @pages -->
+%first% %backward% %previous% %pages_block% %next% %forward% %last%
+
+<!-- @page_first -->
+<a href="#" onclick="jspub_click('%url%')">Начало</a>
+<!-- @page_backward-->
+<a href="#" onclick="jspub_click('%url%')">&laquo;</a>
+<!-- @page_backward_disabled-->
+&laquo;
+<!-- @page_previous-->
+<a href="#" onclick="jspub_click('%url%')">&laquo;</a>
+<!-- @page_previous_disabled-->
+&laquo;
+<!-- @page_forward-->
+<a href="#" onclick="jspub_click('%url%')">&raquo;</a>
+<!-- @page_forward_disabled-->
+&raquo;
+<!-- @page_next-->
+<a href="#" onclick="jspub_click('%url%')">&raquo;</a>
+<!-- @page_next_disabled-->
+&raquo;
+<!-- @page_last -->
+<a href="#" onclick="jspub_click('%url%')">Конец</a>
+<!-- @page_active -->
+<a href="#" onclick="jspub_click('%url%')">%page%</a>
+<!-- @page_passive -->
+%page%
+<!-- @page_delimeter -->
+&nbsp;-&nbsp;
+
+<!-- @page_null -->
+

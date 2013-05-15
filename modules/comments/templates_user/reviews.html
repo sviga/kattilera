@@ -1,0 +1,214 @@
+
+<!-- ****************************************** Шаблон вывода комментариев ****************************************** -->
+
+<!--
+Вывод комментариев
+
+Секции:
+
+@content - основная секция
+  если комментарии есть, метка %reviews_rows% будет заменена на их список  (reviews_header + review_row*N + reviews_footer)
+  иначе - на содержимое метки @no_data
+%total% - общее кол-во комментариев
+%form% - место, куда будет добавлена форма комментариев
+
+@review_row - секция для комментария пользователя
+@review_row_by_admin- секция для комментария администратора
+@review_row_rate_N - секция для оценки в каждом комментарии, этим блоком заменится метка %rate% в @review_row или @review_row_by_admin
+@review_row_pros - секция для "достоинства" в каждом комментарии, этим блоком заменится метка %pros% в @review_row или @review_row_by_admin
+@review_row_cons - секция для "недостатки" в каждом комментарии, этим блоком заменится метка %cons% в @review_row или @review_row_by_admin
+
+
+@form - форма для комментирвания
+@subj2admin - тема письма для админа
+@email2admin - тело письма для админа
+@email2admin_link - ссылка на страницу (если возможна), этим блоком заменится метка %link% в @email2admin
+
+Секции сообщений формы:
+@msg_processing_success
+@msg_need_admin_approve
+@msg_fields_not_filled
+@msg_no_admin_comments
+@msg_badcaptcha
+
+
+
+Секции постраничной навигации:
+
+@page_first - 	Заменяется переменная first в блоке @pages, в том случае, если мы находимся не на самой первой странице. Используется для формирования ссылки перехода к этой самой первой странице.
+@page_backward - 	Заменяется переменная backward в блоке @pages, в том случае, если страниц так много, что они разбиты на несколько блоков и текущая страница не входит в первый из них.
+@page_previous - 	Заменяется переменная previous в блоке @pages, в том случае, если существует более одной страницы и необходимо вывести ссылку на предыдущую страницу относительно текущей.
+@page_previous_disabled - Заменяется переменная previous в блоке @pages, в том случае, если существует более одной страницы, но текущая страница является первой и значит, что предыдущей страницы нет.
+@page_next - Заменяется переменная next в блоке @pages, в том случае, если мы находимся не на самой последней странице. Используется для формирования ссылки перехода к следующей странице, относительно текущей.
+@page_next_disabled - Заменяется переменная next в блоке @pages, в том случае, если мы находимся на самой первой странице.
+@page_forward - Заменяется переменная forward в блоке @pages, в том случае, если страниц так много, что они разбиты на несколько блоков и текущая страница в любом из них, кроме последнего.
+@page_forward_disabled - Заменяется переменная forward в блоке @pages, в том случае, если страниц так много, что они разбиты на несколько блоков и текущая страница входит в последний из них.
+@page_last 	- Заменяется переменная last в блоке @pages, в том случае, если мы находимся не на самой последней странице. Используется для формирования ссылки перехода к этой самой последней странице.
+@page_active - Используется для формирования переменной page_block в блоке @pages. Формируется для страницы списка, на которую может перейти пользователь (то есть не для текущей страницы).
+@page_passive - Используется для формирования переменной page_block в блоке @pages. Формируется для странице списка, на которой сейчас находиться пользователь сайта (то есть для текущей страницы).
+@page_delimeter - Используется для формирования переменной page_block в блоке @pages, Разделяет блоки @page_active и @page_passive друг от друга.
+@page_null - Используется в том случае, если страниц так много, что необходимо показывать не все из них.
+ -->
+
+
+
+
+
+<!-- @no_data -->
+<p class="notice">нет отзывов</p>
+
+<!-- @content -->
+<br clear="all" />
+%reviews_rows%
+%form%
+
+
+<!-- @reviews_header -->
+всего отзывов: %total%<br>
+<ul>
+<!-- @reviews_footer -->
+</ul>
+<p>Страницы: %pages%</p>
+
+<!-- @review_row_rate_1 -->
+оценка:1<br>
+<!-- @review_row_rate_2 -->
+оценка:2<br>
+<!-- @review_row_rate_3 -->
+оценка:3<br>
+<!-- @review_row_rate_4 -->
+оценка:4<br>
+<!-- @review_row_rate_5 -->
+оценка:5<br>
+<!-- @review_row_pros -->
+<p><b>достоинства</b><br>%pros%</p>
+<!-- @review_row_cons -->
+<p><b>недостатки</b><br>%cons%</p>
+
+<!-- @review_row -->
+<li>
+    <span class="author">%name%</span> (<span class="date">%when%</span>):<br />
+    %rate%
+    %comment%
+    %cons%
+    %pros%
+</li>
+
+<!-- @review_row_by_admin -->
+<li>
+    <span class="author"><b>администратор</b></span> (<span class="date">%when%</span>):<br />
+    %comment%
+</li>
+
+<!-- @captcha -->
+<p>
+    <label for="cmnt_captcha">Введите цифры с картинки:</label> <br />
+    <img src="/modules/comments/captcha.php" width="120" height="41" alt="captcha" />
+    <input type="text" class="text" id="cmnt_captcha" name="cmnt_captcha" value="" />
+</p>
+
+
+<!-- @form -->
+<p class="title">Добавить отзыв</p>
+<div id="feedback">
+    <form action="%current_page%" method="post">
+        <p>
+            <label for="r_name">Ваше имя<sup>*</sup></label> <br />
+            <input type="text" class="text" id="r_name" name="r_name" value="%r_name%" />
+        </p>
+        <p>
+            <label for="r_comment">Комментарий<sup>*</sup></label> <br />
+            <textarea name="r_comment" id="r_comment" rows="5" cols="20">%r_comment%</textarea>
+        </p>
+        <p>
+            <label for="">Оценка</label>
+
+            <input type="radio" name="r_rate" value="1" %r_rate_1_checked%>1
+            <input type="radio" name="r_rate" value="2" %r_rate_2_checked%>2
+            <input type="radio" name="r_rate" value="3" %r_rate_3_checked%>3
+            <input type="radio" name="r_rate" value="4" %r_rate_4_checked%>4
+            <input type="radio" name="r_rate" value="5" %r_rate_5_checked%>5
+        </p>
+        <p>
+            <label for="r_pros">Достоинства</label> <br />
+            <textarea name="r_pros" id="r_pros" rows="5" cols="20">%r_pros%</textarea>
+        </p>
+        <p>
+            <label for="r_cons">Недостатки</label> <br />
+            <textarea name="r_cons" id="r_cons" rows="5" cols="20">%r_cons%</textarea>
+        </p>
+        %form_captcha%
+        <p>
+            <input type="image" src="/design/images/submit.png" />
+        </p>
+        <input type="hidden" name="view" value="form_processing" />
+    </form>
+</div>
+
+
+<!-- @msg_processing_success -->
+<p class="success">Ваш комментарий опубликован</p>
+<!-- @msg_need_admin_approve -->
+<p class="notice">Ваш комментарий будет опубликован после просмотра администратором</p>
+<!-- @msg_fields_not_filled -->
+<p class="error">Ошибка! Не заполнены все поля!</p>
+<!-- @msg_no_admin_comments -->
+<p class="error">Ошибка! Нельзя комменировать от имени администратора сайта!</p>
+<!-- @msg_badcaptcha -->
+<p class="error">Ошибка! Введены неверные цифры с картинки!</p>
+
+
+
+<!-- @subj2admin -->
+Новый отзыв
+<!-- @email2admin_link -->
+<a href='%link%'>Ссылка</a><br>
+<!-- @email2admin -->
+<html>
+<head><meta http-equiv="content-type" content="text/html; charset=utf-8" /></head>
+<body>
+%link%
+Имя: %name%<br>
+Текст: %comment%<br>
+Оценка: %rate%<br>
+Достоинства: %pros%<br>
+Недостатки: %cons%<br>
+</body>
+</html>
+
+<!-- @pages -->
+<p>
+    %first%
+    %previous%
+    %pages_block%
+    %next%
+    %last%
+</p>
+<!-- @page_first -->
+<a href="%link%">Начало</a>
+<!-- @page_backward -->
+<a href="%link%">&laquo;</a>
+<!-- @page_backward_disabled -->
+&laquo;
+<!-- @page_previous -->
+<a href="%link%">&laquo;</a>
+<!-- @page_previous_disabled -->
+&laquo;
+<!-- @page_forward -->
+<a href="%link%">&raquo;</a>
+<!-- @page_forward_disabled -->
+&raquo;
+<!-- @page_next -->
+<a href="%link%">&raquo;</a>
+<!-- @page_next_disabled -->
+&raquo;
+<!-- @page_last -->
+<a href="%link%">Конец</a>
+<!-- @page_active -->
+<a href="%link%">%page%</a>
+<!-- @page_passive -->
+%page%
+<!-- @page_delimeter -->
+&nbsp;-&nbsp;
+<!-- @pages_null -->
+1

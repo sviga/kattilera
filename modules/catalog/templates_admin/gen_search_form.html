@@ -1,0 +1,81 @@
+<!-- @form -->
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#catalog_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+ <h3>[#catalog_generate_search_form_label#] <span class="highlight">'%group_name%'</span></h3>
+ 
+ <form action="%form_action%" method="POST"  id="gensearchform">
+ <input type="hidden" name="id" value="%groupid%">
+ 
+ <fieldset>
+  <label for="outfile">[#catalog_gen_search_outfilename_label#]</label>
+  <input type="text" id="outfile" name="outfile" value="">
+ </fieldset>
+ 
+ <fieldset>
+  <label for="filtername">[#catalog_gen_search_filtername_label#]</label>
+  <input type="text" id="filtername" name="filtername" value="">
+ </fieldset>
+ 
+ <fieldset>
+  <label for="filtertpl">[#catalog_gen_search_filtertemplate_label#]</label>
+  <select id="filtertpl" name="filtertpl">
+   %template-lines%
+  </select>
+ </fieldset>
+ 
+ %props_lines%
+ 
+ <fieldset class="page_submit_field">
+  <input type="submit" name="submit" value="[#catalog_generate_search_form_button_label#]">
+ </fieldset>
+ </form>
+ </div>
+ </div>
+</div>
+
+<!-- @template-line -->
+<option value="%value%">%value%</option>
+
+<!-- @string-prop -->
+<fieldset style="border-top:1px solid #ededed;">
+ <label>%propnamefull%</label>
+ <span class="block fLeft">
+  <span class="block clear"><input type="radio" name="prop[%propnamedb%]" id="prop[%propnamedb%]1" value="ignore" checked><label for="prop[%propnamedb%]1" style="width:200px;">[#catalog_gen_search_form_ignore_field_label#]</label></span>
+  <span class="block clear"><input type="radio" name="prop[%propnamedb%]" id="prop[%propnamedb%]2" value="accurate"><label for="prop[%propnamedb%]2" style="width:200px;">[#catalog_gen_search_form_string_accurate_label#]</label></span>
+  <span class="block clear"><input type="radio" name="prop[%propnamedb%]" id="prop[%propnamedb%]3" value="like"><label for="prop[%propnamedb%]3" style="width:200px;">[#catalog_gen_search_form_string_like_label#]</label></span>
+ </span>
+</fieldset>
+
+<!-- @number-prop -->
+<fieldset style="border-top:1px solid #ededed;">
+ <label>%propnamefull%</label>
+ <span class="block fLeft">
+  <span class="block clear"><input type="radio" name="prop[%propnamedb%]" id="prop[%propnamedb%]1" value="ignore" checked><label for="prop[%propnamedb%]1" style="width:200px;">[#catalog_gen_search_form_ignore_field_label#]</label></span>
+  <span class="block clear"><input type="radio" name="prop[%propnamedb%]" id="prop[%propnamedb%]2" value="accurate"><label for="prop[%propnamedb%]2" style="width:200px;">[#catalog_gen_search_form_number_accurate_label#]</label></span>
+  <span class="block clear"><input type="radio" name="prop[%propnamedb%]" id="prop[%propnamedb%]3" value="diapazon"><label for="prop[%propnamedb%]3" style="width:200px;">[#catalog_gen_search_form_number_diapazon_label#]</label></span>
+ </span>
+</fieldset>
+
+<!-- @enum-prop -->
+<fieldset style="border-top:1px solid #ededed;">
+ <label>%propnamefull%</label>
+ <span class="block fLeft">
+  <span class="block clear"><input type="radio" name="prop[%propnamedb%]" id="prop[%propnamedb%]1" value="ignore" checked><label for="prop[%propnamedb%]1" style="width:200px;">[#catalog_gen_search_form_ignore_field_label#]</label></span>
+  <span class="block clear"><input type="radio" name="prop[%propnamedb%]" id="prop[%propnamedb%]2" value="select"><label for="prop[%propnamedb%]2" style="width:200px;">[#catalog_gen_search_form_enum_select_label#]</label></span>
+  <span class="block clear"><input type="radio" name="prop[%propnamedb%]" id="prop[%propnamedb%]3" value="checkbox"><label for="prop[%propnamedb%]3" style="width:200px;">[#catalog_gen_search_form_enum_checkboxes_label#]</label></span>
+  <span class="block clear"><input type="radio" name="prop[%propnamedb%]" id="prop[%propnamedb%]4" value="radio"><label for="prop[%propnamedb%]4" style="width:200px;">[#catalog_gen_search_form_enum_radio_label#]</label></span>
+ </span>
+</fieldset>
+
+<!-- @file-prop -->
+<fieldset style="border-top:1px solid #ededed;">
+ <label>%propnamefull%</label>
+ <span class="block fLeft">
+  <span class="block clear"><input type="radio" name="prop[%propnamedb%]" id="prop[%propnamedb%]1" value="ignore" checked><label for="prop[%propnamedb%]1" style="width:200px;">[#catalog_gen_search_form_ignore_field_label#]</label></span>
+  <span class="block clear"><input type="radio" name="prop[%propnamedb%]" id="prop[%propnamedb%]2" value="select"><label for="prop[%propnamedb%]2" style="width:200px;">[#catalog_gen_search_form_file_select_label#]</label></span>
+  <span class="block clear"><input type="radio" name="prop[%propnamedb%]" id="prop[%propnamedb%]3" value="checkbox"><label for="prop[%propnamedb%]3" style="width:200px;">[#catalog_gen_search_form_file_checkbox_label#]</label></span>
+  <span class="block clear"><input type="radio" name="prop[%propnamedb%]" id="prop[%propnamedb%]4" value="radio"><label for="prop[%propnamedb%]4" style="width:200px;">[#catalog_gen_search_form_file_radio_label#]</label></span>
+ </span>
+</fieldset>

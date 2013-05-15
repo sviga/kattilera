@@ -1,0 +1,74 @@
+<!-- @table_header -->
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#newsi_modul_base_name1#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+ <h3>Список новостей</h3>
+ <form action="%form_action%" method="POST">
+ <table class="admin_table">
+   <tr>
+    <th class="first">№</th>
+    <th>[#news_item_number#]</th>
+    <th><a href="#" class="sort" onclick="jspub_click('%url_sort_date%')">[#news_item_date#]&nbsp;%img_sort_date%</a></th>
+    <th><a href="#" class="sort" onclick="jspub_click('%url_sort_header%')">[#news_item_header#]&nbsp;%img_sort_header%</a></th>
+    <th><a href="#" class="sort" onclick="jspub_click('%url_sort_available%')">[#news_item_available#]&nbsp;%img_sort_available%</a></th>
+    <th><a href="#" class="sort" onclick="jspub_click('%url_sort_lenta%')">[#news_item_lenta#]&nbsp;%img_sort_lenta%</a></th>
+    <th><a href="#" class="sort" onclick="jspub_click('%url_sort_rss%')">[#news_item_rss#]&nbsp;%img_sort_rss%</a></th>
+    <th><a href="#" class="sort" onclick="jspub_click('%url_sort_author%')">[#news_item_author#]&nbsp;%img_sort_author%</a></th>
+    <th class="last">[#news_item_actions#]</th>
+   </tr>
+<!-- @img_sort_asc -->
+<img src="/admin/templates/default/images/12-em-up-blue.gif" />
+<!-- @img_sort_desc -->
+<img src="/admin/templates/default/images/12-em-down-blue.gif" />
+<!-- @table_body-->
+        <tr>
+            <td><input type="checkbox" style="float:none;" name="items[%id%]" value="%id%"></td>
+            <td>%number%</td>
+            <td>%date%</td>
+            <td><a href="#" onclick="jspub_click('%action_edit%&id=%id%')">%header%</a></td>
+            <td align="center">%available%</td>
+            <td align="center">%lenta%</td>
+            <td align="center">%rss%</td>
+            <td>%author%</td>
+            <td><a href="#" onclick="jspub_click('%action_edit%&id=%id%')"><img src="/admin/templates/default/images/icon_edit.gif" alt="[#news_item_action_edit#]"/></a>&nbsp;<a href="#" onclick="jspub_confirm('%action_remove%&id=%id%', '[#news_delete_confirm#]')""><img src="/admin/templates/default/images/icon_delet.gif" alt="[#news_item_action_remove#]"/></a></td>
+        </tr>
+<!-- @table_footer -->
+<!--
+    <tfoot>
+            <th>&nbsp;</th>
+            <th>[#news_item_id#]</th>
+            <th>[#news_item_date#]</th>
+            <th>[#news_item_header#]</th>
+            <th>[#news_item_available#]</th>
+            <th>[#news_item_lenta#]</th>
+            <th>[#new_item_rss#]</th>
+            <th>[#new_item_author#]</th>
+    </tfoot>
+-->
+</table>
+
+<fieldset>
+ <label style="width:150px;">[#news_actions_with_selected#]</label>
+ %actions%
+ <input type="submit" style="margin-left:15px;" name="submit" value="[#news_show_list_submit#]">
+</fieldset>
+<p>%pages%</p>
+ </form>
+ </div>
+</div>
+</div>
+<!-- @no_data -->
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#newsi_modul_base_name1#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+ <h3>Список новостей</h3>
+ Нет данных для отображения
+ </div>
+</div>
+</div>
+<!-- @on -->
+<img src="/admin/templates/default/images/24-em-check.gif" alt="">
+<!-- @off -->
+<!--<img src="/admin/templates/default/images/24-em-check-gray.gif" alt=""/>-->

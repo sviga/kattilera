@@ -1,0 +1,68 @@
+<!--
+Форма авторизации на сайте
+
+В нее вводят логин и пароль зарегистрированные пользователи, чтобы попасть в закрытую зону.
+
+Секции:
+@begin - шапка
+@login - сама форма
+@end - подвал
+
+
+@exit - форма выхода из админки
+
+Сообщения
+@inc_login - неправильный логин
+@disabled_by_admin - забанен админом
+@verifying - не подтвержден e-mail
+@unknown_err - неизестная ошибка
+
+ -->
+
+<!-- ****************************************** Шаблоны формы авторизации ****************************************** -->
+
+<!-- @begin -->
+
+<!-- @login -->
+				<form id="login" action="/%personal%.html" method="POST">
+				<input type="hidden" name="redirect2page" value="%redirect2page%" />
+					<table>
+						<tr>
+							<td><label>Логин</label></td>
+							<td><input class="input-text" type="text" name="login"/></td>
+							<td><label>Пароль</label></td>
+							<td><input class="input-text" type="password" name="pass" /></td>
+							<td><input class="input-button" type="submit" value="OK" /></td>
+							<td><a href="/register.html">Регистрация</a><br /><a href="/ilostmypass.html" title="">Заблыи пароль?</a></td>
+						</tr>
+					</table>
+				</form>
+<!-- @end -->
+
+
+<!-- @empty_fields -->
+<p>Не все поля заполнены</p>
+<!-- @inc_login -->
+<p>Нет такого  пользователя! Неправильное сочетание Логина и пароля!<br> <a href="/ilostmypass.html">Забыли пароль?</a></p>
+
+<!-- @disabled_by_admin -->
+<p>Пользователь отключен администратором</p>
+
+<!-- @verifying -->
+<p>Пользователь зарегистрирован, но еще не подтвержден E-mail</p>
+
+<!-- @unknown_err -->
+<p>Неизвестная ошибка авторизации пользователя</p>
+
+
+<!-- ****************************************** Шаблоны формы выхода из кабинета ****************************************** -->
+<!-- @exit -->
+				<form id="login" action="/index.html" method="POST">
+				<input type="hidden" name="exit" value="1">
+					<table>
+						<tr>
+							<td>Здравствуйте, <a href="/%personal%.html">%name%</a>&nbsp;!</td>
+							<td><input type="submit" value="Выйти"></td>
+						</tr>
+					</table>
+				</form>

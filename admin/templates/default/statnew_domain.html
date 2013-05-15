@@ -1,0 +1,70 @@
+<!-- @begin -->
+<span class="content_header">Статистика &rarr; <span class="black">Настройки</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+  <h3>[#statist_domain_label_main2#]</h3>
+            <form id="stat_newdomain_form">
+   <fieldset>
+    <label for="domain">[#statist_domain_text_label1#]</label>
+    <input type="text" name="domain" id="domain" value="">
+   </fieldset>
+
+   <fieldset class="page_submit_field">
+    <input type="button" value="Сохранить" onclick="jspub_form_submit('stat_newdomain_form','%link_form%');"><!-- // @todo use lang vars -->
+   </fieldset>
+            </form>
+
+  <div id="list_exist_domain">[#table_list#]</div>
+  <div id="stat_result"></div>
+
+        </div>
+</div>
+</div>
+
+<!-- @one_damain -->
+<tr>
+  <td>[#name#]</td>
+  <td valign="baseline"><img src="/admin/templates/default/images/icon_delet.gif" onclick="jspub_confirm('del_domain&delid=[#id#]','[#alert_del#]');" style="cursor:pointer;"/></td>
+</tr>
+
+<!-- @table_damain -->
+  <table class="admin_table">
+    <tr>
+      <th class="first">Доменн</th>
+      <th class="last">Действие</th>
+    </tr>
+
+    [#domain_list#]
+  </table>
+
+
+<!-- @nouse -->
+<!--
+<FORM name="form_partners" method="post" action="/admin/?action=bottom_frames&mod_action=show_domain">
+  <table width="300" height="30" border="0" cellspacing="0" cellpadding="4" class="admin_table">
+    <tr class="table_content_shapka">
+      <th>&nbsp;&nbsp;<img src="templates/default/images/statist_ico.gif" width="14" height="14">&nbsp;&nbsp;&nbsp;[#statist_domain_label_main2#]</th>
+    </tr>
+    <tr>
+      <td> [#statist_domain_text_label1#]:
+        <input name="domain" type="text" size="30" maxlength="50">
+        &nbsp;
+        <input type="submit" name="add_domain" value="[#statist_domain_text_label2#]">
+      </td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td> [#statist_domain_text_label3#]:
+        <SELECT name="IDDomain" size="10" style="width:490px">
+
+
+        			[#domain_list#]
+
+
+        </SELECT>
+        <input type="submit" name="del_domain" value="[#statist_domain_text_label4#]">
+      </td>
+    </tr>
+  </table>
+</FORM>
+-->

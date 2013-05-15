@@ -1,0 +1,100 @@
+<!--@form_header -->
+<div style="width: 800px;">
+<div class="x-box-tl"><div class="x-box-tr"><div class="x-box-tc"></div></div></div>
+    <div class="x-box-ml"><div class="x-box-mr"><div class="x-box-mc">
+<form action="%form_action%" method="POST" enctype="multipart/form-data" id="saveitemform">
+<input type="hidden" name="id" value="%id%">
+<table border="0">
+    <tbody>
+        <tr><td colspan="3"><b>[#catalog_edit_item_label#]</b></td></tr>
+
+<tr>
+ <td colspan="2" align="center"><b>[#catalog_edit_item_properties_label#]</b></td>
+ <td rowspan="%rows%" valign="top"><b>[#catalog_edit_item_incategories_label#]</b><br>%categories%</td>
+</tr>
+
+<tr>
+  <td width="100" align="right">[#catalog_item_available_label#]:</td>
+  <td><input type="checkbox" name="available" %isavalchecked%></td>
+</tr>
+
+
+<!-- @add_prop_text -->
+        <tr>
+            <td width="100" align="right" valign="top">%prop_name_full%:</td>
+            <td><textarea name="%prop_name_db%" style="width: 100%;">%prop_value%</textarea></td>
+        </tr>
+
+<!-- @add_prop_html -->
+        <tr>
+            <td colspan="2">%prop_name_full%:<br>%prop_value%</td>
+        </tr>
+
+<!-- @add_prop_file -->
+        <tr>
+            <td width="100" align="right" valign="top">%prop_name_full%:</td>
+            <td><input type="file" name="%prop_name_db%"></td>
+        </tr>
+
+<!-- @edit_prop_file -->
+        <tr>
+            <td width="100" align="right" valign="top">%prop_name_full%:</td>
+            <td>file:<b>%prop_value%</b> <a href="#" onclick="jspub_confirm('item_clear_field&id=%id%&field=%prop_name_db%','[#catalog_clear_label#] %prop_name_full%?')"><img src="/admin/templates/default/images/icon_delet.gif" alt="[#catalog_clear_label#]"/></a></td>
+        </tr>
+
+<!-- @add_prop_pict -->
+        <tr>
+            <td width="100" align="right" valign="top">%prop_name_full%:</td>
+            <td><input type="file" name="%prop_name_db%"></td>
+        </tr>
+
+<!-- @edit_prop_pict -->
+        <tr>
+            <td width="100" align="right" valign="top">%prop_name_full%:</td>
+            <td><img src="%prop_value%"> <a href="#" onclick="jspub_confirm('item_clear_field&id=%id%&field=%prop_name_db%','[#catalog_clear_label#] %prop_name_full%?')"><img src="/admin/templates/default/images/icon_delet.gif" alt="[#catalog_clear_label#]"/></a></td>
+        </tr>
+
+
+<!-- @add_prop_string -->
+        <tr>
+            <td width="100" align="right" valign="top">%prop_name_full%:</td>
+            <td><input type="text" name="%prop_name_db%" value="%prop_value%"></td>
+        </tr>
+
+
+<!-- @add_prop_number -->
+        <tr>
+            <td width="100" align="right" valign="top">%prop_name_full%:</td>
+            <td><input type="text" name="%prop_name_db%" value="%prop_value%"></td>
+        </tr>
+
+<!-- @add_prop_enum -->
+
+        <tr>
+            <td width="100" align="right" valign="top">%prop_name_full%:</td>
+            <td><select name="%prop_name_db%">%prop_enum_values%</select></td>
+        </tr>
+<!-- @prop_enum_value -->
+<option value="%enum_value%" %selected_%enum_value%%>%enum_name%</option>
+
+
+<!-- @category_item -->
+%shift%<input type="checkbox" id="ccb_%id%" name="ccb_%id%" %checked_%id%%>%catname%<br>
+
+
+<!--@form_footer -->
+        <tr>
+            <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+         <td colspan="3" align="center">
+          <!--<input type="button" name="submit" value="[#catalog_save_label#]" onclick="jspub_form_submit('saveitemform','/admin/index.php?action=set_left_menu&leftmenu=item_save')">-->
+ 	 <input type="submit" name="submit" value="[#catalog_save_label#]">
+	</td>
+        </tr>
+    </tbody>
+</table>
+</form>
+    </div></div></div>
+<div class="x-box-bl"><div class="x-box-br"><div class="x-box-bc"></div></div></div>
+</div>

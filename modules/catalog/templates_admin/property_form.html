@@ -1,0 +1,259 @@
+<!-- @prop_type -->
+<option value="text" selected="selected">[#catalog_prop_type_text#]</option>
+<option value="number">[#catalog_prop_type_number#]</option>
+<option value="enum">[#catalog_prop_type_enum#]</option>
+<option value="string">[#catalog_prop_type_string#]</option>
+<option value="file">[#catalog_prop_type_file#]</option>
+<option value="pict">[#catalog_prop_type_pict#]</option>
+<option value="html">[#catalog_prop_type_html#]</option>
+<option value="date">[#catalog_prop_type_date#]</option>
+<option value="set">[#catalog_prop_type_set#]</option>
+
+
+<!-- @label_form_group -->
+<h3>[#catalog_edit_property_label_group#] <b>"%name%"</b></h3>
+<!-- @label_form_global -->
+<h3>[#catalog_edit_property_label_globalprop#]</h3>
+<!-- @label_form_group_add -->
+<h3>[#catalog_edit_property_label_group_add#] <b>"%name%"</b></h3>
+<!-- @label_form_global_add -->
+<h3>[#catalog_edit_property_label_globalprop_add#]</h3>
+
+<!-- @header -->
+<script type="text/javascript">
+ function selectChange()
+ {
+     var stypeVal=$('#stype').val();
+     if (stypeVal=='enum' || stypeVal=='set')
+     {
+  	     $('#prop_addon').html($('#enum_for_add').html());
+         $('#prop_addon').css('display','block');
+     }
+     else
+     {
+        $('#prop_addon').css('display','none');
+        $('#prop_addon').html('');
+     }
+ }
+
+ function pict_on_off(id_object)
+ {
+     if ($('#'+id_object+'_isset').attr("checked"))
+         $('#'+id_object).css('display','block');
+     else
+         $('#'+id_object).css('display','none');
+ }
+
+</script>
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#catalog_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+ 
+ <h3>%form_label%</h3>
+ 
+ <form action="" method="POST" enctype="multipart/form-data" id="savepropform">
+ <input type="hidden" name="id" value="%id%"/>
+ <input type="hidden" name="group_id" value="%group_id%"/>
+ 
+ <fieldset>
+  <label for="name_full">[#catalog_edit_property_name#]:</label>
+  <input type="text" id="name_full" name="name_full" value="%name_full%">
+ </fieldset>
+ 
+ <fieldset>
+  <label for="name_db">[#catalog_edit_property_namedb#]:</label>
+  <input type="text" id="name_db" name="name_db" value="%name_db%">
+ </fieldset>
+ 
+ <fieldset>
+  <label for="stype">[#catalog_edit_property_type#]:</label>
+  <select name="ptype" onChange="selectChange()" onblur="selectChange()" id="stype" %off_type%>
+   %prop_type%
+  </select>
+ </fieldset>
+ 
+ <fieldset>
+  <label for="sorted">[#catalog_edit_property_sorted#]:</label>
+  <select id="sorted" name="sorted" %sort_enabled%>
+   %sort_params%
+  </select>
+ </fieldset>
+ 
+ <fieldset>
+  <label for="chk_inlist">[#catalog_edit_property_show_in_list#]:</label>
+  <input type="checkbox" name="inlist" id="chk_inlist" %inlist_checked%>
+ </fieldset>
+ 
+ <fieldset>
+  <label for="chk_ismain">[#catalog_edit_property_ismain#]:</label>
+  <input type="checkbox" name="ismain" id="chk_ismain" %ismain_checked% %ismain_enabled%>
+ </fieldset>
+ 
+ <div id="prop_addon" style="margin:10px 0;">
+  %addons_param%
+ </div>
+ 
+ <fieldset class="page_submit_field">
+  <input type="button" name="submit" value="[#catalog_edit_property_bt_save#]" onclick="jspub_form_submit('savepropform','%form_action%')">
+ </fieldset>
+ </form>
+ </div>
+ </div>
+</div>
+
+
+<fieldset id="enum_for_add" style="visibility:hidden; width:0; height:0;">
+ <label for="enum_values">[#catalog_edit_property_enum_label#]:<br /><small>[#catalog_edit_property_enum_help#]</small></label>
+ <textarea rows="" cols="" id="enum_values" name="enum_values" style="width:289px; height:100px;"></textarea>
+</fieldset>
+
+<!-- @sort_param -->
+<option value="%sort_value%" %sort_checked%>%sort_name%</option>
+
+<!-- @addons_pict -->
+<fieldset>
+ <label for="pict_path">[#catalog_edit_property_pict_path#]:<br>
+ <span style="display:block; font-weight:normal; color:#2AADE1;">%pict_path_start%</span>
+ </label>
+ <input type="text" id="pict_path" value="%pict_path%" style="margin-top:8px;" name="pict_path">
+</fieldset>
+
+<fieldset>
+ <label for="pict_source_isset">[#common_edit_property_pict_source_create_label#]</label>
+ <input type="checkbox" name="pict_source_isset" id="pict_source_isset" %source_check% onchange="pict_on_off('pict_source')">
+ 
+ <div id="pict_source" style="display:none; border:1px solid #ccc; margin:40px 0 0 0; border-radius:6px; padding:0 10px; clear:both;">
+ <fieldset>
+  <label>[#common_edit_property_pict_width_and_height#]:<br><small>[#common_edit_property_pict_width_and_height_help#]</small></label>
+  <input type="text" style="width:121px;" name="pict_source_width" id="pict_source_width" value="%pict_source_width%"><span style="float:left; display:block; padding:5px;">x</span><input type="text" style="width:121px;" name="pict_source_height" id="pict_source_height" value="%pict_source_height%">
+ </fieldset>
+ 
+ <fieldset>
+  <label for="pict_source_water_add">[#common_edit_property_pict_watermark_add#]:</label>
+  <select id="pict_source_water_add" name="pict_source_water_add">
+   <option value="0" %pswas0%>[#common_edit_property_pict_watermark_val1#]</option>
+   <option value="1" %pswas1%>[#common_edit_property_pict_watermark_val2#]</option>
+   <option value="2" %pswas2%>[#common_edit_property_pict_watermark_val3#]</option>
+  </select>
+ </fieldset>
+ 
+ <fieldset>
+  <label for="path_source_water_path">[#common_edit_property_pict_watermark_path#]:</label>
+  <input type="text" id="path_source_water_path" value="%path_source_water_path%" name="path_source_water_path">
+ </fieldset>
+ 
+ <fieldset>
+  <label for="pict_source_water_position">[#common_edit_property_pict_watermark_place#]</label>
+  <select id="pict_source_water_position" name="pict_source_water_position">
+   <option value="0" %pswps0%>[#common_edit_property_pict_watermark_place_val0#]</option>
+   <option value="1" %pswps1%>[#common_edit_property_pict_watermark_place_val1#]</option>
+   <option value="2" %pswps2%>[#common_edit_property_pict_watermark_place_val2#]</option>
+   <option value="3" %pswps3%>[#common_edit_property_pict_watermark_place_val3#]</option>
+   <option value="4" %pswps4%>[#common_edit_property_pict_watermark_place_val4#]</option>
+  </select>
+ </fieldset>
+ </div>
+</fieldset>
+
+<fieldset>
+ <label for="pict_big_isset">[#common_edit_property_pict_big_create_label#]</label>
+ <input type="checkbox" name="pict_big_isset" id="pict_big_isset" %big_check% onchange="pict_on_off('pict_big')">
+ 
+ <div id="pict_big" style="display:none; border:1px solid #ccc; margin:40px 0 0 0; border-radius:6px; padding:0 10px; clear:both;">
+ <fieldset>
+  <label for="pict_big_width">[#common_edit_property_pict_width_and_height#]:<br><small>[#common_edit_property_pict_width_and_height_help#]</small></label>
+  <input type="text" style="width:121px;" name="pict_big_width" id="pict_big_width" value="%pict_big_width%"><span style="float:left; display:block; padding:5px;">x</span><input type="text" style="width:121px;" name="pict_big_height" id="pict_big_height" value="%pict_big_height%">
+ </fieldset>
+ 
+ <fieldset>
+  <label for="pict_big_water_add">[#common_edit_property_pict_watermark_add#]:</label>
+  <select id="pict_big_water_add" name="pict_big_water_add">
+   <option value="0" %pbwas0%>[#common_edit_property_pict_watermark_val1#]</option>
+   <option value="1" %pbwas1%>[#common_edit_property_pict_watermark_val2#]</option>
+   <option value="2" %pbwas2%>[#common_edit_property_pict_watermark_val3#]</option>
+  </select>
+ </fieldset>
+ 
+ <fieldset>
+  <label for="path_big_water_path">[#common_edit_property_pict_watermark_path#]:</label>
+  <input type="text" id="path_big_water_path" value="%path_big_water_path%" name="path_big_water_path">
+ </fieldset>
+ 
+ <fieldset>
+  <label for="pict_big_water_position">[#common_edit_property_pict_watermark_place#]</label>
+  <select name="pict_big_water_position" id="pict_big_water_position">
+   <option value="0" %pbwps0%>[#common_edit_property_pict_watermark_place_val0#]</option>
+   <option value="1" %pbwps1%>[#common_edit_property_pict_watermark_place_val1#]</option>
+   <option value="2" %pbwps2%>[#common_edit_property_pict_watermark_place_val2#]</option>
+   <option value="3" %pbwps3%>[#common_edit_property_pict_watermark_place_val3#]</option>
+   <option value="4" %pbwps4%>[#common_edit_property_pict_watermark_place_val4#]</option>
+  </select>
+ </fieldset>
+ </div>
+</fieldset>
+
+<fieldset>
+ <label for="pict_small_isset">[#common_edit_property_pict_small_create_label#]</label>
+ <input type="checkbox" name="pict_small_isset" id="pict_small_isset" %small_check% onchange="pict_on_off('pict_small')">
+ <div id="pict_small" style="display:none;  border:1px solid #ccc; margin:40px 0 0 0; border-radius:6px; padding:0 10px; clear:both;">
+
+ <fieldset>
+  <label>[#common_edit_property_pict_width_and_height#]:<br><small>[#common_edit_property_pict_width_and_height_help#]</small></label>
+  <input type="text" name="pict_small_width" style="width:121px;" id="pict_small_width" value="%pict_small_width%"><span style="float:left; display:block; padding:5px;">x</span><input type="text" name="pict_small_height" style="width:121px;" id="pict_small_height" value="%pict_small_height%">
+ </fieldset>
+ </div>
+</fieldset>
+
+<script type="text/javascript">
+    $(function() {
+        pict_on_off('pict_small');
+        pict_on_off('pict_big');
+        pict_on_off('pict_source');
+    });
+</script>
+
+<!-- @enum_vals -->
+<table style="margin-top:10px;" class="admin_table">
+ <tr>
+  <th colspan="2" class="first last">[#catalog_edit_property_enum_label#]</th>
+ </tr>
+ %vals%
+</table>
+
+<fieldset>
+ <label for="enumval" style="width:180px;">[#catalog_edit_property_enum_val_add_label#]:</label>
+ <input type="text" id="enumval" name="enumval" value="">
+ <input type="button" style="margin-left:10px;" name="submit" value="[#catalog_edit_property_enum_val_add_bt#]" onclick="jspub_form_submit('savepropform','%form_action%')">
+</fieldset>
+
+<!-- @set_vals -->
+<table style="margin-top:10px;" class="admin_table">
+ <tr>
+  <th colspan="2" class="first last">[#catalog_edit_property_enum_label#]</th>
+ </tr>
+ %vals%
+</table>
+
+<fieldset>
+ <label for="enumval" style="width:180px;">[#catalog_edit_property_enum_val_add_label#]:</label>
+ <input type="text" id="enumval" name="enumval" value="">
+ <input type="button" style="margin-left:10px;" name="submit" value="[#catalog_edit_property_enum_val_add_bt#]" onclick="jspub_form_submit('savepropform','%form_action%')">
+</fieldset>
+
+<!-- @enum_val -->
+ <tr>
+  <td>%val_name%</td>
+  <td width="150"><a href="#" onclick="jspub_confirm('%action_del%','[#catalog_edit_property_enum_del_alert#]?')"><img src="/admin/templates/default/images/icon_delet.gif" alt="[#catalog_edit_property_enum_del_alert#]"/></a></td>
+ </tr>
+
+<!-- @set_val -->
+ <tr>
+  <td>%val_name%</td>
+  <td width="150"><a href="#" onclick="jspub_confirm('%action_del%','[#catalog_edit_property_enum_del_alert#]?')"><img src="/admin/templates/default/images/icon_delet.gif" alt="[#catalog_edit_property_enum_del_alert#]"/></a></td>
+ </tr>
+
+<!-- @old_el -->
+<form action="%form_action%" method="post" id="addenumform">
+<input type="hidden" name="id" value="%id%"/>
+</form>

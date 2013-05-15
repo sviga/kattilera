@@ -1,0 +1,117 @@
+<!-- @table_header -->
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#comments_base_name#]</span></span>
+<div id="page_container">
+    <div id="content_container">
+        <div class="content">
+            <h3>[#comments_list_header#](%total%)</h3>
+            <form action="%form_action%" method="POST">
+                <table class="admin_table" style="margin-bottom:10px;">
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>[#comments_item_number#]</th>
+                        <th>[#comments_item_pages#]</th>
+                        <th><a href="#" class="sort"  onclick="jspub_click('%url_sort_date%')">[#comments_item_date#]&nbsp;%img_sort_date%</a></th>
+                        <th><a href="#" class="sort"  onclick="jspub_click('%url_sort_txt%')">[#comments_item_txt#]&nbsp;%img_sort_txt%</a></th>
+                        <th><a href="#" class="sort"  onclick="jspub_click('%url_sort_available%')">[#comments_item_available#]&nbsp;%img_sort_available%</a></th>
+                        <th><a href="#" class="sort"  onclick="jspub_click('%url_sort_author%')">[#comments_item_author#]&nbsp;%img_sort_author%</a></th>
+                        <th>[#comments_item_actions#]</th>
+                    </tr>
+                    <!-- @img_sort_asc -->
+                    <img src="/admin/templates/default/images/12-em-up-blue.gif" />
+                    <!-- @img_sort_desc -->
+                    <img src="/admin/templates/default/images/12-em-down-blue.gif" />
+                    <!-- @table_body-->
+                    <tr>
+                        <td><input type="checkbox" name="items[%id%]" value="%id%"></td>
+                        <td>%number%</td>
+                        <td>%page_id%</td>
+                        <td>%date%<br />%time%</td>
+                        <td style="text-align:left;">%txt%</td>
+                        <td>%available%</td>
+                        <td>%author%</td>
+                        <td><a href="#" onclick="jspub_click('%action_edit%&id=%id%')"><img src="/admin/templates/default/images/icon_edit.gif" alt="[#comments_item_action_edit#]"/></a>&nbsp;<a href="#" onclick="jspub_confirm('%action_remove%&id=%id%', '[#comments_delete_confirm#]')"><img src="/admin/templates/default/images/icon_delet.gif" alt="[#comments_item_action_remove#]"/></a></td>
+                    </tr>
+                    <!-- @table_footer -->
+                </table>
+
+                <h3 style="margin-top:10px;">[#comments_actions_with_selected#]</h3>
+                <fieldset>
+                    %actions%
+                    <input type="submit" style="margin-left:10px;" name="submit" value="[#comments_show_list_submit#]"/><br/>
+                </fieldset>
+
+                <p>%pages%</p>
+            </form>
+
+            <h3>[#comments_select_range_header#]</h3>
+            <form action="%range_form_action%" method="post">
+                <fieldset>
+                    <label for="startDate" style="width: 15px;">[#comments_select_range_from#]</label><input type="text" name="startDate" style="width:130px;" id="startDate">
+                </fieldset>
+                <fieldset>
+                    <label for="endDate" style="width: 15px;">[#comments_select_range_to#]</label><input type="text" name="endDate" style="width:130px;" id="endDate">
+                </fieldset>
+
+                <fieldset class="page_submit_field" style="float: left;">
+                    <input type="button" value="[#comments_button_show#]" onclick="jspub_click('%range_form_action%&start='+$('#startDate').val()+'&stop='+$('#endDate').val())">
+                </fieldset>
+            </form>
+
+            <script type="text/javascript">
+                $(function() {
+                    $("#startDate").datepicker({dateFormat:"yy.mm.dd"});
+                    $("#endDate").datepicker({dateFormat:"yy.mm.dd"});
+                });
+            </script>
+        </div>
+    </div>
+</div>
+<!-- @no_data -->
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#comments_base_name#]</span></span>
+<div id="page_container">
+    <div id="content_container">
+        <div class="content">
+            [#comments_no_data_to_show#]
+        </div>
+    </div>
+</div>
+<!-- @on -->
+<img src="/admin/templates/default/images/24-em-check.gif" alt=""/>
+<!-- @off -->
+<!--<img src="/admin/templates/default/images/24-em-check-gray.gif" alt=""/>-->
+
+
+
+
+<!-- @pages -->
+<p>%first% %backward% %previous% %pages_block% %next% %forward% %last%</p>
+
+<!-- @page_first -->
+<a href="#" onclick="jspub_click('%link%')">Начало</a>
+<!-- @page_backward-->
+<a href="#" onclick="jspub_click('%link%')">&laquo;</a>
+<!-- @page_backward_disabled-->
+&laquo;
+<!-- @page_previous-->
+<a href="#" onclick="jspub_click('%link%')">&laquo;</a>
+<!-- @page_previous_disabled-->
+&laquo;
+<!-- @page_forward-->
+<a href="#" onclick="jspub_click('%link%')">&raquo;</a>
+<!-- @page_forward_disabled-->
+&raquo;
+<!-- @page_next-->
+<a href="#" onclick="jspub_click('%link%')">&raquo;</a>
+<!-- @page_next_disabled-->
+&raquo;
+<!-- @page_last -->
+<a href="#" onclick="jspub_click('%link%')">Конец</a>
+<!-- @page_active -->
+<a href="#" onclick="jspub_click('%link%')">%page%</a>
+<!-- @page_passive -->
+%page%
+<!-- @page_delimeter -->
+|
+
+<!-- @pages_null -->
+1

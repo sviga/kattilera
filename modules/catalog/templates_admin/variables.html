@@ -1,0 +1,41 @@
+<!-- @header -->
+<script type="text/javascript">
+  $("button").button();
+</script>
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#catalog_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+ <h3>[#catalog_variables_header_title#]</h3>
+ 
+ %table%
+ 
+ <fieldset class="page_submit_field">
+  <button onclick="jspub_click('show_variable_form&name_db=')">[#catalog_add_variable_label#]</button>
+ </fieldset>
+ </div>
+</div>
+</div>
+
+<!-- @table_header -->
+<table class="admin_table">
+ <tr>
+  <th>[#catalog_list_variable_namedb_label#]</th>
+  <th>[#catalog_list_variable_namefull_label#]</th>
+  <th>[#catalog_list_variable_value_label#]</th>
+  <th>[#catalog_list_variable_actions#]</th>
+ </tr>
+<!-- @table_body-->
+ <tr>
+  <td>%name_db%</td>
+  <td>%name_full%</td>
+  <td>%value%</td>
+  <td>
+   <a href="#" onclick="jspub_click('show_variable_form&name_db=%name_db%')"><img src="/admin/templates/default/images/icon_edit.gif" alt="[#catalog_list_group_action_edit#]"/></a>
+   <a href="#" onclick="jspub_confirm('variable_delete&name_db=%name_db%','[#catalog_variable_del_alert#] %name_full%?')"><img src="/admin/templates/default/images/icon_delet.gif" alt="[#catalog_variable_del_alert#] %name_full%?"/></a>
+  </td>
+ </tr>
+<!-- @table_footer -->
+</table>
+
+
