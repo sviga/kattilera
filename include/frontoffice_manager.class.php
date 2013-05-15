@@ -104,7 +104,7 @@ class frontoffice_manager
             $redirPage = PAGE_FOR_404;
         else
             $redirPage = "index";
-        $kernel->priv_redirect_301("/" . $redirPage . ".html");
+        $kernel->priv_redirect_301("/" . $redirPage/* . ".html"*/);
     }
 
     /**
@@ -123,7 +123,7 @@ class frontoffice_manager
         //Проверим корректность задания страницы
         if (isset($_GET['sitepage'])) //если задан параметр, какую страницу выдать, то выставим её в первую очередь
             $section_id = $_GET['sitepage'];
-        elseif (preg_match("|^/(.+?)\\.|", $uri, $matches))
+        elseif (preg_match("|^/(.+?)\\.?$|", $uri, $matches))
             $section_id = $matches[1];
         elseif (preg_match("'^/(\\?.*)?$'", $uri))
             $section_id = "index";

@@ -243,7 +243,7 @@ class manager_structue
         $num=0;
         do
         {
-            $node_new_id = $node_parent_id.'_sub'.(++$num);
+            $node_new_id = $node_parent_id.'/sub'.(++$num);
         }
         while($kernel->db_get_record_simple('_structure',"`id`='".$node_new_id."'",'id'));
 
