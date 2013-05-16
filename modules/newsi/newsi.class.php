@@ -143,7 +143,7 @@ class newsi extends basemodule
         $this->set_templates($kernel->pub_template_parse($template));
 
         $content = $this->get_template_block('form');
-        $content = str_replace('%url%', $kernel->pub_page_current_get() . '.html', $content);
+        $content = str_replace('%url%', $kernel->pub_page_current_get(), $content);
         $content = str_replace('%date_alone_name%', 'date', $content);
         $content = str_replace('%date_start_name%', 'start', $content);
         $content = str_replace('%date_stop_name%', 'stop', $content);
@@ -204,7 +204,7 @@ class newsi extends basemodule
                 }
 
                 $line = str_replace('%id%', $item['id'], $line);
-                $line = str_replace('%url%', $page_ch . '.html?id=' . $item['id'], $line);
+                $line = str_replace('%url%', $page_ch . '?id=' . $item['id'], $line);
                 $line = str_replace('%date%', $item['date'], $line);
                 $line = str_replace('%time%', $item['time'], $line);
                 $line = str_replace('%header%', $item['header'], $line);
@@ -218,7 +218,7 @@ class newsi extends basemodule
             $content = $this->get_template_block('content');
             $content = str_replace('%rows%', $lines, $content);
 
-            $page_url=$kernel->pub_page_current_get().'.html?offset=';
+            $page_url=$kernel->pub_page_current_get().'?offset=';
             $max_pages=10;
             $content = str_replace('%pages%', $this->build_pages_nav($total, $offset, $limit,$page_url,$max_pages,'url'), $content);
         }
@@ -339,7 +339,7 @@ class newsi extends basemodule
                         $line = str_replace('%source%', str_replace(array('%source_name%', '%source_url%'), array($item['source_url']), $this->get_template_block('source')), $line);
 
                     $line = str_replace('%id%', $item['id'], $line);
-                    $line = str_replace('%url%', $kernel->pub_page_current_get() . '.html?id=' . $item['id'], $line);
+                    $line = str_replace('%url%', $kernel->pub_page_current_get() . '?id=' . $item['id'], $line);
                     $line = str_replace('%date%', $item['date'], $line);
                     $line = str_replace('%time%', $item['time'], $line);
                     $line = str_replace('%header%', $item['header'], $line);
@@ -356,7 +356,7 @@ class newsi extends basemodule
                 $total = $this->pub_news_avaiable_get($type, $kernel->pub_httpget_get('date'), $kernel->pub_httpget_get('start'), $kernel->pub_httpget_get('stop'));
 
 
-                $page_url=$kernel->pub_page_current_get().'.html?';
+                $page_url=$kernel->pub_page_current_get().'?';
                 if ($this->check_date($kernel->pub_httpget_get('date')))
                     $page_url.= 'date=' . $kernel->pub_httpget_get('date').'&';
                 if ($this->check_date($kernel->pub_httpget_get('start')))

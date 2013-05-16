@@ -141,7 +141,7 @@ class menu
     private function prepare_menu_item($tmpl, $id, $caption, $level)
     {
 		$tmpl = str_ireplace("%text%" , $caption   , $tmpl);
-		$tmpl = str_ireplace("%link%" , $id.".html", $tmpl);
+		$tmpl = str_ireplace("%link%" , "/$id", $tmpl);
         $tmpl = str_ireplace("%id%"   , $id        , $tmpl);
         $tmpl = str_ireplace("%level%", $level     , $tmpl);
         return $tmpl;

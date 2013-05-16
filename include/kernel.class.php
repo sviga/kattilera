@@ -1045,7 +1045,7 @@ class kernel
     {
         if ($front_office)
         {
-            $this->curent_page = $id;
+            $this->curent_page = "/$id";
         }
         else
         {

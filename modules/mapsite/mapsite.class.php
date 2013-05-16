@@ -245,7 +245,7 @@ class mapsite
 		{
 
 			$html = "";
-			$id = $key;
+			$id = "/$key";
 			$caption = $val['caption'];
 
 			//Возьмем свойство видимости из свойств страницы
@@ -264,7 +264,7 @@ class mapsite
 				$tmpl = preg_replace("/%text%/i", $caption, $tmpl);
 				//$tmpl = preg_replace("/%link%/i", $id.".html", $tmpl);
 				if (strpos($id, ".html?")===false)
-				    $tmpl = preg_replace("/%link%/i", $id.".html", $tmpl);
+				    $tmpl = preg_replace("/%link%/i", $id, $tmpl);
 				else
 				    $tmpl = preg_replace("/%link%/i", $id, $tmpl);
 
