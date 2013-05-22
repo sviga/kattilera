@@ -12,12 +12,28 @@ if (SHOW_INT_ERRORE_MESSAGE)
 else
     error_reporting(0);
 
-require_once ("include/kernel.class.php"); //Ядро
-require_once ("include/pub_interface.class.php");
-require_once ("include/frontoffice_manager.class.php"); //управление фронт офисом
-require_once ("admin/manager_modules.class.php"); //Менеджер управления модулями
-require_once ("admin/manager_users.class.php"); //Менеджер управления модулями
-require_once ("admin/manager_stat.class.php");
+spl_autoload_register(function($classname) {
+    if (file_exists($f = 'include/' . strtolower($classname) . '.class.php'))  {
+        require_once ($f);
+    } elseif (file_exists($f = 'admin/' . strtolower($classname) . '.class.php')) {
+        require_once ($f);
+    } else {
+        var_dump('heeeey!');
+    }
+});
+
+register_shutdown_function(function() {
+    $error = error_get_last();
+//    var_dump($error);
+// todo save error to log
+});
+
+//require_once ("include/kernel.class.php"); //Ядро
+//require_once ("include/pub_interface.class.php");
+//require_once ("include/frontoffice_manager.class.php"); //управление фронт офисом
+//require_once ("admin/manager_modules.class.php"); //Менеджер управления модулями
+//require_once ("admin/manager_users.class.php"); //Менеджер управления модулями
+//require_once ("admin/manager_stat.class.php");
 
 $kernel = new kernel(PREFIX);
 //Если необходимо то редирект на строку с WWW

@@ -150,7 +150,7 @@ class frontoffice_manager
             if ((isset($pars_uri['query'])) && (!empty($pars_uri['query'])) && ($pars_uri['query'] !== "/"))
                 $query = "?" . $pars_uri['query'];
 
-            $str_url = "/" . trim($id_other['value']) . ".html" . $query;
+            $str_url = "/" . trim($id_other['value']) . $query;
             $kernel->pub_redirect_refresh_global($str_url);
         }
 
