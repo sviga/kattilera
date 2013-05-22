@@ -486,6 +486,9 @@ class manager_global_properties
 
     function file_get($version, $request="update")
     {
+        if (defined('DO_NOT_UPDATE') && DO_NOT_UPDATE) {
+            return false;
+        }
         $file_content = "";
         if (!($resource = @fopen("http://update.santafox.ru/?ver=".$version."&request=".$request, "r")))
             return false;
