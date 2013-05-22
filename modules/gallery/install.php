@@ -22,6 +22,7 @@ class gallery_install extends install_modules
              `id` int(10) unsigned NOT NULL auto_increment,
              `module_id` varchar(255) NOT NULL,
              `name` text NOT NULL,
+             `description` text DEFAULT NULL,
              PRIMARY KEY  (`id`),
              KEY `module_id` (`module_id`)
          ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1';

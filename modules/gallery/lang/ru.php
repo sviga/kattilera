@@ -58,5 +58,4 @@ $il['gallery_import_upload_failed'] = 'Ошибка при загрузке фа
 $il['gallery_import_archive_read_failed'] = 'Ошибка чтения архива';
 $il['gallery_import_archive_put_failed'] = 'Ошибка сохранения файла изображения';
 $il['gallery_import_added'] = 'Добавлено изображений: ';
-
-?>
+$il['gallery_category_descr'] = 'Описание категории';

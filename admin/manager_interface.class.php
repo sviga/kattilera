@@ -136,13 +136,13 @@ class manager_interface
             	if ($kernel->priv_admin_access_for_group_get('', $key))
             	{
                     $kernel->pub_redirect_refresh_global('/admin/index.php?section='.$key);
-                    die();
+                    exit();
             	}
             }
             //Если пришли сюда, значит что не нашли секцию разрешенную секцию основного меню
             //к которой разрешён доступ
             $this->exit_backofice();
-            die();
+            exit();
         }
 
         //Взависимости от того какое действие указано сделаем то что нужно
@@ -172,15 +172,13 @@ class manager_interface
             case 'edit_content':
                 $out_tmp = $this->priv_edit_content_start();
                 $kernel->priv_output($out_tmp, true);
-                exit(0);
-                break;
+                exit();
 
             //Сохранения контента, который редактировался в отдельном окне
             case 'save_content':
                 $this->priv_edit_content_save();
                 print $kernel->pub_json_encode(array("success"=>true));
-                die();
-                break;
+                exit();
 
             //Вызов редактора контента, но внутри формы, в составе ифрейма
             case 'edit_content_in':
@@ -189,9 +187,7 @@ class manager_interface
                 //$content->set_full_form();
                 //$content->set_close_editor(CLOSE_WINDOWS_ON_SAVE);
                 $kernel->priv_output($content->create(), true);
-                exit(0);
-                break;
-
+                exit();
 
             case 'get_help_content':
                 $str_file = 'admin/help/'.$kernel->priv_langauge_current_get().'/'.$kernel->pub_section_current_get().'-'.$kernel->pub_section_leftmenu_get().'.html';
@@ -209,9 +205,7 @@ class manager_interface
             case 'select_page':
                 $obj = new parse_properties();
                 $kernel->priv_output($obj->get_structure());
-                exit(0);
-                break;
-
+                exit();
 
             //Построение вызов основного шаблона
 			default:

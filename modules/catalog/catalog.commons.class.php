@@ -23,7 +23,7 @@ class CatalogCommons
     {
         global $kernel;
         $prefix = $kernel->pub_prefix_get();
-        $kernel->runSQL("DELETE FROM `".$prefix."_catalog_".$moduleid."_basket_orders` AS `orders` WHERE `orders`.`lastaccess`<'".date("Y-m-d H:i:s",strtotime("-7 days"))."'");
+        $kernel->runSQL("DELETE FROM `".$prefix."_catalog_".$moduleid."_basket_orders` WHERE `lastaccess`<'".date("Y-m-d H:i:s",strtotime("-21 days"))."'");
         $q="DELETE items FROM `".$prefix."_catalog_".$moduleid."_basket_items` AS items
             LEFT JOIN `".$prefix."_catalog_".$moduleid."_basket_orders` AS `orders` ON orders.id = items.orderid
             WHERE orders.id IS NULL";
@@ -36,11 +36,11 @@ class CatalogCommons
         global $kernel;
         $prfx=$kernel->pub_prefix_get();
         if ($subcats_count)
-            $select_fields.=', COUNT(DISTINCT subcats.id) AS _subcats_count';
-        $sql = 'SELECT '.$select_fields.', COUNT('.($subcats_count?"DISTINCT ":"").'i2c.item_id) AS _items_count FROM `'.$prfx.'_catalog_'.$moduleid.'_cats` AS cats
-                LEFT JOIN `'.$prfx.'_catalog_'.$moduleid.'_item2cat` AS i2c ON cats.id = i2c.cat_id';
+            $select_fields.=', IFNULL(subcats._count,0) AS _subcats_count';
+        $sql = 'SELECT '.$select_fields.', IFNULL(i2c._count,0) AS _items_count FROM `'.$prfx.'_catalog_'.$moduleid.'_cats` AS cats
+                LEFT JOIN (SELECT COUNT(item_id)  AS _count, cat_id FROM `'.$prfx.'_catalog_'.$moduleid.'_item2cat` GROUP BY cat_id) AS i2c ON cats.id = i2c.cat_id';
         if ($subcats_count)
-            $sql.=' LEFT JOIN '.$prfx.'_catalog_'.$moduleid.'_cats AS subcats ON subcats.parent_id=cats.id';
+            $sql.=' LEFT JOIN (SELECT COUNT(id)  AS _count, parent_id FROM `'.$prfx.'_catalog_'.$moduleid.'_cats`  GROUP BY parent_id) AS subcats ON subcats.parent_id=cats.id';
         $sql.=  ' WHERE cats.`parent_id` = '.$parentid.'
                 GROUP BY cats.id
                 ORDER BY cats.`order`';

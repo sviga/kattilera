@@ -1053,8 +1053,8 @@ class catalog extends BaseModule
         $ofields = CatalogCommons::get_order_fields2();
         $content = "";
         $userid = intval($kernel->pub_user_is_registred());
-        $process_order = $kernel->pub_httppost_get("process_order");
-        if (!empty($process_order))
+        $tinfo = $kernel->db_get_table_info('_catalog_'.$kernel->pub_module_id_get().'_basket_orders');
+        if ($kernel->pub_httppost_get("process_order"))
         { //обрабатываем форму
             $form_ok = true;
             $user_email = false;
@@ -1068,8 +1068,12 @@ class catalog extends BaseModule
                 $fvalues[$db_field] = nl2br(htmlspecialchars($kernel->pub_httppost_get($db_field))); //сохраним сразу и заэскейпленное значение
                 if ($kernel->pub_is_valid_email($postvar))
                     $user_email = $postvar;
+                if (mb_strlen($postvar)==0)
+                    $field_empty=true;
+                else
+                    $field_empty=false;
 
-                if (empty($postvar) && $ofield['isrequired'] == 1)
+                if ($field_empty && $ofield['isrequired'] == 1)
                 { // если поле не заполнено, но помечено как обязательное
                     $msg = $this->get_template_block("required_field_not_filled");
                     $msg = str_replace("%field_name%", $ofield['name_full'], $msg);
@@ -1077,13 +1081,28 @@ class catalog extends BaseModule
                     $form_ok = false;
                     break;
                 }
-                elseif ($postvar && !empty($ofield['regexp']) && !preg_match($ofield['regexp'], $postvar))
+                if (!$field_empty)
                 {
-                    $msg = $this->get_template_block("incorrect_field_value");
-                    $msg = str_replace("%field_name%", $ofield['name_full'], $msg);
-                    $content .= $msg;
-                    $form_ok = false;
-                    break;
+                    if($ofield['type']=='enum')
+                    {
+                        $evalues = $this->get_enum_set_prop_values($tinfo[$db_field]['Type'],false);
+                        if (!in_array($postvar,$evalues))
+                        {
+                            $msg = $this->get_template_block("incorrect_field_value");
+                            $msg = str_replace("%field_name%", $ofield['name_full'], $msg);
+                            $content .= $msg;
+                            $form_ok = false;
+                            break;
+                        }
+                    }
+                    if ($ofield['regexp'] && !preg_match($ofield['regexp'], $postvar))
+                    {
+                        $msg = $this->get_template_block("incorrect_field_value");
+                        $msg = str_replace("%field_name%", $ofield['name_full'], $msg);
+                        $content .= $msg;
+                        $form_ok = false;
+                        break;
+                    }
                 }
             }
 
@@ -1139,20 +1158,19 @@ class catalog extends BaseModule
         }
 
         $form = $this->get_template_block("form");
-        $tinfo = $kernel->db_get_table_info('_catalog_'.$kernel->pub_module_id_get().'_basket_orders');
         //заполним ранее введённые поля
         foreach ($ofields as $db_field => $ofield)
         {
             $postvar = $kernel->pub_httppost_get($db_field, false);
             if ($ofield['type'] == 'enum')
             {
-                $tstr = $tinfo[$db_field]['Type'];
-                $enum_elems = explode(',', mb_substr($tstr, 5, -1));
+                $enum_elems=$this->get_enum_set_prop_values($tinfo[$db_field]['Type'],false);
                 $form = str_replace("%".$db_field."_".$postvar."_selected%", "selected", $form);
+                $form = str_replace("%".$db_field."_".$postvar."_checked%", "checked", $form);//atlant
                 foreach ($enum_elems as $enum_elem)
                 {
-                    $enum_elem = mb_substr($enum_elem, 1, mb_strlen($enum_elem) - 2);
                     $form = str_replace("%".$db_field."_".$enum_elem."_selected%", " ", $form);
+                    $form = str_replace("%".$db_field."_".$enum_elem."_checked%", " ", $form);//atlant
                 }
             }
             else

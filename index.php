@@ -7,7 +7,7 @@ if (!file_exists("ini.php"))
 }
 require_once ("ini.php"); // Файл с настройками
 
-if (SHOW_INT_ERRORE_MESSAGE)
+if (defined("SHOW_INT_ERRORE_MESSAGE") && SHOW_INT_ERRORE_MESSAGE)
     error_reporting(E_ALL);
 else
     error_reporting(0);
@@ -37,8 +37,32 @@ register_shutdown_function(function() {
 
 $kernel = new kernel(PREFIX);
 //Если необходимо то редирект на строку с WWW
-if ((REDIR_WWW == true) && (!preg_match("/^www\\./", $_SERVER['HTTP_HOST'])))
+if (defined("REDIR_WWW") && REDIR_WWW && !preg_match("/^www\\./i", $_SERVER['HTTP_HOST']))
     $kernel->priv_redirect_301("http://www.".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+
+if (isset($_GET['_openstat']) && strpos($_GET['_openstat'],";")===false)
+{
+    $ostat=@base64_decode($_GET['_openstat']);
+    if ($ostat)
+    {
+        $odata=explode(";",$ostat,4);
+        if (count($odata)==4 && $odata[0]=='direct.yandex.ru')
+        {
+            $ruri = $_SERVER["REQUEST_URI"];
+            $ruri=preg_replace('~_openstat=([a-z0-9]+)~i','',$ruri);
+            $ruri=rtrim($ruri,"&");
+            $ruri=rtrim($ruri,"?");
+            if (strpos($ruri,"?")===false)
+                $ruri.="?";
+            else
+                $ruri.="&";
+            $ruri.="utm_content=".$odata[3];
+            $ruri.='&utm_medium=cpc&utm_source=yandex&utm_campaign='.$odata[1];
+            header("Location: ".$ruri);
+            die();
+        }
+    }
+}
 
 $expiry = 60*24*7;
 ini_set('session.gc_maxlifetime', $expiry);

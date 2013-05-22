@@ -2812,17 +2812,21 @@ class kernel
         return true;
     }
 
+    public function is_valid_sitepage_id($id)
+    {
+        return preg_match('/^([a-z0-9_\.\-\/]+)$/i',$id);
+    }
 
     /**
      * Определяет, существует ли страница с данным ID
      *
-     * @param string $id_page Провреяемое ID
+     * @param string $id_page Проверяемое ID
      * @access public
      * @return boolean
      */
     public function priv_page_exist($id_page)
     {
-        $row = $this->db_get_record_simple("_structure","id='".$id_page."'");
+        $row = $this->db_get_record_simple("_structure","id='".mysql_real_escape_string($id_page)."'");
         if ($row)
             return true;
         else

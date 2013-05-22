@@ -137,3 +137,4 @@ $il['auth_reg_activation_type']  = 'Активация пользователя'
 $il['auth_activation_confirmation_link']  = 'Переход по ссылке из письма';
 $il['auth_activation_admin_manual']  = 'Вручную администратором';
 $il['auth_error_no_param_set']  = 'Ошибка: Не установлен параметр ';
+$il['auth_activation_auto']  = 'Автоматическая активация';

@@ -18,7 +18,9 @@
                         try
                         {
                             var post_res=jQuery.parseJSON(data);
-                            if (!post_res.success)
+                            if(post_res.success)
+                                $('#informer').fadeIn().delay(650).fadeOut();
+                            else if (!post_res.success)
                                 alert('Error: '+post_res.info);
                             else if (typeof editor.config.autoUpdateElement != 'undefined' && editor.config.close_on_save)
                                 window.close();

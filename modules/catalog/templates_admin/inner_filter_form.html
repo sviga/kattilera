@@ -70,7 +70,15 @@
   
   <fieldset>
    <label for="ppv_target">[#catalog_edit_inner_filter_targetpage_label#]</label>
-   <input type="text" style="width:150px;" name="targetpage" value="%targetpage%" id="ppv_target" onClick="showPageSelector('ppv_target')">
+
+      <input type="text" style="width:150px;" name="targetpage" value="%targetpage%" id="ppv_target" onClick="showPageSelector(onInnerFilterPageSelected)">
+      <script type="text/javascript">
+          function onInnerFilterPageSelected(pageid)
+          {
+              $('#ppv_target').val(pageid);
+          }
+      </script>
+
   </fieldset>
   
   <fieldset>

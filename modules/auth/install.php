@@ -102,8 +102,10 @@ $param->set_caption('[#auth_reg_activation_type#]');
 $param->set_data(array(
     'confirm_link' => '[#auth_activation_confirmation_link#]',
     'admin_manual' => '[#auth_activation_admin_manual#]',
+    'auto_activate' => '[#auth_activation_auto#]',
 ));
 $param->set_default('confirm_link');
+$install->add_modul_properties($param);
 
 
 

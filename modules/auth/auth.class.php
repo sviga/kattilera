@@ -179,25 +179,40 @@ class auth extends basemodule
                 else
                 {
                     $errorlevel = $kernel->pub_user_register($my_post['login'], $my_post['pass']);
+                    $is_ajax=$kernel->pub_is_ajax_request();
                     switch ($errorlevel)
                     {
                         case 1:
+                            if ($is_ajax)
+                                return $this->get_template_block('ajax_auth_ok');
                             if (isset($my_post['redirect2page']) && !empty($my_post['redirect2page']))
                                 $kernel->pub_redirect_refresh_global($my_post['redirect2page']);
                             else
                                 $kernel->pub_redirect_refresh_global("/".$page_cabinet.".html");
                             break;
                         case -1:
-                            $html .= $this->get_template_block('inc_login');
+                            $msg=$this->get_template_block('inc_login');
+                            if ($is_ajax)
+                                return $msg;
+                            $html .= $msg;
                             break;
                         case -2:
-                            $html .= $this->get_template_block('disabled_by_admin');
+                            $msg = $this->get_template_block('disabled_by_admin');
+                            if ($is_ajax)
+                                return $msg;
+                            $html .= $msg;
                             break;
                         case -3:
-                            $html .= $this->get_template_block('verifying');
+                            $msg = $this->get_template_block('verifying');
+                            if ($is_ajax)
+                                return $msg;
+                            $html .= $msg;
                             break;
                         default:
-                            $html .= $this->get_template_block('unknown_err');
+                            $msg = $this->get_template_block('unknown_err');
+                            if ($is_ajax)
+                                return $msg;
+                            $html .= $msg;
                     }
                 }
             }
@@ -253,17 +268,26 @@ class auth extends basemodule
                     || !isset($my_post['reg']['pass2']) || empty($my_post['reg']['pass2'])
                 )
                 {
-                    $html .= $this->get_template_block('required_fields_not_filled');
+                    $msg = $this->get_template_block('required_fields_not_filled');
+                    if ($kernel->pub_is_ajax_request())
+                        return $msg;
+                    $html .= $msg;
                     $html .= $this->get_template_block('register');
                 }
                 elseif($my_post['reg']['pass2']!=$my_post['reg']['pass'])
                 {
-                    $html .= $this->get_template_block('passwords_dont_match');
+                    $msg = $this->get_template_block('passwords_dont_match');
+                    if ($kernel->pub_is_ajax_request())
+                        return $msg;
+                    $html .= $msg;
                     $html .= $this->get_template_block('register');
                 }
                 elseif (!$kernel->pub_is_valid_email($my_post['reg']['email']))
                 {
-                    $html .= $this->get_template_block('invalid_email');
+                    $msg = $this->get_template_block('invalid_email');
+                    if ($kernel->pub_is_ajax_request())
+                        return $msg;
+                    $html .= $msg;
                     $html .= $this->get_template_block('register');
                 }
                 else
@@ -364,36 +388,59 @@ class auth extends basemodule
                             $kernel->pub_mail($adminEmail, $adminEmail, $mailFrom, $http_host, $admin_subj, $message, 1);
 
 
-                            if ($this->get_module_prop_value('reg_activation_type')=='admin_manual')
+                            $act_type=$this->get_module_prop_value('reg_activation_type');
+                            switch($act_type)
                             {
-                                $html .= $this->get_template_block('wait_for_confirm');
-                            }
-                            else
-                            {
-                                $url = $id.md5($reg['email']);
-                                $url = "http://".$http_host."/".$kernel->pub_page_current_get().".html?regaction=confirm&code=".$url;
-                                $umessage = $this->get_template_block('mail');
-                                $umessage = str_replace("%url%", $url, $umessage);
-                                $umessage = str_replace("%name%", $reg['name'], $umessage);
-                                $umessage = str_replace("%host%",$_SERVER['HTTP_HOST'], $umessage);
-                                $umessage = str_replace("%email%", $reg['email'], $umessage);
-                                $usubj = $this->get_module_prop_value('auth_user_subj4reg');
-                                if (!$usubj)
-                                    $usubj = "Регистрация на сайте %host%";
-                                $usubj = str_replace('%host%',$http_host,$usubj);
-                                $kernel->pub_mail(array($reg['email']), array($reg['email']), $mailFrom, $http_host, $usubj, $umessage, 1);
-                                $html .= $this->get_template_block('follow_link');
+                                case 'admin_manual':
+                                    $msg=$this->get_template_block('wait_for_confirm');
+                                    if ($kernel->pub_is_ajax_request())
+                                        return $msg;
+                                    $html .= $msg;
+                                    break;
+                                case 'auto_activate':
+                                    $msg=$this->get_template_block('you_are_activated');
+                                    if ($kernel->pub_is_ajax_request())
+                                        return $msg;
+                                    $html .= $msg;
+                                    $kernel->db_update_record("_user",array('verified'=>1),"id=".$id);
+                                    break;
+                                default:
+                                    $url = $id.md5($reg['email']);
+                                    $url = "http://".$http_host."/".$kernel->pub_page_current_get().".html?regaction=confirm&code=".$url;
+                                    $umessage = $this->get_template_block('mail');
+                                    $umessage = str_replace("%url%", $url, $umessage);
+                                    $umessage = str_replace("%name%", $reg['name'], $umessage);
+                                    $umessage = str_replace("%host%",$_SERVER['HTTP_HOST'], $umessage);
+                                    $umessage = str_replace("%email%", $reg['email'], $umessage);
+                                    $usubj = $this->get_module_prop_value('auth_user_subj4reg');
+                                    if (!$usubj)
+                                        $usubj = "Регистрация на сайте %host%";
+                                    $usubj = str_replace('%host%',$http_host,$usubj);
+                                    $kernel->pub_mail(array($reg['email']), array($reg['email']), $mailFrom, $http_host, $usubj, $umessage, 1);
+
+                                    $msg = $this->get_template_block('follow_link');
+                                    if ($kernel->pub_is_ajax_request())
+                                        return $msg;
+                                    $html .= $msg;
+
+                                    break;
                             }
                         }
                         else
                         {
-                            $html .= $this->get_template_block('not_unique');
+                            $msg = $this->get_template_block('not_unique');
+                            if ($kernel->pub_is_ajax_request())
+                                return $msg;
+                            $html .= $msg;
                             $html .= $this->get_template_block('register');
                         }
                     }
                     else//какие-то из обязательных полей не заполнены
                     {
-                        $html .= $this->get_template_block('required_fields_not_filled');
+                        $msg = $this->get_template_block('required_fields_not_filled');
+                        if ($kernel->pub_is_ajax_request())
+                            return $msg;
+                        $html .= $msg;
                         $html .= $this->get_template_block('register');
                     }
                 }

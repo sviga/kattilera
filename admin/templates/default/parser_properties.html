@@ -54,7 +54,7 @@ $(function() {
 jspub_disabled_change('ppf_%name%', 'ppv_%name%');
 
 <!-- @page_html -->
-<input type="text" class="textInput" style="width:150px;" name="properties[%name%]" value="%value%" id="ppv_%name%" onClick="showPageSelector('ppv_%name%')">
+<input type="text" class="textInput" style="width:150px;" name="properties[%name%]" value="%value%" id="ppv_%name%" onClick="showPageSelector('%page_selector_id%')">
 <!-- @page_code -->
 //Добавим событие на клик по тригеру для выбора страницы
 /*

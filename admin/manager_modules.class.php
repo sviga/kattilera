@@ -687,7 +687,7 @@ class manager_modules
 
 
     /**
-    * Возвращает HTML код для редактирования параметров макроса
+    * Возвращает HTML код для редактирования параметров действия модуля
     *
     * @param integer $id_action
     * @param string $id_metod
@@ -708,6 +708,7 @@ class manager_modules
             $serialize = unserialize(stripslashes($array_prop['properties']));
 
     	$pars = new parse_properties();
+        $pars->set_is_dialog(true);
     	$pars->set_metod();
     	if (isset($array_prop['param_array']))
             $pars->set_value_default(unserialize(stripslashes($array_prop['param_array'])));

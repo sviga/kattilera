@@ -23,7 +23,7 @@ class parse_properties
 	private $max_label = 28;        //максимальная длинна символов в заголовке, остальные ображутся
 
 
-	function parse_properties()
+	function __construct()
 	{
 	    global $kernel;
 
@@ -31,6 +31,12 @@ class parse_properties
 	    $this->template = $kernel->pub_template_parse("admin/templates/default/parser_properties.html");
 	}
 
+    private $is_dialog=false;
+
+    public function set_is_dialog($is_dialog)
+    {
+        $this->is_dialog=$is_dialog;
+    }
 
     /** Устанавливает модуль, чьи парметры будем вытаскивать
     * @param string $id_modul
@@ -627,11 +633,16 @@ class parse_properties
 		// Узнаем текущие значения свойства
 		$value_default = $this->get_default($array['name']);
 		$value = $value_default['value'];
-		$naslednoe = ((isset($value_default['naslednoe'])) && $value_default['naslednoe']);
+		$naslednoe = isset($value_default['naslednoe']) && $value_default['naslednoe'];
 
         //Можно формировать сам код свойства
         //Необходимо создать чекбокс для выбора наследовать значение или нет
 		$html = $this->template_element_html('page', $array,$value);
+
+        $page_selector_id='#ppv_'.$array['name'];
+        if ($this->is_dialog)
+            $page_selector_id='#popup_div '.$page_selector_id;
+        $html = str_replace('%page_selector_id%', $page_selector_id, $html);
 
 		$code = $this->template['page_code'];
         $code = str_replace("%name%",  $array['name'], $code);

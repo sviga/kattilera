@@ -111,6 +111,7 @@ class gallery  extends basemodule
             if ($curr_cat)
             {
                 $content = str_replace('%category_name%', str_replace('%category_name%',$curr_cat['name'],$this->get_template_block('category_name')), $content);
+                $content = str_replace('%category_descr%', str_replace('%category_descr%',$curr_cat['description'],$this->get_template_block('category_descr')), $content);
                 $content = str_replace('%back2cats_link%', str_replace('%link%',$curr_page,$this->get_template_block('back2cats_link')), $content);
             }
             else
@@ -383,6 +384,14 @@ class gallery  extends basemodule
                 if (!$cat)
                     $cat=array('id'=>0, 'name'=>'');
                 $content = $this->get_template_block('category_form');
+
+                $editor = new edit_content();
+                $editor->set_edit_name('description');
+                $editor->set_simple_theme(true);
+                $editor->set_content($cat['description']);
+                $content =str_replace('%description%',$editor->create(),$content);
+
+
                 $content = str_replace('%action%', $kernel->pub_redirect_for_form('category_save'), $content);
                 foreach ($cat as $k=>$v)
                 {
@@ -392,11 +401,12 @@ class gallery  extends basemodule
             case "category_save":
                 $id=intval($kernel->pub_httppost_get('id'));
                 $name=$kernel->pub_httppost_get('name');
+                $descr=$kernel->pub_httppost_get('description');
                 if ($id==0)
-                    $q="INSERT INTO `".$kernel->pub_prefix_get()."_gallery_cats` (`name`,`module_id`) VALUES
-                                           ('".$name."','".$moduleid."')";
+                    $q="INSERT INTO `".$kernel->pub_prefix_get()."_gallery_cats` (`name`,`module_id`,`description`) VALUES
+                                           ('".$name."','".$moduleid."','".$descr."')";
                 else
-                    $q="UPDATE `".$kernel->pub_prefix_get()."_gallery_cats` SET `name`='".$name."' WHERE id=".$id;
+                    $q="UPDATE `".$kernel->pub_prefix_get()."_gallery_cats` SET `description`='".$descr."',`name`='".$name."' WHERE id=".$id;
                 $kernel->runSQL($q);
                 $kernel->pub_redirect_refresh_reload('show_cats');
                 break;

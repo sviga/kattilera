@@ -656,10 +656,11 @@ class properties_page
         	$array_properties['template'] = $kernel->pub_str_prepare_set($data['page_template']);
         else
         	unset($array_properties['template']);
-        if ((isset($data['page_id'])) && ($this->id_curent_page != $data['page_id']) &&
-        	$this->id_curent_page!="index" && //не меняем index
-        	!empty($data['page_id']) &&
-        	preg_match("/^[a-zA-Z0-9_].*$/",$data['page_id']))
+        if ( isset($data['page_id'])
+            && $this->id_curent_page != $data['page_id']
+            && $this->id_curent_page != "index" //не меняем index
+            && $kernel->is_valid_sitepage_id($data['page_id'])
+            )
         {
         	//Значит существет новый id, который нужно назначить странице, помимо этого,
         	//нужно поменять все ссылки, которые есть на этот id в mySql базе, а также

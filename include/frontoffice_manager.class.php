@@ -22,7 +22,8 @@ class frontoffice_manager
      */
     function __construct()
     {
-        $this->session_tracking_set();
+        if (defined("GENERATE_STATISTIC") && GENERATE_STATISTIC)
+            $this->session_tracking_set();
     }
 
 
@@ -104,7 +105,7 @@ class frontoffice_manager
             $redirPage = PAGE_FOR_404;
         else
             $redirPage = "index";
-        $kernel->priv_redirect_301("/" . $redirPage/* . ".html"*/);
+        $kernel->priv_redirect_301("/" . $redirPage);
     }
 
     /**
@@ -121,9 +122,9 @@ class frontoffice_manager
         $uri = $_SERVER['REQUEST_URI'];
         $section_id = null;
         //Проверим корректность задания страницы
-        if (isset($_GET['sitepage'])) //если задан параметр, какую страницу выдать, то выставим её в первую очередь
+        if (isset($_GET['sitepage']) && $kernel->is_valid_sitepage_id($_GET['sitepage'])) //если задан параметр, какую страницу выдать, то выставим её в первую очередь
             $section_id = $_GET['sitepage'];
-        elseif (preg_match("|^/([^\?]+)|", $uri, $matches))
+        elseif (preg_match("~^/([^\?]+)~i", $uri, $matches))
             $section_id = $matches[1];
         elseif (preg_match("'^/(\\?.*)?$'", $uri))
             $section_id = "index";

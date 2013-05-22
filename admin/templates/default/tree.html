@@ -35,7 +35,11 @@ start_interface.link_go("%action_node%&id=" + currNodeId);
                     if (typeof structSelectedPage == 'function')
                         structSelectedPage(currNodeId);
                     else // 'string'
-                        $('#'+structSelectedPage).val(currNodeId);
+                    {
+                        if (structSelectedPage.substring(0,1)!='#')
+                            structSelectedPage='#'+structSelectedPage;
+                        $(''+structSelectedPage).val(currNodeId);
+                    }
                     $("#popup_sitemap_div").dialog("destroy");
                 }
 
