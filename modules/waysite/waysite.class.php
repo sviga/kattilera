@@ -67,7 +67,7 @@ class waysite extends BaseModule
                 if ($key=="index")
 				    $tmpl = str_replace("%link%", "/", $tmpl);
                 else
-				    $tmpl = str_replace("%link%", $key.".html", $tmpl);
+				    $tmpl = str_replace("%link%", '/'.$key, $tmpl);
 
 				$way_arr[] = $tmpl;
 			}
