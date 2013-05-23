@@ -339,7 +339,7 @@ class newsi extends basemodule
                         $line = str_replace('%source%', str_replace(array('%source_name%', '%source_url%'), array($item['source_url']), $this->get_template_block('source')), $line);
 
                     $line = str_replace('%id%', $item['id'], $line);
-                    $line = str_replace('%url%', $kernel->pub_page_current_get() . '?id=' . $item['id'], $line);
+                    $line = str_replace('%url%', '/'.$kernel->pub_page_current_get() . '?id=' . $item['id'], $line);
                     $line = str_replace('%date%', $item['date'], $line);
                     $line = str_replace('%time%', $item['time'], $line);
                     $line = str_replace('%header%', $item['header'], $line);
