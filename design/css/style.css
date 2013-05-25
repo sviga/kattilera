@@ -1,0 +1,261 @@
+@import "html5-doctor-reset-stylesheet.css";
+
+@font-face {
+    font-family: FranklinGothicMedium; /* Имя шрифта */
+    src: url(/design/fonts/FranklinGothic-Medium.ttf); /* Путь к файлу со шрифтом */
+}
+@font-face {
+    font-family: MyriadProRegular; /* Имя шрифта */
+    src: url(/design/fonts/MyriadPro-Regular.otf); /* Путь к файлу со шрифтом */
+}
+@font-face {
+    font-family: TrebuchetRegular; /* Имя шрифта */
+    src: url(/design/fonts/Trebuchet-Regular.ttf); /* Путь к файлу со шрифтом */
+}
+@font-face {
+    font-family: Raavi; /* Имя шрифта */
+    src: url(/design/fonts/Raavi.ttf); /* Путь к файлу со шрифтом */
+}
+p {
+    font-family: TrebuchetRegular;
+    font-size: 14px;
+    line-height: 18px;
+    color: #646565;
+    padding-bottom: 19px;
+}
+h1 {
+    /*font-family: FranklinGothicMedium;*/
+    font-family: MyriadProRegular;
+    font-size: 21px;
+    color: #58372D;
+}
+h2 {
+    font-family: MyriadProRegular;
+    font-size: 18px;
+    color: #58372D;
+}
+h3 {
+    font-family: MyriadProRegular;
+    font-size: 16px;
+    color: #58372D;
+}
+a {
+    color: #805039;
+    /*color: #727477;*/
+    text-decoration: none;
+    font-family: TrebuchetRegular;
+}
+a:hover {
+    color: #6DA441;
+}
+
+
+
+.container {
+    width: 1000px;
+    margin: 0 auto;
+    padding-top: 15px;
+    /*background: url("/design/images/Untitled-11.png") no-repeat;
+    height: 1700px;*/
+}
+
+.logo {
+    padding-top: 10px;
+    float: left;
+}
+
+.menu_block {
+    padding-left: 58px;
+    font-family: FranklinGothicMedium;
+    font-size: 18px;
+}
+
+header {
+    height: 131px;
+}
+
+/**
+* Языковое меню
+*/
+.lang_menu {
+    float: right;
+    height: 20px;
+}
+.lang_menu span {
+    background-color: #EBEEDD;
+    color: #B0AFAF;
+    padding: 1px 7px 1px 6px;
+    margin-right: 5px;
+}
+.lang_menu a {
+    background: #DEDFDC;
+    color: #a3a3a3;
+    padding: 1px 7px 1px 6px;
+    text-decoration: none;
+}
+.lang_menu a:hover {
+    background: #6DA441;
+    color: #ffffff;
+}
+
+/**
+* Главное меню
+*/
+.main_menu {
+    clear: right;
+    margin-top: 25px;
+    padding: 12px 16px 10px 0;
+    float: right;
+    border: 1px solid #D5DAD6;
+    border-radius: 7px;
+    font-size: 17.5px;
+    padding-left: 15px;
+
+    background: #fcfcf1; /* Old browsers */
+    background: -moz-linear-gradient(top, #fcfcf1 0%, #e4e9d6 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fcfcf1), color-stop(100%,#e4e9d6)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #fcfcf1 0%,#e4e9d6 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #fcfcf1 0%,#e4e9d6 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #fcfcf1 0%,#e4e9d6 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #fcfcf1 0%,#e4e9d6 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcf1', endColorstr='#e4e9d6',GradientType=0 ); /* IE6-9 */
+}
+.main_menu a {
+    color: #805139;
+    text-decoration: none;
+    padding: 10px 11px 9px 11px;
+}
+.main_menu a:hover {
+    background: #6DA441;
+    color: #ffffff;
+}
+.main_menu .active {
+    background: #6DA441;
+    color: #ffffff;
+}
+.main_menu ul>li {
+    float: left;
+}
+.main_menu span {
+    background: #6DA441;
+    color: #ffffff;
+    padding: 10px 11px 9px 11px;
+    font-family: TrebuchetRegular;
+    font-size: 17.5px;
+}
+/**
+* Меню 2го уровня
+*/
+.sub_menu {
+    display: none;
+    position: absolute;
+    margin-top: 10px;
+    background: #6DA441;
+    z-index: 100;
+}
+.sub_menu li {
+    display: block;
+    clear: left;
+}
+.sub_menu span {
+    color: #447028;
+    background: none;
+    font-size: 14px;
+    display: block;
+}
+.sub_menu a {
+    color: #ffffff;
+    font-size: 14px;
+    display: block;
+}
+.sub_menu a:hover {
+    color: #447028;
+    background: none;
+}
+.sub_menu img {
+    display: block;
+}
+
+
+/**
+* Футер
+*/
+footer {
+    clear: both;
+    padding-top: 13px;
+}
+footer nav {
+    height: 277px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    -moz-column-count: 3;
+    -moz-column-gap: 20px;
+    -webkit-column-count: 3;
+    -webkit-column-gap: 20px;
+    column-count: 3;
+    column-gap: 20px;
+
+}
+footer nav>ul>li>a, nav>ul>li>span {
+    font-family: FranklinGothicMedium;
+    font-size: 18px;
+    color: #805039;
+}
+footer nav>ul>li>ul {
+    padding-top: 14px;
+    line-height: 17px;
+    padding-bottom: 17px;
+}
+footer nav>ul>li>ul>li>a, nav>ul>li>ul>li>span {
+    font-family: TrebuchetRegular;
+    font-size: 14px;
+    color: #757676;
+    font-weight: bold;
+    line-height: 18px;
+}
+footer nav>ul>li>ul>li>ul {
+    padding-bottom: 7px;
+    line-height: 18px;
+}
+footer nav>ul>li>ul>li>ul>li>a, nav>ul>li>ul>li>ul>li>span {
+    font-family: TrebuchetRegular;
+    font-size: 14px;
+    color: #757676;
+}
+.bottom_menu span {
+    color: #447028;
+}
+
+
+
+.copyright, .social, .search {
+    float: left;
+    padding-top: 20px;
+}
+.copyright {
+    font-size: 16px;
+    color: #898B8E;
+    font-family: Raavi;
+    padding-top: 35px;
+}
+.social {
+    padding-left: 150px;
+}
+.search {
+    padding-top: 23px;
+    padding-bottom: 30px;
+}
+.search .field {
+    padding: 3px 30px 2px 3px;
+    font-family: MyriadProRegular;
+    font-size: 15.5px;
+    color: #B5B4B4;
+    margin-left: 160px;
+    width: 243px;
+    border: 1px solid;
+    border-radius: 3px;
+}
+.search .button {
+    position: relative;
+    left: -32px;
+}

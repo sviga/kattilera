@@ -57,7 +57,7 @@ class search extends BaseModule
         //Узнаем на какой странице форма поиска.
         $prop = $kernel->pub_modul_properties_get('page_search');
         $prop = $prop['value'];
-        $html = str_replace('%action%', '/'.$prop.'.html', $html);
+        $html = str_replace('%action%', '/'.$prop, $html);
         return $html;
     }
 
@@ -79,7 +79,7 @@ class search extends BaseModule
         //Странице перекидывания возьмём из настроек
         $page_search = $kernel->pub_modul_properties_get('page_search');
         if (!empty($page_search['value']))
-            $page_search = "/".$page_search['value'].".html";
+            $page_search = "/".$page_search['value'];
         else
             $page_search = "";
 
@@ -135,7 +135,7 @@ class search extends BaseModule
 		$html = str_replace("%search_form%"   , $html_form_serch , $html);
 
         $total = $searcher->number_of_results;
-        $purl = $kernel->pub_page_current_get().".html?search=".urlencode($search_text)."&".$this->offset_param_name."=";
+        $purl = $kernel->pub_page_current_get()."?search=".urlencode($search_text)."&".$this->offset_param_name."=";
 		$html = str_replace("%pages%", $this->build_pages_nav($total,$offset,$perPage,$purl,0) , $html);
 
 		//В итоговом шаблоне могла остаться переменная с поисковым словом, заменим её
@@ -250,7 +250,7 @@ class search extends BaseModule
 				//И индексировать начнём со страницы именного этого пиоска
                 $page_search = $kernel->pub_modul_properties_get('page_search');
                 if (!empty($page_search['value']))
-                    $page_search = $page_search['value'].".html";
+                    $page_search = $page_search['value'];
                 else
                     $page_search = "";
 

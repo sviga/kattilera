@@ -34,21 +34,17 @@ page 	@page* и @block* (все участвующие в формировани
 <!-- ****************************************** Шаблоны ленты новостей ****************************************** -->
 
 <!-- @content -->
-			<div id="lenta">
-				<p><span>Новости</span></p>
-				<ul>
-%rows%
-				</ul>
-			</div>
+<h1>НОВОСТИ</h1>
+    %rows%
+
 <!-- @rows -->
-					<li>
-						<small>%date%</small> <br />
-						<a href="%url%" title="%header%">%description_short%</a>
-					</li>
+<div class="item">
+    <a href="%url%">%header%</a>
+    <p>%description_short%</p>
+</div>
+
 <!-- @no_data -->
-					<li>
-						Нет новостей
-					</li>
+
 <!-- @image -->
 <img src="%image_thumb%" border="0" alt="%header%" align="left" title="%header%"/>
 <!-- @no_images -->

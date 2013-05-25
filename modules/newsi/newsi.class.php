@@ -204,14 +204,13 @@ class newsi extends basemodule
                 }
 
                 $line = str_replace('%id%', $item['id'], $line);
-                $line = str_replace('%url%', $page_ch . '?id=' . $item['id'], $line);
+                $line = str_replace('%url%', '/'.$page_ch . '?id=' . $item['id'], $line);
                 $line = str_replace('%date%', $item['date'], $line);
                 $line = str_replace('%time%', $item['time'], $line);
                 $line = str_replace('%header%', $item['header'], $line);
                 $line = str_replace('%description_short%', $item['description_short'], $line);
                 $line = str_replace('%description_full%', $item['description_full'], $line);
                 $line = str_replace('%author%', $item['author'], $line);
-
                 $lines .= $line . "\r\n";
             }
 

@@ -22,27 +22,23 @@
 %pages%
 
 <!-- @search_form -->
-<h1>Результаты поска по запросу: <span>%search_text%</span></h1>
+<h1>Результаты поиска по запросу: <i>%search_text%</i></h1>
 				
 
 				
 <!-- @noresult -->
-<h1>К сожалению, документов, содержащих слово <span>%search_text%</span> не найдено</h1>
+<h2>К сожалению, документов, содержащих слово <span>%search_text%</span> не найдено</h2>
 
 <!-- @search_results -->
 <div class="table_catalog">
-    <table>
         %rows%
-    </table>
 </div>
 
 <!-- @search_results_rows -->
-    <tr>
-        <td>
-            <a href="%link%">%title%</a>
-            <p>%snipped%</p>
-        </td>
-    </tr>
+<p>
+<a href="%link%">%title%</a>
+<p>%snipped%</p>
+</p>
 
 <!-- @search_results_split -->
 

@@ -1,0 +1,99 @@
+@import "/design/css/style.css";
+
+h1 {
+    font-family: MyriadProRegular;
+    font-size: 21px;
+    color: #58372D;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.road_line {
+    background: #6FA642;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    z-index: 2;
+}
+.road {
+    color: #ffffff;
+    padding-top: 10px;
+    padding-bottom: 13px;
+    margin: 0 auto;
+    width: 1000px;
+}
+.road a {
+    color: #ffffff;
+    font-size: 18px;
+    font-family: FranklinGothicMedium;
+}
+.road a:hover {
+    color: #83503D;
+}
+.road .active {
+    font-size: 18px;
+    font-family: FranklinGothicMedium;
+    color: #83503D;
+}
+
+.under_road_line {
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top, #ffffff 0%, #eaeaea 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#eaeaea)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%,#eaeaea 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%,#eaeaea 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%,#eaeaea 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #ffffff 0%,#eaeaea 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eaeaea',GradientType=0 ); /* IE6-9 */
+
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+}
+.under_road {
+    /*border-bottom: 1px solid #cdcdcf;*/
+    /*padding-bottom: 20px;*/
+    margin: 0 auto;
+    width: 1000px;
+}
+.under_road2 {
+    border-bottom: none;
+}
+.cont {
+    padding-top: 20px;
+    clear: both;
+    min-height: 500px;
+}
+.cont .col1 {
+    float: left;
+    width: 47%;
+}
+.cont .col2 {
+    float: right;
+    width: 47%;
+}
+.cont .clear {
+    clear: both;
+    padding-bottom: 20px;
+}
+
+/**
+* Меню 3-го уровня
+*/
+.third_level_menu {
+    line-height: 25px;
+    font-size: 14px;
+    padding-top: 10px;
+    list-style: none;
+ }
+.third_level_menu img {
+    vertical-align: middle;
+}
+.third_level_menu a {
+    font-family: FranklinGothicMedium;
+}
+.third_level_menu span {
+    color: #6FA642;
+    font-family: FranklinGothicMedium;
+}
