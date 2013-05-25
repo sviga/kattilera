@@ -33,11 +33,6 @@ class HtmlParser /*extends WebContentParser*/
         foreach ($hrefs as $href)
         {
 
-            //Раньше делали так
-            //if (!preg_match("/(\.(css|doc|xls|zip|rar|gzip|gz|tar|jpg|jpeg|avi|png|mp3|js)$|document\.write|pub_create_pageprint)/", $href))
-            //  $normal_hrefs[] = $href;
-
-            //Теперь делаем так
             $abs_url = $urlparser->get_absolute_url($href);
 		    $tmp_href       = @parse_url($abs_url);
             if ($tmp_href===false)
@@ -51,8 +46,12 @@ class HtmlParser /*extends WebContentParser*/
                 $tmp_href_query = ($tmp_href['query']);
 
 
+            if (preg_match("/\.(css|doc|xls|zip|rar|gzip|gz|tar|jpg|jpeg|avi|png|mp3|js)$/i", $tmp_href_path)) {
+                continue;
+            }
+
             //Выбираем только HTML-ки и PDF - всё остальное - лесом
-            if (preg_match("/\\.(pdf|html|htm)$/", $tmp_href_path) || empty($tmp_href_path))
+            if (true || preg_match("/\\.(pdf|html|htm)$/", $tmp_href_path) || empty($tmp_href_path))
             {
                 //$kernel->pub_console_show("--".$tmp_href_query);
                 //Кроме того, выкинем отсюда ссылку на версию для печати, если она есть

@@ -208,8 +208,8 @@ abstract class BaseModule
         $pblock = $this->get_template_block('pages');
         if ($currpage>1)
         {
-            $previous = str_replace('%'.$linkLabelName.'%', $q.($currpage-2)*$perpage, $this->get_template_block('page_previous'));
-            $first = str_replace('%'.$linkLabelName.'%', $q.'0', str_replace('%page_num%',1,$this->get_template_block('page_first')));
+            $previous = str_replace('%'.$linkLabelName.'%', '/'.$q.($currpage-2)*$perpage, $this->get_template_block('page_previous'));
+            $first = str_replace('%'.$linkLabelName.'%', '/'.$q.'0', str_replace('%page_num%',1,$this->get_template_block('page_first')));
         }
         else
         {
@@ -220,15 +220,15 @@ abstract class BaseModule
         $pblock = str_replace('%previous%', $previous, $pblock);
 
         if ($startBlockPage>1)
-            $backward = str_replace('%'.$linkLabelName.'%', $q.(($startBlockPage-2)*$perpage), $this->get_template_block('page_backward'));
+            $backward = str_replace('%'.$linkLabelName.'%', '/'.$q.(($startBlockPage-2)*$perpage), $this->get_template_block('page_backward'));
         else
             $backward = $this->get_template_block('page_backward_disabled');
         $pblock = str_replace('%backward%', $backward, $pblock);
 
         if ($currpage<$pages_count)
         {//есть ли страницы дальше?
-            $next = str_replace('%'.$linkLabelName.'%', $q.($currpage*$perpage), $this->get_template_block('page_next'));
-            $last = str_replace('%'.$linkLabelName.'%', $q.(($pages_count-1)*$perpage), str_replace('%page_num%',$pages_count,$this->get_template_block('page_last')));
+            $next = str_replace('%'.$linkLabelName.'%', '/'.$q.($currpage*$perpage), $this->get_template_block('page_next'));
+            $last = str_replace('%'.$linkLabelName.'%', '/'.$q.(($pages_count-1)*$perpage), str_replace('%page_num%',$pages_count,$this->get_template_block('page_last')));
         }
         else
         {
@@ -239,7 +239,7 @@ abstract class BaseModule
         $pblock = str_replace('%next%', $next, $pblock);
 
         if ($finishBlockPage<$pages_count)
-            $forward = str_replace('%'.$linkLabelName.'%',  $q.($finishBlockPage*$perpage), $this->get_template_block('page_forward'));
+            $forward = str_replace('%'.$linkLabelName.'%',  '/'.$q.($finishBlockPage*$perpage), $this->get_template_block('page_forward'));
         else
             $forward = $this->get_template_block('page_forward_disabled');
         $pblock = str_replace('%forward%', $forward, $pblock);
@@ -257,7 +257,7 @@ abstract class BaseModule
             $link = $q.$currOffset;
             if ($currOffset==0)//для первой страницы уберём &offset=0
                 $link = preg_replace('~&offset=0$~','',$link);
-            $page = str_replace('%'.$linkLabelName.'%', $link, $page);
+            $page = str_replace('%'.$linkLabelName.'%', '/'.$link, $page);
 
             $page = str_replace('%page%', $p, $page);
             $pages[] = $page;

@@ -94,7 +94,7 @@ class UrlParser
 		else
 			$base_filename = "";
 
-		$url_http_host = "$url_info[scheme]://$url_info[host]";
+		$url_http_host = "{$url_info['scheme']}://{$url_info['host']}" . (empty($url_info['port']) ? '' : ":{$url_info['port']}");
 
 		if ($base{0} == '/')
 		{
