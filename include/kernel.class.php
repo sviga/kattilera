@@ -4864,13 +4864,17 @@ class kernel
         $file_exist = file_exists($file);
 
         $parse_file = pathinfo($file);
-        $curent_dir = $parse_file['dirname'];
+        $current_dir = $parse_file['dirname'];
+
+        if (!file_exists($current_dir)) {
+            exec("mkdir -p $current_dir");
+        }
 
         //Можем ли мы записать в сам файл или в папку, где он находиться
         if ($file_exist)
             $file_write = is_writable($file);
         else
-            $file_write = is_writable($curent_dir);
+            $file_write = is_writable($current_dir);
         //Пока не важно, есть файл или нет, главное
         //что мы можем его переписать, что мы и делаем
         //иначе, нужно выполнять
