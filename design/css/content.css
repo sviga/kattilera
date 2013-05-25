@@ -97,3 +97,50 @@ h1 {
     color: #6FA642;
     font-family: FranklinGothicMedium;
 }
+
+
+/**
+* Новости
+*/
+.news .article {
+    clear: both;
+}
+.news .image {
+    float: left;
+    padding-right: 30px;
+    padding-bottom: 30px;
+}
+.news .desc {
+
+}
+.news .desc a {
+    color: #58372D;
+    font-family: MyriadProRegular;
+    font-size: 21px;
+}
+.news .title {
+    font-family: TrebuchetRegular;
+    font-size: 18px;
+    font-weight: bold;
+    color: #6DA441;
+    padding-bottom: 30px;
+}
+.pages {
+    clear: both;
+    float: right;
+    font-family: MyriadProRegular;
+    font-size: 21px;
+    color: #58372D;
+}
+.pages a,.pages span {
+    margin-left: 10px;
+}
+.pages a:hover {
+    color: #6DA441;
+}
+.pages .active {
+    background: #6DA441;
+    border-radius: 150px;
+    color: #ffffff;
+    padding: 5px 10px 3px 10px;
+}

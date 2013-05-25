@@ -364,7 +364,7 @@ class newsi extends basemodule
                     $page_url.= 'stop=' . $kernel->pub_httpget_get('stop').'&';
                 $page_url.='offset=';
 
-                $content = str_replace('%pages%', $this->build_pages_nav($total, $offset, $limit,$page_url,$max_pages,'url'), $content);
+                $content = str_replace('%pages%', $this->build_pages_nav($total, $offset, $limit,'/'.$page_url,$max_pages,'url'), $content);
 
             }
         }

@@ -1,0 +1,26 @@
+footer nav>div>ul>li>a, nav>div>ul>li>span {
+    font-family: FranklinGothicMedium;
+    font-size: 18px;
+    color: #805039;
+}
+footer nav>div>ul>li>ul {
+    padding-top: 14px;
+    line-height: 17px;
+    padding-bottom: 17px;
+}
+footer nav>div>ul>li>ul>li>a, nav>div>ul>li>ul>li>span {
+    font-family: TrebuchetRegular;
+    font-size: 14px;
+    color: #757676;
+    font-weight: bold;
+    line-height: 18px;
+}
+footer nav>div>ul>li>ul>li>ul {
+    padding-bottom: 7px;
+    line-height: 18px;
+}
+footer nav>div>ul>li>ul>li>ul>li>a, nav>div>ul>li>ul>li>ul>li>span {
+    font-family: TrebuchetRegular;
+    font-size: 14px;
+    color: #757676;
+}

@@ -1,4 +1,5 @@
-/*$(function() {
+$(function() {
+    // проверка ие
     var ie6 = navigator.appVersion.indexOf("MSIE 6.") != -1;
     var ie7 = navigator.appVersion.indexOf("MSIE 7.") != -1;
     var ie8 = navigator.appVersion.indexOf("MSIE 8.") != -1;
@@ -9,11 +10,7 @@
             columns: 3
         });
     }
-});
-*/
 
-
-$(function() {
     // Меню 3-го уровня
     $(".sub_menu").each(function () {
         $(this).parent().eq(0).hover(function () {
@@ -33,4 +30,33 @@ $(function() {
         $($(".under_road:eq(1)").children()[1]).width(widthSecondCol-widthFirstCol-30);
     }
 
+
+
+    //Смена языка
+    if (Modernizr.localstorage) {
+        $(".lang_menu a").click(function() {
+            localStorage.setItem("language", $(this).text());
+        });
+    }
+    if(window.location.href.indexOf("/en/") != -1) {
+        var href = window.location.href.replace("/en/", "/ru/");
+    } else {
+        var href = window.location.href.replace("/ru/", "/en/");
+    }
+    $(".lang_menu a").attr("href", href);
+
+    //Заменить в дороге "Главная"
+    if(window.location.href.indexOf("/en/") != -1) {
+        var road = $(".road");
+        if(road != null) {
+            $(road.children()[0]).text("Main").attr("title", "Main");
+        }
+    }
 });
+
+if (Modernizr.localstorage) {
+    if(localStorage.getItem("language") == "En" && window.location.href.indexOf("/en/") == -1) {
+        var href = window.location.href.replace("/ru/", "/en/");
+        window.location.replace(href);
+    }
+}

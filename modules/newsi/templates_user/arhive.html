@@ -16,24 +16,31 @@
 <!-- ****************************************** Шаблоны архива новостей ****************************************** -->
 
 <!-- @content -->
-		<div id="news" class="content hyphenate">
-			<p class="title">Новости</p>
-			<ul>
+<div class="news">
 %rows%
-			</ul>
+
+
 %pages%
-		</div>
+</div>
+
 <!-- @rows -->
-				<li>
-					<small>%date%</small>
-					<a href="%url%" title="%header%">%header%</a>
-					<p>%description_short%</p>
-				</li>
+    <div class="article">
+        %image%
+        <div class="desc">
+            <a href="%url%" title="%header%">%header%</a>
+            <p>%description_short%</p>
+        </div>
+    </div>
+
+
+
 <!-- @no_data -->
-				<li>
-					Нет новостей
-				</li>
+
 <!-- @page_no -->
+
+<!-- @image -->
+<div class="image"><img src="%image_thumb%" alt="%header%" title="%header%"/></div>
+<!-- @no_images -->
 
 <!--
 Вывод постраничной навигации
@@ -60,7 +67,7 @@
 <!-- ****************************************** Шаблоны постраничной навигации ****************************************** -->
 
 <!-- @pages -->
-%first% %backward% %previous% %pages_block% %next% %forward% %last%
+<div class="pages">%pages_block%</div>
 <!-- @page_first -->
 <a href="%url%">Начало</a>
 <!-- @page_first_disabled -->
@@ -88,9 +95,9 @@
 <!-- @page_active -->
 <a href="%url%">%page%</a>
 <!-- @page_passive -->
-%page%
+<span class="active">%page%</span>
 <!-- @page_delimeter -->
-&nbsp;-&nbsp;
+
 
 <!--
 Вывод полного отображения новости
@@ -105,10 +112,6 @@
 
 <!-- ****************************************** Шаблоны полного отображения новости ****************************************** -->
 
-<!-- @image -->
-<img src="%image_thumb%" border="0" alt="%header%" align="left" title="%header%"/>
-<!-- @no_images -->
-<div style="width:100; height:100; float:left; border:#999999 solid 1px;">Нет изображения</div>
 
 <!-- @source -->
 <a href="%source_url%">%source_name%</a>
@@ -116,18 +119,21 @@
 %source_name%
 
 <!-- @fulltext -->
-		<div class="content hyphenate">
-			<p><small>%date%</small></p>
-			<h3>%header%</h3>
-			%description_full%
-			<hr />
-			<p>%author% %source%</p>
-			<p><a href="%url_back%" title="Назад">Назад</a></p>
+		<div class="news">
+            <div class="title">%header%</div>
+            <div class="article">
+                %image%
+                <div class="desc">
+                    %description_full%
+                </div>
+            </div>
         </div>
+
 <!-- @fulltext_image -->
-<img src="%image_thumb%" border="0" alt="%header%" align="left" title="%header%"/>
+<div class="image"><img src="%image_big%" alt="%header%" title="%header%"/></div>
+
 <!-- @fulltext_no_image -->
-<div style="width:100; height:100; float:left; border:#999999 solid 1px;">Нет изображения</div>
+
 <!-- @fulltext_source -->
 (<a href="%source_url%" title="%source_name%">%source_name%</a>)
 <!-- @fulltext_source_no_url -->

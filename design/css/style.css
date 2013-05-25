@@ -49,6 +49,53 @@ a:hover {
     color: #6DA441;
 }
 
+table th {
+    font-family: FranklinGothicMedium;
+    font-size: 18px;
+    color: #58372D;
+
+    background: #fcfcf1; /* Old browsers */
+    background: -moz-linear-gradient(top, #fcfcf1 0%, #e4e9d6 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fcfcf1), color-stop(100%,#e4e9d6)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #fcfcf1 0%,#e4e9d6 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #fcfcf1 0%,#e4e9d6 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #fcfcf1 0%,#e4e9d6 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #fcfcf1 0%,#e4e9d6 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcf1', endColorstr='#e4e9d6',GradientType=0 ); /* IE6-9 */
+
+    padding: 10px;
+    padding-left: 20px;
+}
+table td {
+    font-family: TrebuchetRegular;
+    font-size: 14px;
+    color: #696A6A;
+    padding: 10px;
+    padding-left: 20px;
+}
+table tr {
+    border: 1px solid #D5DAD6;
+}
+table tr:nth-child(1) {
+    border: 1px solid #D5DAD6 !important;
+}
+table tr:nth-child(odd) {
+    background: #edf0f0;
+    border: none;
+}
+
+li {
+    color: #696A6A;
+}
+ol li {
+    font-size: 14px;
+    font-family: TrebuchetRegular;
+    padding-bottom: 20px;
+}
+/*ul li {
+    list-style: url("/design/images/li_style.png");
+    vertical-align: middle;
+}*/
 
 
 .container {
@@ -86,12 +133,15 @@ header {
     color: #B0AFAF;
     padding: 1px 7px 1px 6px;
     margin-right: 5px;
+    font-family: FranklinGothicMedium;
 }
 .lang_menu a {
     background: #DEDFDC;
     color: #a3a3a3;
     padding: 1px 7px 1px 6px;
     text-decoration: none;
+    margin-right: 5px;
+    font-family: FranklinGothicMedium;
 }
 .lang_menu a:hover {
     background: #6DA441;
@@ -124,14 +174,17 @@ header {
     color: #805139;
     text-decoration: none;
     padding: 10px 11px 9px 11px;
+    font-family: FranklinGothicMedium;
 }
 .main_menu a:hover {
     background: #6DA441;
     color: #ffffff;
+    font-family: FranklinGothicMedium;
 }
 .main_menu .active {
     background: #6DA441;
     color: #ffffff;
+    font-family: FranklinGothicMedium;
 }
 .main_menu ul>li {
     float: left;
@@ -140,7 +193,7 @@ header {
     background: #6DA441;
     color: #ffffff;
     padding: 10px 11px 9px 11px;
-    font-family: TrebuchetRegular;
+    font-family: FranklinGothicMedium;
     font-size: 17.5px;
 }
 /**
