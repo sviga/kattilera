@@ -8,6 +8,41 @@ h1 {
     padding-top: 20px;
 }
 
+table th {
+    font-family: FranklinGothicMedium;
+    font-size: 18px;
+    color: #58372D;
+
+    background: #fcfcf1; /* Old browsers */
+    background: -moz-linear-gradient(top, #fcfcf1 0%, #e4e9d6 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fcfcf1), color-stop(100%,#e4e9d6)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #fcfcf1 0%,#e4e9d6 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #fcfcf1 0%,#e4e9d6 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #fcfcf1 0%,#e4e9d6 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #fcfcf1 0%,#e4e9d6 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcf1', endColorstr='#e4e9d6',GradientType=0 ); /* IE6-9 */
+
+    padding: 10px;
+    padding-left: 20px;
+}
+table td {
+    font-family: TrebuchetRegular;
+    font-size: 14px;
+    color: #696A6A;
+    padding: 10px;
+    padding-left: 20px;
+}
+table tr {
+    border: 1px solid #D5DAD6;
+}
+table tr:nth-child(1) {
+    border: 1px solid #D5DAD6 !important;
+}
+table tr:nth-child(odd) {
+    background: #edf0f0;
+    border: none;
+}
+
 .road_line {
     background: #6FA642;
     width: 100%;
