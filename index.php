@@ -8,7 +8,7 @@ if (stripos($user_agent, 'MSIE 6.0') !== false || stripos($user_agent, 'MSIE 7.0
 //Проверим, если нет файла ini.php   то необходимо запустить инсталятор
 if (!file_exists("ini.php"))
 {
-    header("Location: http://".$_SERVER['HTTP_HOST'].'/sinstall/index.php');
+//    header("Location: http://".$_SERVER['HTTP_HOST'].'/sinstall/index.php');
     die;
 }
 require_once ("ini.php"); // Файл с настройками
@@ -33,6 +33,10 @@ register_shutdown_function(function() {
 //    var_dump($error);
 // todo save error to log
 });
+
+if ('/' . PAGE_FOR_404 == $_SERVER['REQUEST_URI']) {
+    header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
+}
 
 //require_once ("include/kernel.class.php"); //Ядро
 //require_once ("include/pub_interface.class.php");
