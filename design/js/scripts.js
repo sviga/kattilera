@@ -32,13 +32,6 @@ $(function() {
 
 
 
-    //Смена языка
-    if (Modernizr.localstorage) {
-        $(".lang_menu a").click(function() {
-            localStorage.setItem("language", $(this).text());
-        });
-    }
-
     //Заменить в дороге "Главная"
     if(window.location.href.indexOf("/en/") != -1) {
         var road = $(".road");
@@ -48,12 +41,3 @@ $(function() {
         $(".logo").attr("href", "/en");
     }
 });
-
-if (Modernizr.localstorage) {
-    if(localStorage.getItem("language") == "En" && window.location.href.indexOf("/en/") == -1) {
-        window.location.replace(window.location.origin+"/en");
-    }
-    if(localStorage.getItem("language") == "Ru" && window.location.href.indexOf("/ru/") == -1) {
-        window.location.replace(window.location.origin+"/ru");
-    }
-}
