@@ -38,12 +38,6 @@ $(function() {
             localStorage.setItem("language", $(this).text());
         });
     }
-    if(window.location.href.indexOf("/en/") != -1) {
-        var href = window.location.href.replace("/en/", "/ru/");
-    } else {
-        var href = window.location.href.replace("/ru/", "/en/");
-    }
-    $(".lang_menu a").attr("href", href);
 
     //Заменить в дороге "Главная"
     if(window.location.href.indexOf("/en/") != -1) {
@@ -51,12 +45,15 @@ $(function() {
         if(road != null) {
             $(road.children()[0]).text("Main").attr("title", "Main");
         }
+        $(".logo").attr("href", "/en");
     }
 });
 
 if (Modernizr.localstorage) {
     if(localStorage.getItem("language") == "En" && window.location.href.indexOf("/en/") == -1) {
-        var href = window.location.href.replace("/ru/", "/en/");
-        window.location.replace(href);
+        window.location.replace(window.location.origin+"/en");
+    }
+    if(localStorage.getItem("language") == "Ru" && window.location.href.indexOf("/ru/") == -1) {
+        window.location.replace(window.location.origin+"/ru");
     }
 }
