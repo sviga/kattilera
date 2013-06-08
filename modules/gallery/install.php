@@ -166,6 +166,12 @@ $property->set_caption('[#gallery_items_per_page#]');
 $property->set_default(20);
 $property->set_id('items_per_page');
 $install->add_public_metod_parametrs('pub_create_content', $property);
+// Категория
+$property = new properties_string();
+$property->set_caption('Категория');
+$property->set_default('');
+$property->set_id('items_cat');
+$install->add_public_metod_parametrs('pub_create_content', $property);
 
 
 $install->add_public_metod('pub_random_photos', '[#gallery_pub_random_photos#]');

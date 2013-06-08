@@ -14,30 +14,58 @@ h2 {
 */
 .slider .prev_slide {
     position: absolute;
-    margin-top: 155px;
-    margin-left: -20px;
+    margin-top: -310px;
+    margin-left: 20px;
+    cursor: pointer;
 }
 .slider .next_slide {
     position: absolute;
-    margin-top: -185px;
-    margin-left: 1010px;
+    margin-top: -310px;
+    margin-left: 1160px;
+    cursor: pointer;
+}
+.slider li {
+    width: 100%;
+}
+.slider {
+    margin-left: -100px;
+    margin-bottom: 50px;
+    overflow: hidden;
+    height: 406px;
+    width: 1200px;
+    border-top: solid 2px rgba(113, 70, 49, 0.4);
+    border-bottom: solid 2px rgba(113, 70, 49, 0.4);
 }
 .slider .slide {
-    height: 338px;
+    height: 406px;
+    width: 1200px;
 }
-.slider .shadow {
-    margin-top: -3px;
+.slider .slide img {
+    height: 406px;
+    width: 1200px;
 }
 .slider .slide span {
-    font-family: MyriadProRegular;
-    font-weight: bold;
-    font-size: 28px;
-    background: rgba(110, 166, 66, 0.8);
-    padding: 15px 8px 12px 27px;
-    color: #ffffff;
+    background: #fbc231;
+    border: 1px solid #F3A41D;
     position: relative;
-    top: -176px;
-    float: right;
+    width: 573px;
+    height: 102px;
+    display: block;
+    padding: 20px;
+    top: -147px;
+    border-radius: 3px;
+    left: 85px;
+}
+.slider .slide .title {
+    font-family: MyriadProRegular;
+    font-size: 21px;
+    color: #5E3925;
+    padding-bottom: 20px;
+}
+.slider .slide span p {
+    font-family: MyriadProRegular;
+    font-size: 16px;
+    color: #5E3925;
 }
 
 /**
@@ -87,7 +115,86 @@ h2 {
 /**
 * Еда
 */
+.f {
+    clear: right;
+    height: 188px;
+}
 .foods {
+    clear: right;
+    height: 188px;
+    border-top: solid 1px #C6C6C6;
+    border-bottom: solid 1px #C6C6C6;
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    margin-top: -188px;
+}
+.foods .hint {
+    position: absolute;
+    opacity: 0;
+    width: 95px;
+    height: 38px;
+    top: 170px;
+    left: 243px;
+    z-index: 1000;
+    background: url("/design/images/hint.png")no-repeat;
+    color: #919293;
+    font-size: 14px;
+    padding: 40px 0px 0px 60px;
+}
+.production_title {
+    width: 66px;
+    height: 188px;
+    float: left;
+    position: relative;
+    z-index: 100;
+}
+#touch_carousel {
+    float: left;
+    padding-top: 24px;
+    width: 100%;
+    overflow: hidden !important;
+    margin-top: -188px;
+    height: 164px;
+}
+#touch_carousel li {
+    list-style: none;
+    float: left;
+    width: 345px;
+    padding-left: 13px;
+}
+#touch_carousel .title {
+    font-family: TrebuchetRegular;
+    font-size: 18.2px;
+    color: #727477;
+    display: block;
+    float: left;
+}
+#touch_carousel img {
+    clear: left;
+    float: left;
+}
+#touch_carousel p {
+    float: left;
+    width: 114px;
+    height: 105px;
+    font-family: TrebuchetRegular;
+    font-size: 14px;
+    color: #646565;
+    border-right: 1px solid #C6C6C6;
+    padding-right: 30px;
+    padding-left: 10px;
+    padding-top: 10px;
+    line-height: 17px;
+}
+#touch_carousel .first_li {
+    width: 60px;
+}
+#touch_carousel .title:hover {
+    color: #6FA843;
+}
+
+/*.foods {
     clear: right;
     padding-top: 13px;
 }
@@ -107,7 +214,7 @@ h2 {
 .foods a:hover {
     color: #6DA441;
     font-size: 17.5px;
-}
+}*/
 
 /**
 * О компании Новости Контактная информация

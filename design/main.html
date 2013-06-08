@@ -7,11 +7,18 @@
 
     <link rel="stylesheet" href="/design/css/main.css" type="text/css" media="screen, projection" />
     <!--[if lt IE 10]><link rel="stylesheet" href="/design/css/ie.css" type="text/css" media="screen, projection" /><![endif]-->
+    <link rel="stylesheet" href="/design/js/touchcarousel/touchcarousel.css" />
+    <link rel="stylesheet" href="/design/js/jquery-ui-carousel/src/css/jquery.rs.carousel.css" />
 
     <script src="/design/js/html5shiv.js"></script>
-    <script src="/design/js/jquery-2.0.0.min.js"></script>
+    <script src="/design/js/jquery-1.8.0.min.js"></script>
+    <script src="/design/js/jquery-ui-1.10.3.custom.min.js"/>
     <script src="/design/js/jquery.columnizer.js"></script>
     <script src="/design/js/modernizr.localStorage.js"></script>
+    <script src="/design/js/jquery-ui-carousel/src/js/jquery.rs.carousel.js"></script>
+    <script src="/design/js/jquery-ui-carousel/src/js/jquery.rs.carousel-autoscroll.js"></script>
+    <script src="/design/js/jquery-ui-carousel/src/js/jquery.rs.carousel-continuous.js"></script>
+    <script src="/design/js/touchcarousel/jquery.touchcarousel-1.1.min.js"></script>
     <script src="/design/js/scripts.js"></script>
 </head>
 
@@ -19,31 +26,58 @@
 
 <div class="container">
     <header>
+        [#language_menu#]
         <a class="logo" href="/">
             <img src="/design/images/logo.png" alt="Kattileta Foods internationl"/>
         </a>
         <div class="menu_block">
-            [#language_menu#]
             [#main_menu#]
         </div>
     </header>
 
     <section class="content">
-        <div class="slider">
-            <div class="slide">
-                <img src="/design/images/slider/slide1.png" alt="slide1"/>
-                <img src="/design/images/slider/shadow.png" alt="shadow" class="shadow"/>
-                <span>Welcome to official site Kattilera Foods International</span>
-            </div>
-        </div>
+        [#carousel#]
         <div class="block1">
             [#welcome_block#]
         </div>
         <div class="block2">
             [#stock_block#]
         </div>
+        <div class="f"></div>
         <div class="foods">
-            [#foods_block#]
+            <!--[#foods_block#]-->
+            <div class="hint">Меню</br>скролировать</div>
+            <img class="production_title" src="/design/images/production.png"/>
+            <div class="list touchcarousel" id="touch_carousel">
+                <ul class="touchcarousel-container">
+                    <li class="touchcarousel-item first_li">&nbsp;</li>
+                    <li class="touchcarousel-item">
+                        <a class="title" href="/">Смеси</a>
+                        <img src="/design/images/foods/food5.jpg"/>
+                        <p>Смесь сухофруктов - это богатейший источник витаминов и минералов</p>
+                    </li>
+                    <li class="touchcarousel-item">
+                        <a class="title" href="/">Орехи</a>
+                        <img src="/design/images/foods/food3.jpg"/>
+                        <p>Грецкий, бразильский, фисташки, кешью, мускатный орех</p>
+                    </li>
+                    <li class="touchcarousel-item">
+                        <a class="title" href="/">Крупы</a>
+                        <img src="/design/images/foods/food1.jpg"/>
+                        <p>Перловая крупа, рис, пшеница, гречка, ячмень, ячневая крупа</p>
+                    </li>
+                    <li class="touchcarousel-item">
+                        <a class="title" href="/">Ягода протертая</a>
+                        <img src="/design/images/foods/food2.jpg"/>
+                        <p>Перловая крупа, рис, пшеница, гречка, ячмень, ячневая крупа</p>
+                    </li>
+                    <li class="touchcarousel-item">
+                        <a class="title" href="/">Сухофрукты</a>
+                        <img src="/design/images/foods/food4.jpg"/>
+                        <p>Перловая крупа, рис, пшеница, гречка, ячмень, ячневая крупа</p>
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="about">
             [#about_block#]

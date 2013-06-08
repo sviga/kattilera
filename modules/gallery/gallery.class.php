@@ -27,7 +27,7 @@ class gallery  extends basemodule
     }
 
 	//показываем содержимое галереи пользователю
-    function pub_create_content($template, $perpage)
+    function pub_create_content($template, $perpage, $item_cat)
     {				
         global $kernel;
         $perpage = intval($perpage);
@@ -40,9 +40,19 @@ class gallery  extends basemodule
         $moduleid = $kernel->pub_module_id_get();
         $this->set_templates($kernel->pub_template_parse($template));
 
-        if ($this->get_categories_count($moduleid)==0 || $catid>0)
+        //if ($this->get_categories_count($moduleid)==0 || $catid>0)
+        if($this->get_categories_count($moduleid)==0 || !empty($item_cat))
         {//если нету категорий или указана категория - выводим фотки
             $show_cats = false;
+
+            if(!empty($item_cat)) {
+                $query = "SELECT id FROM ".$kernel->pub_prefix_get()."_gallery_cats WHERE name like('".$item_cat."')";
+                $res=$kernel->runSQL($query);
+                if($row=mysql_fetch_assoc($res)) {
+                    $catid=$row['id'];
+                }
+                mysql_free_result($res);
+            }
 
             $cond="module_id='".$moduleid."'";
             if ($catid>0)
@@ -57,7 +67,7 @@ class gallery  extends basemodule
             if ($catid>0)
                 $curr_cat = $this->get_category($catid);
         }
-        else
+        /*else
         {//иначе - список категорий
             $show_cats = true;
             $items = array();
@@ -71,7 +81,7 @@ class gallery  extends basemodule
             }
             mysql_free_result($res);
             $content = $this->get_template_block('categories_content');
-        }
+        }*/
 
         if (count($items)==0)
             return $this->get_template_block('no_data');
@@ -89,6 +99,11 @@ class gallery  extends basemodule
             else
             {
                 $line = $this->get_template_block('rows');
+                if($data['description'] == "" && $data['title_image'] == "") {
+                    $line = str_replace('%data%',  $this->get_template_block('no_data'), $line);
+                } else {
+                    $line = str_replace('%data%',  $this->get_template_block('data'), $line);
+                }
                 $line = str_replace('%link_small_image%',"/content/images/".$moduleid."/tn/".$data['image'], $line);
                 $line = str_replace('%link_big_image%',"/content/images/".$moduleid."/".$data['image'], $line);
                 $line = str_replace('%link_source_image%',"/content/images/".$moduleid."/source/".$data['image'], $line);

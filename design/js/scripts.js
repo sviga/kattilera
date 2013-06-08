@@ -11,7 +11,7 @@ $(function() {
         });
     }
 
-    // Меню 3-го уровня
+    // Меню 2-го уровня
     $(".sub_menu").each(function () {
         $(this).parent().eq(0).hover(function () {
             $($(this).children()[0]).addClass("active");
@@ -40,4 +40,63 @@ $(function() {
         }
         $(".logo").attr("href", "/en");
     }
+
+    // Языковое меню
+    $(".lang_menu .bottom").hover(function () {
+        if($(".lang_menu .bottom a").text() == "Russian") {
+            $(".lang_menu .bottom a").css({"paddingRight": "27px"});
+        }
+        $(".lang_menu .bottom a").css({"display": "block"});
+    }, function () {
+        $(".lang_menu .bottom a").css({"display": "none"});
+    });
+
+
+
+    //Карусель
+    $('#carousel').carousel({
+        loop: true,
+        autoScroll: true,
+        speed: "fast",
+        pause: 5000,
+        continuous: true,
+        insertNextAction: function () {
+            return $('<img class="next_slide" src="/design/images/slider/next_slide.png"/>').appendTo(this);
+        },
+        insertPrevAction: function () {
+            return $('<img class="prev_slide" src="/design/images/slider/prev_slide.png"/>').appendTo(this);
+        }
+    });
+
+
+
+    //Продукты перетаскивание
+    $("#touch_carousel").touchCarousel({
+        itemsPerPage: 1,
+        scrollbar: false,
+        snapToItems: false,
+        scrollToLast: false,
+        loopItems: false
+    });
+
+    //Продукция hint
+    var timer = 0;
+    $(".touchcarousel-item").each(function(i) {
+        $(this).hover(function() {
+            clearInterval(timer);
+            $(".hint").stop();
+            var shift = ($(this).width())*i - 100 + parseInt($(".touchcarousel-container").css("left").split("px")[0]);
+            if($(window).width() < shift+156) {
+                shift = $(window).width() - 166;
+            } else if(shift < 0) {
+                shift = 10;
+            }
+            $(".hint").css({"left": shift}).animate({opacity: 1},400);
+            timer = setInterval(function() {
+                $(".hint").animate({opacity: 0},400);
+            }, 2000);
+        }, function() {
+            $(".hint").animate({opacity: 0},400);
+        });
+    });
 });

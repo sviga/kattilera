@@ -90,23 +90,51 @@ header {
 * Языковое меню
 */
 .lang_menu {
+
+}
+.lang_menu .top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 10px;
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0px 2px 15px #888;
+}
+.lang_menu .bottom {
     float: right;
-    height: 20px;
+    margin-right: 103px;
+}
+.lang_menu .arrow{
+    background: url("/design/images/lang_menu_arrow.png") no-repeat;
+    margin-left: 10px;
 }
 .lang_menu span {
-    background-color: #EBEEDD;
-    color: #B0AFAF;
-    padding: 1px 7px 1px 6px;
-    margin-right: 5px;
-    font-family: FranklinGothicMedium;
+    background: url("/design/images/lang_menu_map.png") no-repeat;
+    background-color: #ffffff;
+    width: 54.5px;
+    height: 19.5px;
+    color: #9b9b9b;
+    padding: 3px 10px 0px 54.5px;
+    font-family: MyriadProRegular;
+    box-shadow: 0px 10px 19px -5px #888;
+    border-radius: 0px 0px 5px 5px;
+    position: relative;
+    top: -3px;
+    cursor: default;
 }
 .lang_menu a {
-    background: #DEDFDC;
-    color: #a3a3a3;
-    padding: 1px 7px 1px 6px;
+    display: none;
+    background: #ffffff;
+    color: #9b9b9b;
     text-decoration: none;
-    margin-right: 5px;
-    font-family: FranklinGothicMedium;
+    font-family: MyriadProRegular;
+    position: absolute;
+    top: 29px;
+    margin-left: 48px;
+    padding: 10px 31px 6px 6px;
+    border-radius: 0px 0px 5px 5px;
+    box-shadow: 0px 10px 19px -5px #888;
 }
 .lang_menu a:hover {
     background: #6DA441;
