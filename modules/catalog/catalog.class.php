@@ -2272,7 +2272,7 @@ class catalog extends BaseModule
             //Теперь ищем переменные, свойств и заменяем их
             $block = $this->process_item_props_out($item, $props, $block, $groups[$item['group_id']]);
 
-            $block = str_replace("%link%", $kernel->pub_page_current_get().'.html?'.$this->frontend_param_item_id_name.'='.$item['id'], $block);
+            $block = str_replace("%link%", "/".$kernel->pub_page_current_get().'?'.$this->frontend_param_item_id_name.'='.$item['id'], $block);
             $rows .= $block;
             $curr++;
         }
@@ -2356,7 +2356,7 @@ class catalog extends BaseModule
         $items_pagename = trim($items_pagename);
         if (mb_strlen($items_pagename) == 0)
             $items_pagename = $kernel->pub_page_current_get();
-        $items_pagename .= '.html';
+        $items_pagename = '/'.$items_pagename;
 
         $parsed_template = $kernel->pub_template_parse($template);
         $this->set_templates($parsed_template);
@@ -6735,21 +6735,21 @@ class catalog extends BaseModule
      */
     public function interface_get_menu($menu)
     {
-        $menu->set_menu_block('[#catalog_menu_label_cats#]');
+        $menu->set_menu_block('[#catalog_menu_label_cats#], [#catalog_menu_items#]');
         $menu->set_tree($this->create_categories_tree());
-        $menu->set_menu_block('[#catalog_menu_label#]');
-        $menu->set_menu("[#catalog_menu_all_props#]", "show_group_props&id=0" /*, array('flush' => 1)*/);
-        $menu->set_menu("[#catalog_menu_groups#]", "show_groups", array('flush' => 1));
-        $menu->set_menu("[#catalog_menu_cat_props#]", "show_cat_props", array('flush' => 1));
+//        $menu->set_menu_block('[#catalog_menu_label#]');
+//        $menu->set_menu("[#catalog_menu_all_props#]", "show_group_props&id=0" /*, array('flush' => 1)*/);
+//        $menu->set_menu("[#catalog_menu_groups#]", "show_groups", array('flush' => 1));
+//        $menu->set_menu("[#catalog_menu_cat_props#]", "show_cat_props", array('flush' => 1));
         $menu->set_menu("[#catalog_menu_items#]", "show_items", array('flush' => 1));
-        $menu->set_menu("[#catalog_inner_filters#]", "show_inner_filters", array('flush' => 1));
-        $menu->set_menu("[#catalog_basket_order_settings_label#]", "show_order_fields", array('flush' => 1));
-        $menu->set_menu("[#catalog_menu_variables#]", "show_variables", array('flush' => 1));
+//        $menu->set_menu("[#catalog_inner_filters#]", "show_inner_filters", array('flush' => 1));
+//        $menu->set_menu("[#catalog_basket_order_settings_label#]", "show_order_fields", array('flush' => 1));
+//        $menu->set_menu("[#catalog_menu_variables#]", "show_variables", array('flush' => 1));
 
-        $menu->set_menu_block('[#catalog_menu_label_import_export#]');
-        $menu->set_menu("[#catalog_import_csv_menuitem#]", "import_csv", array('flush' => 1));
-        $menu->set_menu("[#catalog_export_csv_menuitem#]", "show_csv_export", array('flush' => 1));
-        $menu->set_menu("[#catalog_menu_label_import_commerceml#]", "import_commerceml", array('flush' => 1));
+//        $menu->set_menu_block('[#catalog_menu_label_import_export#]');
+//        $menu->set_menu("[#catalog_import_csv_menuitem#]", "import_csv", array('flush' => 1));
+//        $menu->set_menu("[#catalog_export_csv_menuitem#]", "show_csv_export", array('flush' => 1));
+//        $menu->set_menu("[#catalog_menu_label_import_commerceml#]", "import_commerceml", array('flush' => 1));
         //$menu->set_menu_default('show_items');
         return true;
     }
