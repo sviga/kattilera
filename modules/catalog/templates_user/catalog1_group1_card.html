@@ -22,6 +22,10 @@ cat_name - Заменяется названием конкретной стра
 <!-- ****************************************** Шаблон карточки товаров ****************************************** -->
 
 <!-- @item -->
-			<p class="title">%name_value%</p>
-			<p><img class="left" src="/%image_source%" alt="%name_value%" /> %description_value%</p>
-			<p>Цена: %price_value% руб.</p>
+<div class="products">
+    <h1>%name_value%</h1>
+    <div>
+        <img class="big_image" src="/%image_value%" alt="%name_value%" />
+        <div class="desc">%description_value%</div>
+    </div>
+</div>

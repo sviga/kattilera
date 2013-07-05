@@ -54,20 +54,21 @@ $(function() {
 
 
     //Карусель
-    $('#carousel').carousel({
-        loop: true,
-        autoScroll: true,
-        speed: "fast",
-        pause: 5000,
-        continuous: true,
-        insertNextAction: function () {
-            return $('<img class="next_slide" src="/design/images/slider/next_slide.png"/>').appendTo(this);
-        },
-        insertPrevAction: function () {
-            return $('<img class="prev_slide" src="/design/images/slider/prev_slide.png"/>').appendTo(this);
-        }
-    });
-
+    if($('#carousel li').length > 1) {
+        $('#carousel').carousel({
+            loop: true,
+            autoScroll: true,
+            speed: "fast",
+            pause: 5000,
+            continuous: true,
+            insertNextAction: function () {
+                return $('<img class="next_slide" src="/design/images/slider/next_slide.png"/>').appendTo(this);
+            },
+            insertPrevAction: function () {
+                return $('<img class="prev_slide" src="/design/images/slider/prev_slide.png"/>').appendTo(this);
+            }
+        });
+    }
 
 
     //Продукты перетаскивание

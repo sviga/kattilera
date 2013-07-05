@@ -22,40 +22,44 @@
 <!-- ****************************************** Шаблон списка товаров ****************************************** -->
 
 <!-- @list -->
-		<p>Всего товаров в категории: %total_in_cat%</p>
-		<table summary="Каталог" border="0" cellspacing="0" cellpadding="0">
-			<thead>
-				<tr>
-					<th>Картинка</th>
-					<th>Название</th>
-					<th>Описание</th>
-					<th>Цена, руб</th>
-					<th>В корзину</th>
-				</tr>
-			</thead>
-%row%
-		</table>
-%pages%
+<div class="products">
+    <h1>%category_name%%category_name_value%</h1>
+    <div class="cat_desc">%category_description_full%%category_description_full_value%</div>
+    %row%
+    <br class="clear"/>
+    %pages%
+
+</div>
+
+<!-- category_name -->
+
+<!-- category_description -->
+
+
+
+
+
+
+
 
 
 <!-- ****************************************** Шаблон товара ****************************************** -->
 
-<!-- @row_odd -->
-			<tr>
-				<td><img src="/%image_small%" alt="%name_value%" /></td>
-				<td><a href="%link%" title="%name_value%">%name_value%</a></td>
-				<td>%description_value%</td>
-				<td>%price_value%</td>
-				<td><noindex><a href="basket.html?catalog_basket_additemid=%item_id%&redir2=%current_page_url%">&raquo;</a></noindex></td>
-			</tr>
-<!-- @row_even -->
-			<tr class="even">
-				<td><img src="/%image_small%" alt="%name_value%" /></td>
-				<td><a href="%link%" title="%name_value%">%name_value%</a></td>
-				<td>%description_value%</td>
-				<td>%price_value%</td>
-                <td><noindex><a href="basket.html?catalog_basket_additemid=%item_id%&redir2=%current_page_url%">&raquo;</a></noindex></td>
-			</tr>
+<!-- @row -->
+<a href="%link%" title="%name_value%" class="item">
+    <div class="image">
+        <img src="/%image_small%" alt="%name_value%" />
+    </div>
+    <div class="name">%name_value%</div>
+    <div class="name_hover">
+        <div class="text">просмотреть</div>
+        <div class="img">
+            <img src="/design/images/item_hover_img.png"/>
+        </div>
+    </div>
+</a>
+
+
 <!-- ****************************************** Шаблон постраничной навигации ****************************************** -->
 <!--
 Секции:
@@ -76,14 +80,9 @@
 -->
 
 <!-- @pages -->
-		<p>
-			%first%
-			%backward%
 			%previous%
-			%pages_block%
+			<div class="pages">%pages_block%</div>
 			%next%
-			%forward%
-			%last%
 		</p>
 <!-- @page_first -->
 <a href="%link%">Начало</a>
@@ -92,23 +91,23 @@
 <!-- @page_backward_disabled -->
 &laquo;
 <!-- @page_previous -->
-<a href="%link%">&laquo;</a>
+<a href="%link%" class="page_prev">◄ Предыдущая</a>
 <!-- @page_previous_disabled -->
-&laquo;
+<span class="page_prev_passive">◄ Предыдущая</span>
 <!-- @page_forward -->
 <a href="%link%">&raquo;</a>
 <!-- @page_forward_disabled -->
 &raquo;
 <!-- @page_next -->
-<a href="%link%">&raquo;</a>
+<a href="%link%" class="page_next">Следующая ►</a>
 <!-- @page_next_disabled -->
-&raquo;
+<span class="page_next_passive">Следующая ►</span>
 <!-- @page_last -->
 <a href="%link%">Конец</a>
 <!-- @page_active -->
 <a href="%link%">%page%</a>
 <!-- @page_passive -->
-%page%
+<span class="passive">%page%</span>
 <!-- @page_delimeter -->
-&nbsp;-&nbsp;
+
 <!-- @page_null -->

@@ -834,7 +834,7 @@ class catalog extends BaseModule
                     $cat_label = str_replace("%".$cpname."%", $cpval, $cat_label);
                 }
                 $kernel->pub_waysite_set(array('caption' => $cat_label,
-                        'url' => '/'.$kernel->pub_page_current_get().'.html?'.$this->frontend_param_cat_id_name.'='.$cwe['id'])
+                        'url' => '/'.$kernel->pub_page_current_get().'?'.$this->frontend_param_cat_id_name.'='.$cwe['id'])
                 );
             }
         }
@@ -2279,7 +2279,7 @@ class catalog extends BaseModule
         $content = $this->get_template_block('list');
         $content = str_replace("%row%", $rows, $content);
         $content = str_replace("%total_in_cat%", $total, $content);
-        $purl = $kernel->pub_page_current_get().'.html?'.$this->frontend_param_cat_id_name.'='.$catid.'&'.$this->frontend_param_offset_name.'=';
+        $purl = $kernel->pub_page_current_get().'?'.$this->frontend_param_cat_id_name.'='.$catid.'&'.$this->frontend_param_offset_name.'=';
         $content = str_replace('%pages%', $this->build_pages_nav($total, $offset, $limit, $purl, 15), $content);
         $content = $this->cats_props_out($category['id'], $content);
         $content = $this->process_variables_out($content);
@@ -6739,8 +6739,8 @@ class catalog extends BaseModule
         $menu->set_tree($this->create_categories_tree());
 //        $menu->set_menu_block('[#catalog_menu_label#]');
 //        $menu->set_menu("[#catalog_menu_all_props#]", "show_group_props&id=0" /*, array('flush' => 1)*/);
-//        $menu->set_menu("[#catalog_menu_groups#]", "show_groups", array('flush' => 1));
-//        $menu->set_menu("[#catalog_menu_cat_props#]", "show_cat_props", array('flush' => 1));
+        $menu->set_menu("[#catalog_menu_groups#]", "show_groups", array('flush' => 1));
+        $menu->set_menu("[#catalog_menu_cat_props#]", "show_cat_props", array('flush' => 1));
         $menu->set_menu("[#catalog_menu_items#]", "show_items", array('flush' => 1));
 //        $menu->set_menu("[#catalog_inner_filters#]", "show_inner_filters", array('flush' => 1));
 //        $menu->set_menu("[#catalog_basket_order_settings_label#]", "show_order_fields", array('flush' => 1));
