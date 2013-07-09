@@ -106,6 +106,9 @@ header {
     margin-right: 103px;
     padding-top: 5px;
 }
+.lang_menu .bottom:hover span {
+    border-radius: 0px 0px 0px 5px;
+}
 .lang_menu .arrow{
     background: url("/design/images/lang_menu_arrow.png") no-repeat;
     margin-left: 10px;
@@ -116,8 +119,9 @@ header {
     width: 54.5px;
     height: 19.5px;
     color: #9b9b9b;
-    padding: 3px 10px 0px 54.5px;
+    padding: 7px 10px 0px 54.5px;
     font-family: MyriadProRegular;
+    font-size: 16px;
     box-shadow: 0px 10px 19px -5px #888;
     border-radius: 0px 0px 5px 5px;
     position: relative;
@@ -129,10 +133,11 @@ header {
     color: #9b9b9b;
     text-decoration: none;
     font-family: MyriadProRegular;
+    font-size: 16px;
     position: absolute;
-    top: 22px;
+    top: 23px;
     margin-left: 48px;
-    padding: 10px 31px 6px 6px;
+    padding: 8px 31px 4px 6px;
     border-radius: 0px 0px 5px 5px;
     box-shadow: 0px 10px 19px -5px #888;
 }

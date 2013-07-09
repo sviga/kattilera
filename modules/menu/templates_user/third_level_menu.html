@@ -20,7 +20,8 @@
 <!-- ****************************************** Шаблон динамического меню сайта ****************************************** -->
 
 <!-- @begin -->
-				<ul class="third_level_menu">
+        <div class="cats third_level_menu">
+				<ul>
 <!-- @@nextlevel -->
 
 <!-- @link -->
@@ -28,31 +29,26 @@
 <!-- @@nextlevel -->
 
 <!-- @@nextlevel -->
-
-<li>
-    <img src="/design/images/third_level_menu_item.png"/>
-    <a href="%link%">%text%</a></li>
+    <li><a href="%link%">%text%</a></li>
 
 
 <!-- @activelink -->
 
 <!-- @@nextlevel -->
-
+    <li class="title">%text%</li>
 <!-- @@nextlevel -->
-<li>
-    <img src="/design/images/third_level_menu_item_select.png"/>
-    <span>%text%</span></li>
+    <li><span>%text%</span></li>
 
 <!-- @passiveactive -->
 
 <!-- @@nextlevel -->
-
+                    <li class="title">%text%</li>
 <!-- @@nextlevel -->
-<li>
-    <img src="/design/images/third_level_menu_item.png"/>
-    <a href="%link%"><i>%text%</i></a></li>
+    <li><a href="%link%"><i>%text%</i></a></li>
 
 <!-- @end -->
-				</ul>
+				</ul></div>
+<!-- @@nextlevel -->
+
 <!-- @@nextlevel -->
 

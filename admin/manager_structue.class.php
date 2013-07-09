@@ -183,7 +183,7 @@ class manager_structue
             	$saved = true;
         	}
 
-        	if (!empty($properties['page_modules']))
+        	//if (!empty($properties['page_modules']))
         	{
         	    if (!isset($properties['page_inheritance']) || !is_array($properties['page_inheritance']))
         	    	$properties['page_inheritance'] = array();

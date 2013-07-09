@@ -72,45 +72,54 @@ $(function() {
 
 
     //Продукты перетаскивание
-    $("#touch_carousel").touchCarousel({
-        itemsPerPage: 1,
-        scrollbar: false,
-        snapToItems: false,
-        scrollToLast: false,
-        loopItems: false
-    });
+    if($("#touch_carousel").length > 0) {
+        $("#touch_carousel").touchCarousel({
+            itemsPerPage: 1,
+            scrollbar: false,
+            snapToItems: false,
+            scrollToLast: false,
+            loopItems: false
+        });
 
-    //Продукция hint
-    var hintTimer;
-    $(".hint").show().css({opacity: 0});
-    function hideHint() {
-        clearTimeout (hintTimer);
-        $(".hint").stop().animate({opacity: 0},400);
-    };
-    $(".touchcarousel-item").live({
-        mouseenter:function(){
-            var maskWidth = $(this).parents(".touchcarousel-wrapper").width();
-            var listWidth = $(this).parents(".touchcarousel-container").width();
-            if (maskWidth < listWidth) {
-                var hintLeft = $(this).offset().left + $(this).width()/2;
-                if($(window).width() < hintLeft+156) {
-                    hintLeft = $(window).width() - 166;
-                } else if(hintLeft < 0) {
-                    hintLeft = 10;
+        //Продукция hint
+        var hintTimer;
+        $(".hint").show().css({opacity: 0});
+        function hideHint() {
+            clearTimeout (hintTimer);
+            $(".hint").stop().animate({opacity: 0},400);
+        };
+        $(".touchcarousel-item").live({
+            mouseenter:function(){
+                var maskWidth = $(this).parents(".touchcarousel-wrapper").width();
+                var listWidth = $(this).parents(".touchcarousel-container").width();
+                if (maskWidth < listWidth) {
+                    var hintLeft = $(this).offset().left + $(this).width()/2;
+                    if($(window).width() < hintLeft+156) {
+                        hintLeft = $(window).width() - 166;
+                    } else if(hintLeft < 0) {
+                        hintLeft = 10;
+                    }
+
+                    $(".hint").stop().css({left:hintLeft}).animate({opacity: 1},400);
+
+                    clearTimeout (hintTimer);
+                    hintTimer = setTimeout (function () {hideHint()}, 2000);
                 }
-
-                $(".hint").stop().css({left:hintLeft}).animate({opacity: 1},400);
-
-                clearTimeout (hintTimer);
-                hintTimer = setTimeout (function () {hideHint()}, 2000);
+            },
+            mouseleave: function(){
+                var maskWidth = $(this).parents(".touchcarousel-wrapper").width();
+                var listWidth = $(this).parents(".touchcarousel-container").width();
+                if (maskWidth < listWidth) {
+                    hideHint();
+                }
             }
-        },
-        mouseleave: function(){
-            var maskWidth = $(this).parents(".touchcarousel-wrapper").width();
-            var listWidth = $(this).parents(".touchcarousel-container").width();
-            if (maskWidth < listWidth) {
-                hideHint();
-            }
-        }
-    });
+        });
+    }
+
+    //Удаление 3-го уровня меню, если его не надо выводить
+    if($(".third_level_menu li").length < 2) {
+        $(".third_level_menu").remove();
+        $(".content_block").css({"marginLeft": "0px"});
+    }
+
 });

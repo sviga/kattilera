@@ -113,25 +113,6 @@ table tr:nth-child(odd) {
     padding-bottom: 20px;
 }
 
-/**
-* Меню 3-го уровня
-*/
-.third_level_menu {
-    line-height: 25px;
-    font-size: 14px;
-    padding-top: 10px;
-    list-style: none;
- }
-.third_level_menu img {
-    vertical-align: middle;
-}
-.third_level_menu a {
-    font-family: FranklinGothicMedium;
-}
-.third_level_menu span {
-    color: #6FA642;
-    font-family: FranklinGothicMedium;
-}
 
 
 /**
@@ -187,6 +168,7 @@ table tr:nth-child(odd) {
     float: left;
     width: 194px;
     font-family: FranklinGothicMedium;
+    padding-right: 40px;
 }
 .cats .title {
     color: #70A22D;
@@ -199,21 +181,18 @@ table tr:nth-child(odd) {
 .cats li a, .cats span {
     color: #635f5e;
     background: #ededed;
-    font-family: 18px;
     margin-bottom: 7px;
-    padding-top: 9px;
-    padding-bottom: 6px;
-    padding-left: 16px;
+    padding: 9px 10px 6px 16px;
     display: block;
-    width: 176px;
+    width: 166px;
+    font-family: FranklinGothicMedium;
 }
 .cats li a:hover, .cats span {
     color: #ffffff;
     background: #70A12d;
 }
-.products {
-    float: right;
-    width: 770px;
+.products, .content_block {
+    margin-left: 234px;
 }
 .products h1 {
     font-family: FranklinGothicMedium;
@@ -269,6 +248,7 @@ table tr:nth-child(odd) {
     width: 165px;
     float: left;
     border-right: 2px solid #68962e;
+    border-right: 2px solid #68962e;
     font-size: 20px;
 }
 .products .name_hover .img {
@@ -288,7 +268,7 @@ table tr:nth-child(odd) {
     padding-bottom: 50px;
     position: relative;
     right: 40px;
-    top: 50px;
+    top: 20px;
 }
 .pages .passive {
     color: #70a12d;
@@ -303,8 +283,12 @@ table tr:nth-child(odd) {
 .page_prev_passive, .page_next_passive {
     color: #d5d3d3;
 }
+.page_prev, .page_prev_passive {
+    float: left;
+}
 .page_next, .page_next_passive {
     float: right;
+    margin-right: 40px;
 }
 .page_prev:hover, .page_next:hover {
     color: #70a12d;
