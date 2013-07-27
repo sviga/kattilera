@@ -1,528 +1,537 @@
-<?php
+<?PHP
+		include_once('components/mail.class.php');
+        include_once ("components/kcaptcha/kcaptcha.php");
 
 /**
- * Модуль "Обратная Связь"
+ * Основной управляющий класс модуля «Гостевая книга»
  *
- * @author Александр Ильин mecommayou@gmail.com , s@nchez
- * @copyright ООО "АртПром" 2011
- * @name feedback
- * @version 2.0
- *
- * Модуль  обратной  связи.  Отбражает форму обратной связи (@form) и
- * осуществляет формирование и отпрвку письма менеджеру. Доступно два
- * варианта   отправки   писем:  html  (@email_html)   и   plain text
- * (@email_text), выбрать можно в настройках действия.  Так же указы-
- * ваеться  желаемый  шаблон,  email  менеджера, имя менеджера и тема
- * письма.
- *
- * В  случае успешной  отправки сообщения  пользователю отображаеться
- * блок @processing_succses,  если отправить  сообщения  не удалось -
- * @processing_fail
- *
- * = ФОРМА ОБРАТНОЙ СВЯЗИ ДОЛЖНА СООТВЕТСТВОВАТЬ СЛЕДУЮЩИМ ПРАВИЛАМ =
- *
- * 1. Содержать   ТОЛЬКО   html   элементы  input  типов: "checkbox",
- *    "password", "text" и html элемент select
- *
- * 2. Элемент input типа "checkbox" должен иметь значение "&checked&"
- *
- * 3. Все элементы формы должны иметь имена  соответствующие шаблону:
- *    "values[ID_ЭЛЕМЕНТА]". Каждый элемент должен иметь уникальный
- *    ID.
- *
- * 4. Блоки @email_text и @email_html должны сожержать метки соответ-
- *    ствующие шаблону - "%ID_ЭЛЕМЕНТА%",  на их места будут подстав-
- *    ленны соответствующие данные введенные пользователем.  Для эле-
- *    ментов типа  "checkbox"  необходимо определить значения языовых
- *    переменных:  @feedback_property_field_no  -  для НЕотмеченного,
- *    @feedback_property_field_yes - для отмеченного.
- *
+ * Модуль предназначен организации гостевой книги на сайте.
+ * 
+ * @copyright ArtProm (с) 2001-2008
+ * @version 1.0 beta
  */
+
 class feedback
 {
-    /**
-     * Содержит массив распаршенных шаблонов
-     *
-     * @var array
+	//Путь к административным шаблонам модуля
+    private $admin_templates_path = 'modules/feedback/templates_admin/';
+
+    //массив полей в форме с ограничениями
+    private $fields = array(
+    	'author'     => array(
+    					'type' => 'string',
+    					'minlength' => 1,
+    					'maxlength' => 255 ),
+    	'email'   => array(
+    					'type' => 'email',
+    					'minlength' => 1,
+    					'maxlength' => 50 ),
+    	'message' => array(
+    					'type' => 'string',
+    					'minlength' => 1,
+    					'maxlength' => 5000 )
+    );
+
+    // Массив регулярных выражений для них
+    private $regexps = array(
+    	'string' => '',
+    	'email'  => '/^([A-Za-z\d\-_]+\.)*[A-Za-z\d\-_]+@([A-Za-z\d\-_]+\.)+[a-zA-Z]{2,7}$/'
+	);
+	
+    //Длина видимого сообщения в админке
+    private $admin_message_len = 150;
+
+    //флаг, использования капчи
+	private $use_captcha = true;
+
+	/**
+     * Конструктор класса
      */
-    private $templates = array();
-
-    /**
-     * Действие по умолчанию
-     *
-     * @var string
-     */
-    private $action_default;
-
-    /**
-     * Название перемнной в GET запросе определяющей действие
-     *
-     * @var string
-     */
-    //private $action_name = 'view';
-
-
-
-    /**
-     * Возвращает урл, на который произойдёт возврат
-     * @return string
-     */
-    private function get_return_url()
+    function feedback()
     {
-        $url = $_SERVER['REQUEST_URI'];
-        $url = preg_replace('~feedback(\d+)-(\d+)=form_processing~U', "", $url);
-        if (strpos($url, "?") === false)
-            $url.="?";
-        elseif (substr($url,-1)!="&")
-            $url.="&";
-        return $url;
+    	global $kernel;
+    	$this->use_captcha = $kernel -> pub_modul_properties_get( 'captcha', $kernel -> pub_module_id_get() );
     }
 
-    /**
-     * Публичный метод для отображения формы обратной связи
-     *
-     * @param string $template Путь к шаблону формы
-     * @param string $email Email для отправки соощения
-     * @param string $type Тип письма (html | text)
-     * @param string $name Имя менеджера магазина
-     * @param string $theme Тема письма
-     * @return string
-     */
-    public function pub_show_form($template, $email, $type, $name, $theme)
-    {
-        global $kernel;
 
-        $this->set_action_default('form_show');
-        $this->set_templates($kernel->pub_template_parse($template));
-        switch ($this->get_action_value())
-        {
-            // Отобразим форму обратной связи (Действие по умолчанию)
-        	default:
-        	case 'form_show':
-                $file = basename($template);
-        	    $settings = $this->pub_get_js('modules/feedback/templates_user/'.$file.'.ini');
-        	    $content = $this->get_template_block('form');
-        	    $content = str_replace('%form_action%', $this->get_return_url().$this->get_action_name().'=form_processing', $content);
-        	    $content = $content.$settings;
-        		break;
+    //***********************************************************************
+    //	Наборы Публичных методов из которых будут строится макросы
+    //**********************************************************************
 
-            // Обработаем данные введенные пользователем
-        	case 'form_processing':
-        	    $input_values = $kernel->pub_httppost_get('values');
-                if (isset($input_values['message']))
-                    $input_values['message']=nl2br(htmlspecialchars($input_values['message']));
-                if ($type=='html')
-                    $message = $this->get_template_block('email_html');
-                else
-                    $message = $this->get_template_block('email_text');
-
-        	    $message = str_replace(array_map(array('feedback', 'array_map_marks'), array_keys($input_values)), $input_values, $message);
-        	    $message = preg_replace('/\%[a-zA-Z0-9]+\%/', '[#feedback_property_field_no#]', $message);
-        	    $message = preg_replace('/\&[a-zA-Z0-9]+\&/', '[#feedback_property_field_yes#]', $message);
-        	    $message = $kernel->priv_page_textlabels_replace($message);
-
-        	    $sended = $kernel->pub_mail(array($email), array($name), 'noreply@'.$_SERVER['HTTP_HOST'], 'Module: FeedBack', $theme, $message);
-                $rurl=$this->get_return_url().$this->get_action_name().'=';
-        	    if ($sended > 0)
-                    $rurl.='processing_success';
-        	    else
-                    $rurl.='processing_fail';
-                $kernel->pub_redirect_refresh_global($rurl);
-        	    break;
-
-        	// Выведем собщение об успешной отправке данных
-        	case 'processing_success':
-        	    $content = $this->get_template_block('processing_succses');
-        	    break;
-
-            // Выведем собщение невозможности отправки
-        	case 'processing_fail':
-        	    $content = $this->get_template_block('processing_fail');
-        	    break;
-        }
-
-        return isset($content)?$content:null;
-    }
-
-    /**
-     * Функция по файлу настроек формирует код jscript для формы
-     *
-     * @param string $filename
-     * @return string
-     */
-    function pub_get_js($filename)
-    {
-        $settings = parse_ini_file($filename, true);
-        $lines = array();
-        foreach ($settings as $element => $config) {
-
-            $line = $this->get_template_block('jscript_line_1');
-            $line = str_replace('%element%', $element, $line);
-            $lines[] = $line;
-
-            foreach ($config as $name => $value) {
-
-                $line = $this->get_template_block('jscript_line_2');
-                $line = str_replace('%element%', $element, $line);
-                $line = str_replace('%name%', $name, $line);
-                $line = str_replace('%value%', $value, $line);
-                $lines[] = $line;
-
-            }
-        }
-
-        return $this->get_template_block('jscript_start').implode("\n", $lines).$this->get_template_block('jscript_end');
-    }
-
-    /**
-     * Вспомогательная
-     *
-     * @param string $element
-     * @return string
-     */
-    private  function array_map_marks($element)
-    {
-        return '%'.$element.'%';
-    }
-
-    /**
-     * Возвращает указанный блок шаблона
-     *
-     * @param string $block_name Имя блока
-     * @return mixed
-     */
-    private function get_template_block($block_name)
-    {
-        return ((isset($this->templates[$block_name]))?(trim($this->templates[$block_name])):(null));
-    }
-
-    /**
-     * Устанавливает шаблоны
-     *
-     * @param array $templates Массив распаршенных шаблонов
-     */
-    private function set_templates($templates)
-    {
-        $this->templates = $templates;
-    }
-
-    /**
-     * Возвращает название перемнной в GET запросе определяющей действие
-     *
-     * @return string
-     */
-    private function get_action_name()
+   /**
+    * Публичный метод для действия 'Показать форму'
+    *
+    * @param string $template Шаблон вывода формы
+    * @return HTML
+    */
+	public function pub_show_feedback_form( $template )
     {
         global $kernel;
-    	return $kernel->pub_module_id_get()."-".$kernel->get_current_actionid();
-    }
 
-    /**
-     * Возвращает значение указанного действия, если установленно или значение по умолчанию
-     * @return string
-     */
-    private function get_action_value()
-    {
-        global $kernel;
-        $action_name=$this->get_action_name();
-        if ($kernel->pub_httpget_get($action_name))
-            return $kernel->pub_httpget_get($action_name);
-        //elseif ($kernel->pub_httppost_get('values'))
-        //    return "form_processing";
-        else
-            return $this->get_action_default();
-    }
+        $error = '';
+        // Парсим шаблон
+        $template = trim( $template );
+        if( !empty( $template ) && file_exists( $template ) )
+        	$template = $kernel -> pub_template_parse( $template );
+      	else
+        	return '[#feedback_error_no_template#]';
 
-    /**
-     * Возвращает значение действия по умолчанию
-     *
-     * @return string
-     */
-    private function get_action_default()
-    {
-        return $this->action_default;
-    }
+		//если получили данные в посте, то..
+	    if( is_array( $input_values = $kernel -> pub_httppost_get( 'values' ) ) && count( $input_values ) > 0 && $kernel -> pub_httppost_get( 'feedback_form', true ) == 1 ) {
+	    	//..проверяем их корректность
+			$errors = $this -> check_input_values( $input_values, $kernel->pub_httppost_get( 'captcha' ) );
 
-    /**
-     * Устанавливает действие по умолчанию
-     *
-     * @param string $value Имя GET параметра определяющего действие
-     */
-    private function set_action_default($value)
-    {
-        $this->action_default = $value;
-    }
+			//пришли некорректные данные
+			if ( count( $errors ) > 0 || $errors === false ) {
+				$error = str_replace( '%error_message%', ( !$errors ) ? 'Ошибка данных!' : $errors[ 0 ], $template[ 'error' ] );
+			}
+			//с данными всё впорядке, подготовим их для добавления в базу
+			else {
+				if ( $tobase_values = $this -> bd_prepare( $input_values ) ) {
+					//всё ОК, можно добавлять в базу
+					if ( $this -> save_in_feedback( $tobase_values ) ) {
+						/*успешно добавлено в базу*/
+						//отправка писма администратору
+						$this -> send_mail_to_admin( $input_values );
+						$kernel -> pub_session_set( 'feedback_ok', '[#feedback_user_correct_message_added#]' );
+                        if($kernel -> pub_httppost_get( 'js', true ) == 1) {
+                            die (json_encode(array('correct'=> 1)));
+                        }
+						$kernel -> pub_redirect_refresh_global( '/' . $kernel->pub_page_current_get());
+					}
+					else {
+						var_dump(mysql_error());
+						$error = str_replace( '%error_message%', '[#feedback_user_error_message_added#]', $template[ 'error' ] );
+					}
+				}
+				else {
+					$error = str_replace( '%error_message%', '[#feedback_user_error_data_handling#]', $template[ 'error' ] );
+				}
+			}
+    	}//endif
+        $html = $template[ 'begin_form' ];
 
-    /**
-     * Функция для построения меню для административного интерфейса
-     *
-     * @param pub_interface $menu Обьект класса для управления построением меню
-     * @return boolean true
-     */
-	public function interface_get_menu($menu)
+        $html = str_replace( '%form_action%', '/' . $kernel -> pub_page_current_get() . '.html', $html );
+
+        $lines = $template[ 'fields' ];
+
+        $search  = $this -> get_search_data();
+       	$replace = $this -> get_replace_data( $input_values );
+
+   		$lines = str_replace( $search, $replace, $lines );
+
+   		//обязательность полей
+   	    /*foreach ( $this -> fields as $name => $value ) {
+   			if ( $value[ 'minlength' ] > 0 )
+   				$lines = str_replace( '%' . $name . '_ob%', $template[ 'oblige' ], $lines );
+   			else
+				$lines = str_replace( '%' . $name . '_ob%', '', $lines );
+   		}*/
+
+        $html .= $lines . $template[ 'end_form' ];
+        
+        //error/correct
+        $feedback_ok = $kernel -> pub_session_get( 'feedback_ok' );
+		if ( !empty( $feedback_ok ) ) {
+			$correct = str_replace( '%correct_message%', $feedback_ok, $template[ 'correct' ] );
+			$kernel -> pub_session_unset( 'feedback_ok' );
+		}
+		else
+			$correct = '';
+
+        $html = str_replace( '%feedback_error%', $error, $html );
+        $html = str_replace( '%feedback_correct%', $correct, $html );
+
+        $captcha = '';
+        //если модуль использует Код безопасности
+		if ( $this->use_captcha['value'] == 'true') {
+        	$captcha = str_replace('%captcha_image%', $this->get_captcha(), $template['captcha']);
+		}
+       	$html = str_replace('%captcha%', $captcha, $html);
+
+        return $html;
+
+    }//END function pub_show_feedback_form
+
+    
+    private function get_search_data ()
 	{
-        $menu->set_menu_block('[#feedback_menu_label#]');
-        $menu->set_menu("[#feedback_menu_edit_ini#]","edit_ini");
+		$arr = array();
+		foreach ( $this -> fields as $name => $value ) {
+			$arr[] = '%' . $name . '_value%';
+		}
+		return $arr;
+	}
 
-        $menu->set_menu_default('edit_ini');
+	private function get_replace_data ( $values )
+    {
+    	$flag = is_array( $values ) ? true : false;
+		$arr = array();
+		foreach ( $this -> fields as $name => $value ) {
+			if ( $flag )
+				$arr[] = $this -> ss( $values[ $name ] );
+			else
+				$arr[] = '';
+		}
+		return $arr;
+    }
+
+    private function ss( $val )
+    {
+     	$val = ( get_magic_quotes_gpc() == 1 ) ? stripslashes($val) : $val;
+     	return htmlspecialchars( $val );
+    }
+    
+    
+    /**
+     * Функция проверяет введённые в форме значения на корректность в соответствии с массивами $fields и $regexps.
+     *
+     * @param mixed $values	//массив введённых в форме значений
+     * @return array		//массив ошибок
+     */
+    private function check_input_values( $values = null, $captcha )
+    {
+    	global $kernel;
+
+    	if ( $values == null || !isset( $values ) || empty( $values ) )
+    		return false;
+
+    	$errors = array();
+ 		foreach ( $this -> fields as $name => $detals ) {
+	   		//пришел массив
+	   		if ( is_array( $values ) ) {
+   				if ( strlen( $values[ $name ] ) < $detals[ 'minlength' ] )
+	   				if ( strlen( $values[ $name ] ) == 0 )
+   						$errors[] = '[#feedback_user_error_empty#] [#feedback_user_' . $name . '_label#]';
+   					else
+	   					$errors[] = '[#feedback_user_error_sosmall#] [#feedback_user_' . $name . '_label#]';
+   				elseif ( strlen( $values[ $name ] ) > $detals[ 'maxlength' ] )
+	   				$errors[] = '[#feedback_user_error_sobig#] [#feedback_user_' . $name . '_label#]';
+   				else {
+		  			if ( strlen( $values[ $name ] ) != 0 && isset( $this -> regexps[ $detals[ 'type' ] ] ) && !empty( $this -> regexps[ $detals[ 'type' ] ] ) ) {
+	  					if ( !preg_match($this -> regexps[ $detals[ 'type' ] ], $values[ $name ] ) > 0 ) {
+	                    	$errors[] = '[#feedback_user_error_incorrect#] [#feedback_user_' . $name . '_label#]';
+						}
+	  				}
+   				}
+	   		}
+	   		//пришел не массив
+	   		else {
+   				if ( strlen( $values ) < $detals[ 'minlength' ] )
+	   				if ( strlen( $values ) == 0 )
+   						$errors[] = '[#feedback_user_error_empty#] [#feedback_user_' . $values . '_label#]';
+   					else
+	   					$errors[] = '[#feedback_user_error_sosmall#] [#feedback_user_' . $values . '_label#]';
+   				elseif ( strlen( $values ) > $detals[ 'maxlength' ] )
+	   				$errors[] = '[#feedback_user_error_sobig#] [#feedback_user_' . $values . '_label#]';
+   				else {
+		  			if ( strlen( $values ) != 0 && isset( $this -> regexps[ $detals[ 'type' ] ] ) && !empty( $this -> regexps[ $detals[ 'type' ] ] ) ) {
+	  					if ( !preg_match($this -> regexps[ $detals[ 'type' ] ], $values ) > 0 ) {
+	                    	$errors[] = '[#feedback_user_error_incorrect#] [#feedback_user_' . $values . '_label#]';
+						}
+	  				}
+   				}
+	   		}
+ 		}//endforeach
+
+ 		//если модуль использует Код безопасности
+ 		if ( $this->use_captcha['value'] == 'true' ) {
+	 		//проверяем капчу
+ 			if ( $kernel -> pub_session_get( 'captcha_keystring' ) != $captcha )
+	 			$errors[] = '[#feedback_user_error_captcha#]';
+			$kernel -> pub_session_unset( 'captcha_keystring' );
+ 		}
+
+    	return $errors;
+    }
+    
+    /**
+     * Функция подготавливает данные к добавлению в базу
+     *
+     * @param mixed $values
+     * @return boolean
+     */
+    private function bd_prepare( $values = null )
+    {
+    	if ( $values == null || !isset( $values ) || empty( $values ) )
+    		return false;
+
+    	//пришел массив
+   		if ( is_array( $values ) ) {
+   			$res = array();
+   			foreach ( $values as $name => $value ) {
+	    		$res[ $name ] = ( get_magic_quotes_gpc() == 1 ) ? stripslashes( $value ) : $value;
+    			if ( ($res[ $name ] = mysql_real_escape_string( $res[ $name ] )) === false ) {
+    				return false;
+    			}
+   			}
+    	}
+    	//пришел не массив
+   		else {
+	    	if ( get_magic_quotes_gpc() ) {
+	    		$res = stripslashes( $values );
+   			}
+   			if ( ($res = mysql_real_escape_string( $values )) === false ) {
+   				return false;
+   			}
+   		}
+    	return $res;
+    }
+
+    /**
+     * Функция для добавления записи в базу
+     *
+     * @param mixed $values
+     * @return boolean
+     */
+    private function save_in_feedback( $values = null )
+    {
+    	if ( $values == null || !isset( $values ) || empty( $values ) )
+    		return false;
+    		
+    	global $kernel;
+    	
+    	//пришел массив
+		$set = '';
+    	if ( is_array( $values ) ) {
+			foreach ( $values as $name => $value ) {
+				$set .= ", $name='$value'";
+			}
+    	}
+    	else {}
+    	
+    	if ( $set === '' )
+    		return false;
+
+		$query = "INSERT INTO `" . PREFIX . "_feedback` SET id=''$set"
+							. ", date='" . date('Y-m-d H:i:s') . "'";
+
+    	return $kernel -> runSQL( $query );
+    }
+    
+    
+    /**
+     * Функция отправляет администратору письмо с сообщением пользователя
+     *
+     * @param mixed $input_values
+     * @return boolean
+     */
+    private function send_mail_to_admin( $values )
+    {
+		global $kernel;
+
+	    function crlf() { return chr(10).chr(13); }
+	    
+		$admin_email = $kernel -> pub_modul_properties_get( 'email', $kernel -> pub_module_id_get() );
+		if ( empty( $admin_email[ 'value' ] ) )
+			return false;
+
+		$name              = empty( $values[ 'author' ] ) ? 'Аноним' : $values[ 'author' ];
+		$email             = empty( $values[ 'email'  ] ) ? ''       : ' <' . $values[ 'email' ] . '>';
+		$site              = 'http://' . $_SERVER['HTTP_HOST'];
+		$admin_email       = $admin_email[ 'value' ];
+		$return_path_email = 'noreply@'.$_SERVER['HTTP_HOST'];
+		$subject           = '18+. Новое сообщение в обратной связи';
+		
+		$message           = $name . $email . crlf()
+						   . 'отправил сообщение на сайте' . crlf()
+						   . $site . crlf()
+						   . '-----------------------------------------------------------'. crlf()
+						   . $values[ 'message' ];
+
+		$mail =  new multi_mail;
+		$mail -> from          = '18+<'.$return_path_email.'>';
+  		$mail -> reply_to      = $return_path_email;
+  		$mail -> return_path   = $return_path_email;
+		$mail -> to            = $admin_email;
+  		$mail -> text_html     = "text/plain";
+  		$mail -> input_encode  = "windows-1251";
+  		$mail -> output_encode = "windows-1251";
+		$mail -> subject       = $subject;
+  		$mail -> body          = $message;
+
+		$mail -> send_mail();
+
+  		return true;
+    }
+
+    /**
+     * Получаем капчу
+     *
+     * @return string $path_to_captcha
+     */
+    private function get_captcha()
+    {
+        global $kernel;
+
+        $captcha = new KCAPTCHA();
+        $captcha->root_path = $kernel->pub_site_root_get ();
+        $captcha->deleteOld();
+        $captcha->makeKcaptcha();
+        $kernel->pub_session_set ('captcha_keystring', $captcha->getKeyString());
+        return $captcha->gen_img_path;
+    }
+
+
+    
+    
+    //***********************************************************************
+    //	Наборы внутренних методов модуля
+    //**********************************************************************
+
+
+    //***********************************************************************
+    //	Наборы методов, для работы с административным интерфейсом модуля
+    //**********************************************************************
+
+    /**
+     * Формирует меню модуля
+     *
+     * Здесь описывается меню модуля, которое будет выводиться при входе в административный
+     * раздел модуля
+     * @param object $menu
+     * @return boolean
+     */
+	public function interface_get_menu( $menu )
+	{
+        $menu -> set_menu_block( '[#feedback_admin_block_menu1#]' );
+        $menu -> set_menu( '[#feedback_admin_block_menu_item1#]', "show_list",      array( 'flush' => 1 ) );
+        $menu -> set_menu_default( 'list' );
+        $menu->set_menu_default('show_list');
+
 	    return true;
 	}
 
 	/**
-	 * Функция для отображаения административного интерфейса
-	 *
-	 * @return null
+     * Основной метод модуля, из которого расходиться всё управление административным разделом модуля
+	 * 
 	 */
-    public function start_admin()
+    function start_admin()
     {
         global $kernel;
-
-        $ini_blank = 'modules/feedback/templates_user/blank.ini';
-
-        $content = '';
+        
+        $html = '';
         switch ($kernel->pub_section_leftmenu_get())
         {
-        	case 'edit_ini':
-        	    if (!file_exists($ini_blank))
-        	       $kernel->pub_file_save($ini_blank, '');
-
-        	    $content = $this->priv_show_edit_ini($ini_blank);
+            default:
+        	case 'show_list':
+                return $this -> priv_show_list();
         		break;
 
-        	case 'save_cfg':
-        	    $this->save_ini_file($kernel->pub_httppost_get(), $ini_blank);
-                $content = $kernel->pub_json_encode(array('success'=>true,'result_message'=>'','redirect'=>'edit_ini'));
-        	    break;
+        	case 'item_remove':
+                $this -> priv_item_delete( $kernel -> pub_httpget_get( 'id' ) );
+                $kernel -> pub_redirect_refresh( 'show_list' );
+                break;
 
-        	case 'add_cfg':
-        	    $id_new = $kernel->pub_httppost_get('field_id');
-        	    if (!empty($id_new))
-        	    {
-        	       $str = file_get_contents($ini_blank);
-        	       $str .= "\n[".$id_new.']';
-        	       $kernel->pub_file_save($ini_blank, $str);
-        	    }
-        	    $content = $kernel->pub_json_encode(array('success'=>true,'result_message'=>'','redirect'=>'edit_ini'));
-        		break;
-
-        	case 'delete':
-        	    $settings = parse_ini_file($ini_blank, true);
-        	    unset($settings[$kernel->pub_httpget_get('id')]);
-        	    $this->save_ini_file($settings, $ini_blank);
-        	    $kernel->pub_redirect_refresh('edit_ini');
-        	    break;
-
-        	case 'add_template':
-
-        	    $new_name = $kernel->pub_httpget_get('filenew_name');
-        	    if (preg_match("|^([a-zA-Z_0-9]+)$|",$new_name))
-        	    {
-        	       $this->priv_template_create(strtolower($new_name), $ini_blank);
-        	    }
-        	    $kernel->pub_redirect_refresh_reload('edit_ini');
-        	    break;
-
+            case 'show_detail':
+                return $this -> priv_show_detail( $kernel -> pub_httpget_get( 'id' ) );
+                break;
         }
 
-        return $content;
+        return isset( $content ) ? $content : null;
     }
 
-    function save_ini_file($array, $filename)
-    {
+	private function priv_show_list()
+	{
         global $kernel;
-        $config = array();
-        foreach ($array as $name => $properties)
+
+        $template = $kernel -> pub_template_parse( $this -> admin_templates_path . 'show_list.html' );
+
+       	$query = 'SELECT *, DATE_FORMAT(`date`, "%d.%m.%Y") AS `date_formated` FROM `'.PREFIX.'_feedback` ORDER BY `date` DESC;';
+    	$result = $kernel -> runSQL( $query );
+
+    	if ( ( mysql_num_rows( $result ) == 0 ) ) {
+            return $template[ 'no_data' ];
+    	}
+
+    	$lines = array();
+        while ( $row = mysql_fetch_assoc( $result ) )
         {
-            $config[] = '['.$name.']';
-            foreach ($properties as $property => $value)
-            {
-                $value = trim($value);
-                if ($value != '')
-                    $config[] = $property.' = "'.$value.'"';
-            }
-        }
-        $kernel->pub_file_save($filename, implode("\n", $config));
-    }
-
-    function priv_show_edit_ini($filename)
-    {
-    	global $kernel;
-
-    	$templates = $kernel->pub_template_parse('modules/feedback/templates_admin/edit_ini.html');
-        $settings = parse_ini_file($filename, true);
-        $lines = array();
-
-        $types = array(
-            'text'=>'[#feedback_field_type_blank1#]',
-            'checkbox'=>'[#feedback_field_type_blank2#]',
-            'textarea'=>'[#feedback_field_type_blank3#]'
-        );
-        $regexp_types = array(
-            'numeric'=>'[#feedback_field_regexp_blank1#]',
-            'email'=>'[#feedback_field_regexp_blank2#]',
-            'string'=>'[#feedback_field_regexp_blank3#]',
-            'text'=>'[#feedback_field_regexp_blank4#]'
-        );
-        foreach ($settings as $name => $properties)
-        {
-            $line = $templates['line'];
-            $line = str_replace('%legend%', $name, $line);
-
-            //Вставка заголовка поля
-            if (isset($properties['label']))
-                $line = str_replace('%label%', $properties['label'], $line);
-            else
-                $line = str_replace('%label%', '', $line);
-
-            $type_lines = '';
-            if (!isset($properties['type']))
-                $properties['type']='';
-            foreach ($types as $tk=>$tv)
-            {
-                if ($properties['type']==$tk)
-                    $type_lines.='<option value="'.$tk.'" selected>'.$tv.'</option>';
-                else
-                    $type_lines.='<option value="'.$tk.'">'.$tv.'</option>';
-            }
-            $line = str_replace('%types%',$type_lines, $line);
-
-            $regexp_lines = '';
-            if (!isset($properties['regexp']))
-                $properties['regexp']='';
-            foreach ($regexp_types as $tk=>$tv)
-            {
-                if ($properties['regexp']==$tk)
-                    $regexp_lines.='<option value="'.$tk.'" selected>'.$tv.'</option>';
-                else
-                    $regexp_lines.='<option value="'.$tk.'">'.$tv.'</option>';
-            }
-            $line = str_replace('%regexp_types%',$regexp_lines, $line);
-
-
-            //Вставка обязательности заполнения
-            if ((isset($properties['allowBlank'])) && (intval($properties['allowBlank']) == 1))
-            {
-                $line = str_replace('%allow_value%', "checked", $line);
-                //$line = str_replace('%regexp_disabe%', "false", $line);
-            }
-            else
-            {
-                $line = str_replace('%allow_value%', '', $line);
-                //$line = str_replace('%regexp_disabe%', "false", $line);
-            }
-
+        	$message = htmlspecialchars( $row['message'] );
+        	if ( strlen( $message ) > $this -> admin_message_len ) {
+        		$message  = substr( $message, 0, $this -> admin_message_len ) . '...';
+        	}
+        	
+            $line = $template[ 'table_body' ];
+            $_1 = array('%id%'
+                      , '%date%'
+                      , '%author%'
+                      , '%email%'
+                      , '%message%'
+                      , '%action_detail%'
+                      , '%action_remove%'
+                       );
+            $_2 = array($row['id']
+                      , $row['date_formated']
+                      , $row['author']
+                      , ( trim( $row['email'] ) == '' ) ? '' : '&lt;' . $row['email'] . '&gt;'
+                      , $message
+                      , 'show_detail'
+                      , 'item_remove'
+                       );
+                       
+            $line = str_replace( $_1, $_2, $line );
             $lines[] = $line;
         }
 
-
-
-        $content = $templates['form'];
-        $content = str_replace('%form_action%', $kernel->pub_redirect_for_form('save_cfg'), $content);
-        $content = str_replace('%form_action_2%', $kernel->pub_redirect_for_form('add_cfg'), $content);
-        $content = str_replace('%form_action_3%', $kernel->pub_redirect_for_form('add_template&filenew_name='), $content);
-        $content = str_replace('%lines%', implode("\n", $lines), $content);
-
-        $but_dis = "";
-        if (count($settings) == 0)
-            $but_dis = "disabled";
-
-        $content = str_replace('%but1disabled%', $but_dis, $content);
-        $content = str_replace('%but2disabled%', $but_dis, $content);
+        $header  = $template[ 'table_header' ];
+        $content = $header . implode( "\n", $lines ) . $template[ 'table_footer' ];
+        $content = str_replace( '%form_action%', $kernel -> pub_redirect_for_form( 'list_actions' ), $content );
 
         return $content;
+	}
+
+
+    private function priv_item_delete( $item_id )
+    {
+    	global $kernel;
+
+    	$query = 'DELETE FROM `'.PREFIX.'_feedback` WHERE `id` = '.$item_id.' LIMIT 1;';
+        $kernel -> runSQL( $query );
     }
-    /**
-     * Создание файла шаблона
-     *
-     * По файлу настроек создаётся файл шаблона, который затем и может быть о
-     * тредактирован по необходимости
-     * @param string $filename Имя вновь создаваемого файла
-     * @param string $file_ini путь ini-файлу
-     */
-    private function priv_template_create($filename, $file_ini)
+
+
+    private function priv_show_detail( $item_id )
     {
         global $kernel;
 
-        //Распарсим файл настроек
-        $settings = parse_ini_file($file_ini, true);
+        $template = $kernel -> pub_template_parse( $this -> admin_templates_path . 'show_detail.html' );
 
-        //Создание основного блока формы @form
-        $templates_blank = $kernel->pub_template_parse('modules/feedback/templates_admin/blank_template.html');
+       	$query = 'SELECT *, DATE_FORMAT(`date`, "%d.%m.%Y") AS `date_formated` FROM `'.PREFIX.'_feedback` WHERE id=' . $item_id . ' ORDER BY `date` DESC;';
+    	$result = $kernel -> runSQL( $query );
 
-        $html = $templates_blank['blank_form'];
-        $html = "<!-- @form -->\n".$html;
+    	if ( ( mysql_num_rows( $result ) == 1 ) ) {
+    		$row = mysql_fetch_assoc( $result );
+            $line = $template[ 'table_body' ];
+        	$message = htmlspecialchars( $row['message'] );
+            $_1 = array('%id%'
+                      , '%date%'
+                      , '%author%'
+                      , '%email%'
+                      , '%message%'
+                      , '%action_remove%'
+                       );
+            $_2 = array($row['id']
+                      , $row['date_formated']
+                      , $row['author']
+                      , ( trim( $row['email'] ) == '' ) ? '' : '&lt;' . $row['email'] . '&gt;'
+                      , $message
+                      , 'item_remove'
+                       );
+                       
+            $line = str_replace( $_1, $_2, $line );
+    	}
+    	else {
+    		return $template[ 'no_data' ];
+    	}
 
+        $header  = $template[ 'table_header' ];
+        $content = $header . $line . $template[ 'table_footer' ];
+        $content = str_replace( '%form_action%', $kernel -> pub_redirect_for_form( 'list_actions' ), $content );
 
-        //Теперь необходимо добавить разные блоки, в зависимости от того,
-        //какой тип имеет поле в форме
-        $html_res = '';
-        foreach ($settings as $id_feild => $properties)
-        {
-            $line = '';
-            //Определим тип поля и получем нужный шаблон.
-            switch ($properties['type'])
-            {
-                case "text":
-                    $line = $templates_blank['blank_text'];
-                    break;
-                case "checkbox":
-                    $line = $templates_blank['blank_checkbox'];
-                    break;
-                case "textarea":
-                    $line = $templates_blank['blank_textarea'];
-                    break;
-            }
-            $line = str_replace('%id%',      $id_feild,            $line);
-            $line = str_replace('%caption%', $properties['label'], $line);
-            $html_res .= $line;
-        }
-
-        $html = str_replace('%lines%', $html_res, $html);
-
-        //Теперь добавим блок с шаблоном письма, отправляемого
-        //менеджеру в формате HTML
-        $html .= "\n<!-- @email_html -->\n".$templates_blank['blank_email_html'];
-        $html_res = '';
-        foreach ($settings as $id_feild => $properties)
-        {
-            $line = $templates_blank['blank_email_html_line'];
-            $line = str_replace('%id%'     , "%".$id_feild."%"       , $line);
-            $line = str_replace('%caption%', $properties['label'].":", $line);
-            $html_res .= $line;
-        }
-        $html = str_replace('%lines%', $html_res, $html);
-
-        //Всё тоже самое только для письма отправляемого в
-        //обычном текстовом формате
-        $html .= "\n<!-- @email_text -->\n".$templates_blank['blank_email_text'];
-        $html_res = '';
-        foreach ($settings as $id_feild => $properties)
-        {
-            $line = $templates_blank['blank_email_text_line'];
-            $line = str_replace('%id%'     , "%".$id_feild."%"       , $line);
-            $line = str_replace('%caption%', $properties['label'].":", $line);
-            $html_res .= $line;
-        }
-        $html = str_replace('%lines%', $html_res, $html);
-
-        //Добавим два блока с сообщениями о успешной отправке и ошибке
-        //в отправке формы
-        $html .= "\n<!-- @processing_succses -->\n".$templates_blank['blank_processing_succses'];
-        $html .= "\n<!-- @processing_fail -->\n".$templates_blank['blank_processing_fail'];
-
-        //и последнее, добавим блоки для переменных jscript
-        $html .= "\n<!-- @jscript_start -->\n".$templates_blank['blank_jscript_start'];
-        $html .= "\n<!-- @jscript_line_1 -->\n".$templates_blank['blank_jscript_line_1'];
-        $html .= "\n<!-- @jscript_line_2 -->\n".$templates_blank['blank_jscript_line_2'];
-        $html .= "\n<!-- @jscript_end -->\n".$templates_blank['blank_jscript_end'];
-
-        //Записываем файл шаблона
-        $kernel->pub_file_save('modules/feedback/templates_user/'.$filename.'.html', $html);
-
-        //Кроме того, нужно переписать с таким же именем файл настроек (ini) что бы форма потом его
-        //использоваала
-        $kernel->pub_file_save('modules/feedback/templates_user/'.$filename.'.html.ini', file_get_contents($file_ini));
-
+        return $content;
     }
-
 }
+
+
+?>

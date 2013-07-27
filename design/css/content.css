@@ -306,3 +306,64 @@ table tr:nth-child(odd) {
     padding-left: 80px;
     width: 372px;
 }
+
+.contacts .title {
+    font-family: FranklinGothicMedium;
+    font-size: 28px;
+    color: #885135;
+    padding-bottom: 20px;
+}
+.contacts #map {
+    width: 703px;
+    height: 225px;
+    float: left;
+    padding-bottom: 20px;
+}
+.contacts .image {
+    float: right;
+    padding-bottom: 20px;
+}
+
+.feedback input, textarea {
+    background-color: #f7f7f7;
+    border: solid 2px #ededed;
+    width: 394px;
+    height: 34px;
+    margin-bottom: 15px;
+    display: block;
+
+    font-family: TrebuchetRegular;
+    font-size: 14px;
+    line-height: 18px;
+    color: #646565;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.feedback textarea {
+    height: 143px;
+}
+.feedback .send {
+    background-color: #6EA92D;
+    color: #ffffff;
+    width: 125px;
+    height: 40px;
+    border: 0px;
+    font-family: TrebuchetRegular;
+    font-size: 17.35px;
+    margin-left: 303px;
+}
+.feedback .send:hover {
+    cursor: pointer;
+    border-top: 2px solid #669D2F;
+    background: #557c2d;/*6FA82D*/
+    background-image: linear-gradient(to bottom, #557c2d, #6FA82D);
+}
+
+.feedback .error {
+    color: red;
+    padding-bottom: 10px;
+}
+.feedback .correct {
+    color: green;
+    padding-bottom: 10px;
+}

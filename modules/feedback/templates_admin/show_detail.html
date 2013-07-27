@@ -1,0 +1,39 @@
+<!-- @table_header -->
+<form action="%form_action%" method="POST">
+<table class="admin_table">
+    <thead>
+        <tr>
+            <th>[#feedback_item_number#]</th>
+            <th>[#feedback_item_date#]</th>
+            <th>[#feedback_item_author#]</th>
+            <th>[#feedback_item_message#]</th>
+            <th>[#feedback_item_actions#]</th>
+        </tr>
+    </thead>
+    <tbody>
+<!-- @img_sort_asc -->
+<img src="/admin/templates/default/images/12-em-up-blue.gif" />
+<!-- @img_sort_desc -->
+<img src="/admin/templates/default/images/12-em-down-blue.gif" />
+<!-- @table_body-->
+        <tr>
+            <td>%id%</td>
+            <td>%date%</td>
+            <td>%author%&nbsp;%email%</td>
+            <td width="250">%message%</td>
+            <td><a href="#" onclick="jspub_confirm('%action_remove%&id=%id%', '[#feedback_delete_confirm#]')""><img src="/admin/templates/default/images/icon_delet.gif" title="[#feedback_item_action_remove#]"/></a></td>
+        </tr>
+
+<!-- @table_footer -->
+    </tbody>
+</table>
+<!--br/><p>[#feedback_actions_with_selected#]&nbsp;%actions%<input type="submit" name="submit" value="[#feedback_show_list_submit#]"/></p><br/>
+<p>%pages%</p-->
+
+</form>
+<!-- @no_data -->
+Нет данных для отображения
+<!-- @on -->
+<img src="/admin/templates/default/images/24-em-check.gif" title="Скрыть"/>
+<!-- @off -->
+<img src="/admin/templates/default/images/24-em-check-gray.gif" title="Опубликовать"/>

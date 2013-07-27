@@ -122,4 +122,32 @@ $(function() {
         $(".content_block").css({"marginLeft": "0px"});
     }
 
+    // yandex map
+    if($("#map").length > 0) {
+        $.getScript("/design/js/yandex.map.js", function() {
+            ymaps.ready(init);
+
+            function init() {
+                ymaps.geocode('Санкт Питербург, Рузовская, 35', { results: 1 }).then(function (res) {
+                    var firstGeoObject = res.geoObjects.get(0);
+                    myMap = new ymaps.Map("map", {
+                        center: firstGeoObject.geometry.getCoordinates(),
+                        zoom: 16
+                    });
+
+                    myPlacemark = new ymaps.Placemark(firstGeoObject.geometry.getCoordinates(), {
+                        balloonContentHeader: "Kattilera Foods",
+                        balloonContentBody: "190013, Россия. Санкт-Петербург, ул. Рузовская, дом 35, помещение 2Н. литер А",
+                        hintContent: "Kattilera Foods"
+                    });
+
+                    myMap.geoObjects.add(myPlacemark);
+                    myMap.controls.add('zoomControl', { left:5, top: 5 });
+                }, function (err) {
+                    alert(err.message);
+                });
+            }
+        });
+    }
+
 });
