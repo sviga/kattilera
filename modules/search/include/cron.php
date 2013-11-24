@@ -9,7 +9,7 @@ $santapath = realpath(dirname(__FILE__)."/../../../")."/";
 $moduleid = "search1";
 
 // URL страницы сайта, с которой начинается индексация, например http://www.webkes.info/
-$start_url = "http://ваш_сайт_здесь/";
+$start_url = "http://kattilera.ru/";
 
 print "santa path: ".$santapath."\n";
 print "start url:".$start_url."\n";
