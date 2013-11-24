@@ -1,5 +1,5 @@
 <!--
-Шаблон меню только основных разделов сайта
+Шаблон динамического меню сайта
 
 Содержит секции:
 
@@ -17,17 +17,33 @@
 
 -->
 
-<!-- ****************************************** Шаблон меню только основных разделов сайта ****************************************** -->
+<!-- ****************************************** Шаблон динамического меню сайта ****************************************** -->
 
 <!-- @begin -->
-<!-- @link -->
-&nbsp;<a href="%link%">%text%</a>&nbsp;
-<!-- @activelink -->
-&nbsp;<b>%text%</b>&nbsp;
-<!-- @passiveactive -->
-&nbsp;<b>%text%</b>&nbsp;
-<!-- @delimiter -->
-&nbsp;|&nbsp;
-<!-- @end -->
+    <ul class="second_level_menu">
+<!-- @@nextlevel -->
 
+<!-- @link -->
+        <li><a href="%link%">%text%</a></li>
+
+<!-- @@nextlevel -->
+<!-- @@nextlevel -->
+
+
+<!-- @activelink -->
+        <li><a href="%link%">%text%</a></li>
+
+<!-- @@nextlevel -->
+<!-- @@nextlevel -->
+
+<!-- @passiveactive -->
+        <li class="title">%text%</li>
+
+<!-- @@nextlevel -->
+<!-- @@nextlevel -->
+
+<!-- @end -->
+    </ul>
+<!-- @@nextlevel -->
+<!-- @@nextlevel -->
 

@@ -117,10 +117,10 @@ $(function() {
     }
 
     //Удаление 3-го уровня меню, если его не надо выводить
-    if($(".third_level_menu li").length < 2) {
-        $(".third_level_menu").remove();
-        $(".content_block").css({"marginLeft": "0px"});
-    }
+//    if($(".third_level_menu li").length < 2) {
+//        $(".third_level_menu").remove();
+//        $(".content_block").css({"marginLeft": "0px"});
+//    }
 
     // yandex map
     if($("#map").length > 0) {
