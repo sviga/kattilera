@@ -310,3 +310,7 @@ footer nav>ul>li>ul>li>ul>li>a, nav>ul>li>ul>li>ul>li>span {
     position: relative;
     left: -32px;
 }
+
+.cont ul {
+    margin: 10px 10px 20px 20px;
+}
