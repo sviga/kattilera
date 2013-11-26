@@ -1,23 +1,25 @@
 <!-- @begin_form -->
-<div class="title">Обратная связь</div>
-<a href="fbform"></a>
-<form class="feedback" id="feedback" method="post" >
-%feedback_error%%feedback_correct%
+<div class="feedback">
+    <div class="title">Обратная связь</div>
+    <a href="fbform"></a>
+    <form id="feedback" method="post" >
+        %feedback_error%%feedback_correct%
 
 <!-- @fields -->
-    <input class="name" placeholder="Ваше имя" name="values[author]" />
-    <input class="email" placeholder="Ваш email" name="values[email]" />
-    <textarea class="message" placeholder="Сообщение" name="values[message]" ></textarea>
+        <input class="name" placeholder="Ваше имя" name="values[author]" />
+        <input class="email" placeholder="Ваш email" name="values[email]" />
+        <textarea class="message" placeholder="Сообщение" name="values[message]" ></textarea>
 
 
 <!-- @end_form -->
-    <button type="submit" class="send">Отправить</button>
+        <button type="submit" class="send">Отправить</button>
 
-    <input type="hidden" name="feedback_form" value="1" />
-</form>
+        <input type="hidden" name="feedback_form" value="1" />
+    </form>
+</div>
 
 <!-- @error -->
-<div class="error">Ошибка заполнения полей!</div>
+    <div class="error">Ошибка заполнения полей!</div>
 
 <!-- @correct -->
-<div class="correct">Сообщение отправлено</div>
+    <div class="correct">Сообщение отправлено</div>

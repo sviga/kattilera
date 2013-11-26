@@ -324,6 +324,12 @@ table tr:nth-child(odd) {
     padding-bottom: 20px;
 }
 
+.feedback .title {
+    font-family: FranklinGothicMedium;
+    font-size: 28px;
+    color: #885135;
+    padding-bottom: 20px;
+}
 .feedback input, textarea {
     background-color: #f7f7f7;
     border: solid 2px #ededed;
