@@ -2072,8 +2072,7 @@ class catalog extends BaseModule
                 if ($catid == 0)
                     $catid = $this->get_random_catid();
             }
-            else
-                $this->add_categories2waysite($this->get_way2cat($catid, true));
+            $this->add_categories2waysite($this->get_way2cat($catid, true));
         }
         $category = $this->get_category($catid);
         if (!$category)
