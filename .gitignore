@@ -2,3 +2,4 @@ ini.php
 backup/*
 .idea
 .htaccess
+.DS_Store
