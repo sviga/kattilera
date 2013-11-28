@@ -246,9 +246,7 @@ h2 {
     color: #6DA441;
 }
 .news .item {
-    overflow: hidden;
     width: 290px;
-    height: 113px;
 }
 .contacts {
     width: 305px;
