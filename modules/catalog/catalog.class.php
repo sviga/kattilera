@@ -8346,6 +8346,7 @@ class catalog extends BaseModule
         if (!in_array($action, array('category_items', 'category_move', 'category_items_save', 'save_selected_items', 'item_edit', 'item_save')))
             setcookie($this->structure_cookie_name, "");
         $moduleid = $kernel->pub_module_id_get();
+        $action = str_replace("/", "", $action);
         switch ($action)
         {
             case 'get_item_subcats_block':
