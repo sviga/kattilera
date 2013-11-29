@@ -1,0 +1,64 @@
+<!-- @table_header -->
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#calendar_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+ <h3>Список ссылок</h3>
+ <form action="%form_action%" method="POST">
+ <table class="admin_table">
+   <tr>
+    <th class="first">№</th>
+    <th>[#calendar_item_number#]</th>
+    <th><a href="#" class="sort" onclick="jspub_click('%url_sort_date%')">[#calendar_item_date#]&nbsp;%img_sort_date%</a></th>
+    <th><a href="#" class="sort" onclick="jspub_click('%url_sort_header%')">[#calendar_item_header#]&nbsp;%img_sort_header%</a></th>
+    <th><a href="#" class="sort" onclick="jspub_click('%url_sort_available%')">[#calendar_item_available#]&nbsp;%img_sort_available%</a></th>
+    <th class="last">[#calendar_item_actions#]</th>
+   </tr>
+<!-- @img_sort_asc -->
+<img src="/admin/templates/default/images/12-em-up-blue.gif" />
+<!-- @img_sort_desc -->
+<img src="/admin/templates/default/images/12-em-down-blue.gif" />
+<!-- @table_body-->
+        <tr>
+            <td><input type="checkbox" style="float:none;" name="items[%id%]" value="%id%"></td>
+            <td>%number%</td>
+            <td>%date%</td>
+            <td><a href="#" onclick="jspub_click('%action_edit%&id=%id%')">%header%</a></td>
+            <td align="center">%available%</td>
+            <td>
+                <a href="#" onclick="jspub_click('%action_edit%&id=%id%')">
+                    <img src="/admin/templates/default/images/icon_edit.gif" alt="[#calendar_item_action_edit#]"/>
+                </a>&nbsp;
+                <a href="#" onclick="jspub_confirm('%action_remove%&id=%id%', '[#calendar_delete_confirm#]')">
+                    <img src="/admin/templates/default/images/icon_delet.gif" alt="[#calendar_item_action_remove#]"/>
+                </a>
+            </td>
+        </tr>
+
+ <!-- @table_footer -->
+</table>
+
+<fieldset>
+ <label style="width:150px;">[#calendar_actions_with_selected#]</label>
+ %actions%
+ <input type="submit" style="margin-left:15px;" name="submit" value="[#calendar_show_list_submit#]">
+</fieldset>
+<p>%pages%</p>
+ </form>
+ </div>
+</div>
+</div>
+<!-- @no_data -->
+<span class="content_header">[#admin_module_label#] &rarr; <span class="black">[#calendar_base_name#]</span></span>
+<div id="page_container">
+ <div id="content_container">
+ <div class="content">
+ <h3>Список ссылок</h3>
+ Нет данных для отображения
+ </div>
+</div>
+</div>
+<!-- @on -->
+<img src="/admin/templates/default/images/24-em-check.gif" alt="">
+<!-- @off -->
+<!--<img src="/admin/templates/default/images/24-em-check-gray.gif" alt=""/>-->

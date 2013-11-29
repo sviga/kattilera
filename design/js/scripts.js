@@ -151,15 +151,17 @@ $(function() {
     }
 
     // yandex map всплывалка на главной
-    $(".various").fancybox({
-        maxWidth	: 800,
-        maxHeight	: 600,
-        fitToView	: false,
-        width		: '80%',
-        height		: '80%',
-        autoSize	: false,
-        closeClick	: false,
-        openEffect	: 'elastic',
-        closeEffect	: 'elastic'
-    });
+    if($(".various")[0] != null) {
+        $(".various").fancybox({
+            maxWidth	: 800,
+            maxHeight	: 600,
+            fitToView	: false,
+            width		: '80%',
+            height		: '80%',
+            autoSize	: false,
+            closeClick	: false,
+            openEffect	: 'elastic',
+            closeEffect	: 'elastic'
+        });
+    }
 });

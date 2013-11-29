@@ -1,0 +1,15 @@
+<!-- @date_picker -->
+<script type="text/javascript">
+    $(function() {
+        $("#datePicker").datepicker({
+             dateFormat:"yy.mm.dd"
+            ,onSelect:newsDateSelected
+        }
+       );
+    });
+    function newsDateSelected(dateText)
+    {
+        jspub_click('show_list&flush=1&date='+dateText);
+    }
+</script>
+<div id="datePicker"></div>

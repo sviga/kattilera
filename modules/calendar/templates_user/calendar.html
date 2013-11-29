@@ -1,0 +1,157 @@
+<!-- @content -->
+<script src="/design/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="/design/js/jquery-ui-1.10.3.custom/js/jquery.ui.datepicker-ru.js"></script>
+<script>
+    // http://jsfiddle.net/paul724/HXb6v/
+    $(function() {
+
+        var calendarData = $.parseJSON('%calendar_data%');
+        var datapicker = $('#datepicker');
+        var datapickerPopup = $('#dialog');
+        var month = (new Date()).getMonth() + 1;
+
+        //datapickerPopup.attr('title', 'titleName');
+        //$(".ui-dialog-titlebar").hide();
+
+
+        // возвращает список доступных дат
+        function getAvailableDate() {
+            var availableDate = [];
+            for(var i=0; i<calendarData.length; i++) {
+                availableDate[i] = calendarData[i].date;
+            }
+            return availableDate;
+        }
+        var availableDate = getAvailableDate();
+
+        // Возвращает true если переданая дату надо отобразить в календаре
+        function getAvailableCalendarData(date) {
+            var m = date.getMonth() + 1, d = date.getDate(), y = date.getFullYear();
+            if(m < 10) {
+                m = "0" + m;
+            }
+            if(d < 10) {
+                d = "0" + d;
+            }
+            for (var i=0; i<availableDate.length; i++) {
+                if($.inArray(d + '-' + m + '-' + y,availableDate) != -1) {
+                    return [true];
+                }
+            }
+            return [false];
+        }
+
+        // Инициализация календаря
+        function initDatapicker() {
+            datapicker.datepicker({
+                dateFormat: 'yy-mm-dd',
+                inline: true,
+                beforeShowDay: getAvailableCalendarData,
+                onSelect: function(date) {
+                    dlg.dialog("option", "position", {
+                        my: "left top",
+                        at: "right bottom",
+                        of: event,
+                        offset: "20 20"
+                    });
+                    getPopUpData();
+                    datapickerPopup.dialog('open');
+                }
+            });
+        }
+        initDatapicker();
+
+        // Добавление евентов на кнопки предыдущего и следующего месецов
+        function addPrevNextButtonEvents() {
+            datapicker.find(".ui-datepicker-prev").on('click', function() {
+                if(month > 1) {
+                    month--;
+                } else {
+                    month = 12;
+                }
+                getSelectedDates(month);
+            });
+
+            datapicker.find(".ui-datepicker-next").on('click', function() {
+                if(month < 12) {
+                    month++;
+                } else {
+                    month = 1;
+                }
+                getSelectedDates(month);
+            });
+        }
+        addPrevNextButtonEvents();
+
+        // Инициализация диалога
+        function initDatapickerPopUp() {
+            return datapickerPopup.dialog({
+                autoOpen: false,
+                draggable: false,
+                resizable: false,
+                width: 350,
+                close: addMouseOverEvent
+            });
+        }
+        var dlg = initDatapickerPopUp();
+
+        // Вешает евента на все даты в календаре которые доступны
+        function addMouseOverEvent() {
+            datapicker.find(".ui-datepicker-calendar a").mouseover(function() {
+                dlg.dialog("open");
+            }).mousemove(function(event) {
+                dlg.dialog("option", "position", {
+                    my: "left top",
+                    at: "right bottom",
+                    of: event,
+                    offset: "20 20"
+                });
+                getPopUpData();
+            }).mouseout(function() {
+                dlg.dialog("close");
+            });
+        }
+        addMouseOverEvent();
+
+        // Выставляет текст в диалог для текущей выделеной даты
+        function getPopUpData() {
+            datapickerPopup.html("");
+            var selectedDate = datapicker.find(".ui-state-hover").text();
+            if(selectedDate < 10) {
+                selectedDate = "0" + selectedDate;
+            }
+            for(var i=0; i<calendarData.length; i++) {
+                lineData = calendarData[i];
+                if(lineData.date.split("-")[0] == selectedDate) {
+                    datapickerPopup.html(
+                        datapickerPopup.html() +
+                            '<a class="title" href="'+ lineData.source_url +'">' +
+                                "<span style='color: #7f7fff; font-weight: lighter;'>" + lineData.header + '</span>' +
+                            '</a>' +
+                            '<div class="desc">'+lineData.description+'</div><br/>'
+                    );
+                }
+            }
+        }
+
+        // ajax запрос для получения данных для выбранного месяца
+        function getSelectedDates(month) {
+            $.post(
+                '%page_url%',
+                {"month": month, "dataOnly": true},
+                function(data) {
+                    calendarData = data;
+                    availableDate = getAvailableDate();
+                    datapicker.datepicker( "refresh" );
+                    addMouseOverEvent();
+                    addPrevNextButtonEvents();
+                },
+                "json"
+            );
+        }
+
+    });
+</script>
+
+<div id="dialog"></div>
+<div style="display: table;" id="datepicker"></div>
