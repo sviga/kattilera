@@ -3,3 +3,4 @@ backup/*
 .idea
 .htaccess
 .DS_Store
+content/kc_tmp

@@ -7,9 +7,18 @@
         %feedback_error%%feedback_correct%
 
 <!-- @fields -->
-        <input class="name" placeholder="Ваше имя" name="values[author]" />
-        <input class="email" placeholder="Ваш email" name="values[email]" />
-        <textarea class="message" placeholder="Сообщение" name="values[message]" ></textarea>
+        <input class="name" placeholder="Ваше имя" value="%author_value%" name="values[author]" />
+        <input class="email" placeholder="Ваш email" value="%email_value%" name="values[email]" />
+        <textarea class="message" placeholder="Сообщение" name="values[message]" >%message_value%</textarea>
+        %captcha%
+
+
+<!-- @captcha -->
+        <span>
+            <input type="text" style="float: left;" placeholder="Введите текст с картинки" name="captcha" value="">
+            <img style="float: left;" src="%captcha_image%" width="160" height="40" border="0" />
+            <br style="clear: both;"/>
+        </span>
 
 
 <!-- @end_form -->
