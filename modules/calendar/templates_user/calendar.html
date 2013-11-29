@@ -90,10 +90,16 @@
                 draggable: false,
                 resizable: false,
                 width: 350,
-                close: addMouseOverEvent
+                close: addEvents
             });
         }
         var dlg = initDatapickerPopUp();
+
+        // вешает евенты после того как закрыли всплывающее окно
+        function addEvents() {
+            addMouseOverEvent();
+            addPrevNextButtonEvents();
+        }
 
         // Вешает евента на все даты в календаре которые доступны
         function addMouseOverEvent() {
