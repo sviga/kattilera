@@ -276,6 +276,7 @@ function santaShowPopupHint(header, text,timeout)
         title: header,
         buttons: {
             "OK": function() {
+                timeout = 0;
                 $(this).dialog( "close" );
             }
         },
@@ -283,8 +284,13 @@ function santaShowPopupHint(header, text,timeout)
         hide: "scale"//"explode"
     });
     //autoclose
-    if (timeout!=0)
-        setTimeout(function(){ $("#popup_msg_div").dialog("close"); }, timeout);
+    if (timeout!=0) {
+        setTimeout(function(){
+            if (timeout!=0) {
+                $("#popup_msg_div").dialog("close");
+            }
+        }, timeout);
+    }
 }
 
 //здесь хранится текущая выбранная страница во всплывающем диве
@@ -953,7 +959,7 @@ function saveStructForm(url,isFull,modulesProps)
             //сначала проверка на наличие ошибок
             if (post_res.success)
             {
-                santaShowPopupHint("Info",post_res.info,1500);
+                santaShowPopupHint("Info",post_res.info,1000);
                 //обновим всё дерево, если требуется
                 if (shouldReloadTree)
                     santaUpdateRegion('west','index.php?action=get_left_menu');
