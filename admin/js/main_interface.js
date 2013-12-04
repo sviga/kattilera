@@ -611,7 +611,7 @@ function run_update_metki(url)
 function set_propertes_main(d)
 {
     // название страницы
-    $('#structure_page_name').html('"<a href="/'+d.id_curent_page+'.html" class="link2page" target="_blank" title="Откроется в новом окне">'+d.caption+'</a>"');
+    $('#structure_page_name').html('"<a href="/'+d.id_curent_page+'" class="link2page" target="_blank" title="Откроется в новом окне">'+d.caption+'</a>"');
 
     //Проставляем поля формы
     $("#fieldPageName").val(d.caption);
